@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>java ECLIPSE常见的使用技巧 | 留白</title>
+  <title>设计模式－策略模式 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="未验证 批量修改ALT+SHIFT+R 快速输入主方法 敲入main  alt+/  快速输入System.out.println 敲入syso  alt+/  快速输入for 敲入for  alt+/  查看java源代码JDK里提供的类，比如String,Intger,System都是开源的，免费提供其源代码可以很简便的通过eclipse就查看源码   先选中想要查看的方法，比如System.">
+  <meta name="description" content="接下去一段时间打算把23种设计模式好好学习一下，今天是第一篇：策略模式。 策略模式策略模式定义了算法家族，把算法分别封装起来，让它们之间可以互相使用起来，这个模式让算法的变化，不会影响到算法的客户。 组成：1.抽象策略，通常是接口类或者抽象类2.具体算法策略，实现了1中点接口类或者继承了1中的抽象类，有具体算法或者行为3.持有一个策略类的引用，最终给客户端使用 应用场景：1、 多个类只区别在表现行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java ECLIPSE常见的使用技巧">
-<meta property="og:url" content="http://yoursite.com/2017/11/22/2017112201/index.html">
+<meta property="og:title" content="设计模式－策略模式">
+<meta property="og:url" content="http://yoursite.com/2018/02/04/2018020401/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="未验证 批量修改ALT+SHIFT+R 快速输入主方法 敲入main  alt+/  快速输入System.out.println 敲入syso  alt+/  快速输入for 敲入for  alt+/  查看java源代码JDK里提供的类，比如String,Intger,System都是开源的，免费提供其源代码可以很简便的通过eclipse就查看源码   先选中想要查看的方法，比如System.">
+<meta property="og:description" content="接下去一段时间打算把23种设计模式好好学习一下，今天是第一篇：策略模式。 策略模式策略模式定义了算法家族，把算法分别封装起来，让它们之间可以互相使用起来，这个模式让算法的变化，不会影响到算法的客户。 组成：1.抽象策略，通常是接口类或者抽象类2.具体算法策略，实现了1中点接口类或者继承了1中的抽象类，有具体算法或者行为3.持有一个策略类的引用，最终给客户端使用 应用场景：1、 多个类只区别在表现行">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-22T11:32:21.000Z">
+<meta property="og:updated_time" content="2018-02-04T14:29:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java ECLIPSE常见的使用技巧">
-<meta name="twitter:description" content="未验证 批量修改ALT+SHIFT+R 快速输入主方法 敲入main  alt+/  快速输入System.out.println 敲入syso  alt+/  快速输入for 敲入for  alt+/  查看java源代码JDK里提供的类，比如String,Intger,System都是开源的，免费提供其源代码可以很简便的通过eclipse就查看源码   先选中想要查看的方法，比如System.">
+<meta name="twitter:title" content="设计模式－策略模式">
+<meta name="twitter:description" content="接下去一段时间打算把23种设计模式好好学习一下，今天是第一篇：策略模式。 策略模式策略模式定义了算法家族，把算法分别封装起来，让它们之间可以互相使用起来，这个模式让算法的变化，不会影响到算法的客户。 组成：1.抽象策略，通常是接口类或者抽象类2.具体算法策略，实现了1中点接口类或者继承了1中的抽象类，有具体算法或者行为3.持有一个策略类的引用，最终给客户端使用 应用场景：1、 多个类只区别在表现行">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -158,56 +158,31 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2017112201" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2018020401" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      java ECLIPSE常见的使用技巧
+      设计模式－策略模式
     </h1>
   
 
         
-        <a href="/2017/11/22/2017112201/" class="archive-article-date">
-  	<time datetime="2017-11-22T05:29:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
+        <a href="/2018/02/04/2018020401/" class="archive-article-date">
+  	<time datetime="2018-02-04T14:06:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>未验证</p>
-<h2 id="批量修改"><a href="#批量修改" class="headerlink" title="批量修改"></a>批量修改</h2><p>ALT+SHIFT+R</p>
-<h2 id="快速输入主方法"><a href="#快速输入主方法" class="headerlink" title="快速输入主方法"></a>快速输入主方法</h2><ol>
-<li>敲入main </li>
-<li>alt+/</li>
-</ol>
-<h2 id="快速输入System-out-println"><a href="#快速输入System-out-println" class="headerlink" title="快速输入System.out.println"></a>快速输入System.out.println</h2><ol>
-<li>敲入syso </li>
-<li>alt+/</li>
-</ol>
-<h2 id="快速输入for"><a href="#快速输入for" class="headerlink" title="快速输入for"></a>快速输入for</h2><ol>
-<li>敲入for </li>
-<li>alt+/</li>
-</ol>
-<h2 id="查看java源代码"><a href="#查看java源代码" class="headerlink" title="查看java源代码"></a>查看java源代码</h2><p>JDK里提供的类，比如String,Intger,System都是开源的，免费提供其源代码<br>可以很简便的通过eclipse就查看源码 </p>
-<ol>
-<li>先选中想要查看的方法，比如System.out.println()的 println </li>
-<li>敲键F3</li>
-</ol>
-<h2 id="代码格式化"><a href="#代码格式化" class="headerlink" title="代码格式化"></a>代码格式化</h2><p>ctrl+shift+f<br>格式化代码 </p>
-<h2 id="快速助手"><a href="#快速助手" class="headerlink" title="快速助手"></a>快速助手</h2><p>ctrl+shift+o<br>import 类<br>去掉未使用的类 等等都可以使用</p>
-<h2 id="快速注释"><a href="#快速注释" class="headerlink" title="快速注释"></a>快速注释</h2><p>选中一行或者多行代码 ctrl+shift+c</p>
-<h2 id="大小写转换"><a href="#大小写转换" class="headerlink" title="大小写转换"></a>大小写转换</h2><p>ctrl+shift+x 选中的转换为大写<br>ctrl+shift+y 选中的转换为小写</p>
-<h2 id="快速解决办法提示"><a href="#快速解决办法提示" class="headerlink" title="快速解决办法提示"></a>快速解决办法提示</h2><p>在出错误的行，使用ctrl+1。 比如忘记导入类了，就可以用这个解决</p>
-<h2 id="toString-getter-setter-构造方法的快速生成"><a href="#toString-getter-setter-构造方法的快速生成" class="headerlink" title="toString getter setter 构造方法的快速生成"></a>toString getter setter 构造方法的快速生成</h2><ol>
-<li><p>通过菜单-&gt; Source 就可以看到快速生成的选项</p>
-</li>
-<li><p>直接使用快捷键 shift+alt+s也可以弹出这个选项</p>
-</li>
-</ol>
+        <p>接下去一段时间打算把23种设计模式好好学习一下，今天是第一篇：策略模式。</p>
+<h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><p>策略模式定义了算法家族，把算法分别封装起来，让它们之间可以互相使用起来，这个模式让算法的变化，不会影响到算法的客户。</p>
+<p>组成：<br>1.抽象策略，通常是接口类或者抽象类<br>2.具体算法策略，实现了1中点接口类或者继承了1中的抽象类，有具体算法或者行为<br>3.持有一个策略类的引用，最终给客户端使用</p>
+<p>应用场景：<br>1、 多个类只区别在表现行为不同，可以使用Strategy模式，在运行时动态选择具体要执行的行为。<br>2、 需要在不同情况下使用不同的策略(算法)，或者策略还可能在未来用其它方式来实现。<br>3、 对客户隐藏具体策略(算法)的实现细节，彼此完全独立。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">//抽象算法类,计算购买商品的价格</div><div class="line">public interface CalPrice &#123;</div><div class="line">	Double getPrice(Double oriPrice);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//算法1，普通用户购买商品的价格</div><div class="line">public class NormalUser implements CalPrice &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Double getPrice(Double oriPrice) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return oriPrice;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//算法2，vip用户购买商品的价格</div><div class="line">public class VipUser implements CalPrice &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Double getPrice(Double oriPrice) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return 0.9*oriPrice;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//使用场景，用户以一个算法买东西的价格</div><div class="line">public class Person &#123;</div><div class="line">	private CalPrice calPrice;</div><div class="line">	public Person(CalPrice cal) &#123;</div><div class="line">		this.calPrice=cal;</div><div class="line">	&#125;</div><div class="line">	public Double buy(Double oriPrice) &#123;</div><div class="line">		return calPrice.getPrice(oriPrice);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//测试代码</div><div class="line">public class TestStrategy &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		CalPrice nor=new NormalUser();</div><div class="line">		Person p1=new Person(nor);</div><div class="line">		Double price1=p1.buy(100.00);</div><div class="line">		System.out.println(&quot;price=&quot;+price1);</div><div class="line">		CalPrice vip=new SuperVipUser();</div><div class="line">		Person p2=new Person(vip);</div><div class="line">		Double price2=p2.buy(100.00);</div><div class="line">		System.out.println(&quot;price=&quot;+price2);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
 
@@ -292,7 +267,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/11/22/2017112201/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/04/2018020401/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -306,18 +281,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2018/01/17/2017011701/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          多线程并发处理———数据库并发处理机制
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/10/02/2017100201/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">浅谈精细化管理</div>
+    <a href="/2018/01/17/2017011701/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">多线程并发处理———数据库并发处理机制</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -355,7 +321,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2017/11/22/2017112201/",
+  id: "http://yoursite.com/2018/02/04/2018020401/",
   owner: 'feixiang0713',
   repo: 'feixiang0713.github.io',
   oauth: {
