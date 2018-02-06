@@ -159,6 +159,92 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018020603" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/06/2018020603/">模板方法模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/06/2018020603/" class="archive-article-date">
+  	<time datetime="2018-02-06T14:06:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>定义一个操作中的算法的骨架，而将一些有差异的步骤延迟到子类。这样子类可以在不改变算法的骨架的情况下，重定义自己的特殊步骤。</p>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:模板抽象类<br>2:有特殊步骤的子类</p>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>其实可以从定义中找，当2个类有相同的算法逻辑，或者类似方法时，就可以将两个类相同的逻辑搬到超类中，同时去除子类中重复的部分，而将不同之处留到子类中实现。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">public abstract class TemplateClass &#123;</div><div class="line">	public abstract void TheFirstProcess();</div><div class="line">	public abstract void TheSecondProcess();</div><div class="line">	public void TemplateMethod() &#123;</div><div class="line">		TheFirstProcess();</div><div class="line">		TheSecondProcess();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class ConcreteClassA extends TemplateClass&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void TheFirstProcess() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;A:TheFirstProcess&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void TheSecondProcess() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;A:TheSecondProcess&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ConcreteClassB extends TemplateClass&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void TheFirstProcess() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;B:TheFirstProcess&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void TheSecondProcess() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;B:TheSecondProcess&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestTemplate &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		TemplateClass a=null;</div><div class="line">		a=new ConcreteClassA();</div><div class="line">		a.TemplateMethod();</div><div class="line">		a=new ConcreteClassB();</div><div class="line">		a.TemplateMethod();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/06/2018020603/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018020602" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -936,100 +1022,10 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-FRM1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/27/FRM1/">FRM1</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/27/FRM1/" class="archive-article-date">
-  	<time datetime="2017-09-27T15:13:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>报名了2017年11月份的FRM一级考试，为了能够总结平时所学，同时强迫自己每日坚持学习，故准备写这一系列的FMR文章。</p>
-<h2 id="主题：Principles-for-effective-Risk-Data-Aggregation-and-Risk-Reporting"><a href="#主题：Principles-for-effective-Risk-Data-Aggregation-and-Risk-Reporting" class="headerlink" title="主题：Principles for effective Risk Data Aggregation and Risk Reporting"></a>主题：Principles for effective Risk Data Aggregation and Risk Reporting</h2><h3 id="好处-Benefits"><a href="#好处-Benefits" class="headerlink" title="好处 Benefits"></a>好处 Benefits</h3><p>1.effective<br>2.anticipate problems<br>3.profitability</p>
-<h2 id="原则-Principles"><a href="#原则-Principles" class="headerlink" title="原则 Principles"></a>原则 Principles</h2><p>三大类</p>
-<h3 id="类别一：总体"><a href="#类别一：总体" class="headerlink" title="类别一：总体"></a>类别一：总体</h3><p>1.Governance 无论做啥事，都需要领导支持授权给资源。</p>
-<p>2.Data Architecture and Infrastructure 先做好总体设计和数据架构</p>
-<h3 id="类别二：Risk-Data-Aggregation-Capabilities-数据记录方面"><a href="#类别二：Risk-Data-Aggregation-Capabilities-数据记录方面" class="headerlink" title="类别二：Risk Data Aggregation Capabilities 数据记录方面"></a>类别二：Risk Data Aggregation Capabilities 数据记录方面</h3><p>3.Accuracy and Integrity<br>4.Completness<br>5.Timeliness<br>6.Adaptability</p>
-<h3 id="类别三：Effective-Risk-Reporting-Capabilities-报表展示方面"><a href="#类别三：Effective-Risk-Reporting-Capabilities-报表展示方面" class="headerlink" title="类别三：Effective Risk Reporting Capabilities 报表展示方面"></a>类别三：Effective Risk Reporting Capabilities 报表展示方面</h3><p>7.Accuracy<br>8.Comprehensiveness<br>9.Clarity and Usefulness<br>10.Frequency<br>11.Distribution 指分发给相关人且注意保密性</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">金融</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/27/FRM1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
