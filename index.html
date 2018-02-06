@@ -159,6 +159,94 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018020602" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/06/2018020602/">原型模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/06/2018020602/" class="archive-article-date">
+  	<time datetime="2018-02-06T13:09:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>原型模式其实就是从一个对象再创建另外一个可定制多对象，而且不需要知道任何创建的细节。</p>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:有一个继承Cloneable的类</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">public class WorkExperience implements Cloneable &#123;</div><div class="line">	</div><div class="line">	private String timeRange;</div><div class="line">	private String company;</div><div class="line">	public WorkExperience(String timeRange, String company) &#123;</div><div class="line">		this.timeRange = timeRange;</div><div class="line">		this.company = company;</div><div class="line">	&#125;</div><div class="line">	public void disploy() &#123;</div><div class="line">		System.out.println(&quot;WorkExperience:&quot;+timeRange+&quot;,&quot;+company);</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	protected Object clone() throws CloneNotSupportedException &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return super.clone();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Resume implements Cloneable &#123;</div><div class="line">	</div><div class="line">	private String name=null;</div><div class="line">	private int age;</div><div class="line">	private WorkExperience workExperience;</div><div class="line"></div><div class="line">	public int getAge() &#123;</div><div class="line">		return age;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setAge(int age) &#123;</div><div class="line">		this.age = age;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public WorkExperience getWorkExperience() &#123;</div><div class="line">		return workExperience;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setWorkExperience(WorkExperience workExperience) &#123;</div><div class="line">		this.workExperience = workExperience;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Resume(String name) &#123;</div><div class="line">		super();</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected Object clone() throws CloneNotSupportedException &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return super.clone();</div><div class="line">	&#125;</div><div class="line">	public void disploy() &#123;</div><div class="line">		System.out.println(&quot;name:&quot;+name);</div><div class="line">		System.out.println(&quot;age:&quot;+age);</div><div class="line">		this.workExperience.disploy();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestPrototype &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Resume a=new Resume(&quot;xxb&quot;);</div><div class="line">		a.setAge(28);</div><div class="line">		WorkExperience work=new WorkExperience(&quot;2010-2018&quot;,&quot;ICBC&quot;);</div><div class="line">		a.setWorkExperience(work);</div><div class="line">		Resume b=null;</div><div class="line">		try &#123;</div><div class="line">			b=(Resume) a.clone();</div><div class="line">			System.out.println(&quot;a.hashCode()&quot;+a.hashCode());</div><div class="line">			System.out.println(&quot;b.hashCode()&quot;+b.hashCode());</div><div class="line">			System.out.println(&quot;a.WorkExperience.hashCode()&quot;+a.getWorkExperience().hashCode());</div><div class="line">			System.out.println(&quot;b.WorkExperience.hashCode()&quot;+b.getWorkExperience().hashCode());</div><div class="line">			b.setAge(29);</div><div class="line">			WorkExperience work1=new WorkExperience(&quot;2010-2018&quot;,&quot;alibaba&quot;);</div><div class="line">			a.setWorkExperience(work1);</div><div class="line">System.out.println(&quot;a.WorkExperience.hashCode()&quot;+a.getWorkExperience().hashCode());</div><div class="line">System.out.println(&quot;b.WorkExperience.hashCode()&quot;+b.getWorkExperience().hashCode());</div><div class="line">		&#125; catch (CloneNotSupportedException e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		a.disploy();</div><div class="line">		b.disploy();//明明是浅复制，为啥会互不影响呢？</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="思考1："><a href="#思考1：" class="headerlink" title="思考1："></a>思考1：</h4><p>我这里明明是浅复制，为啥会互不影响呢？其实应该是我在a.setWorkExperience(work1)给了a.workExperience新的引用。</p>
+<h4 id="思考2："><a href="#思考2：" class="headerlink" title="思考2："></a>思考2：</h4><p>如何深复制，其实就是改写Resume.clone()即可。</p>
+<h4 id="改写代码"><a href="#改写代码" class="headerlink" title="改写代码"></a>改写代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">	protected Object clone() throws CloneNotSupportedException &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		//return super.clone();</div><div class="line">		Resume obj=(Resume) super.clone();</div><div class="line">		obj.workExperience=(WorkExperience) this.workExperience.clone();</div><div class="line">		return obj;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/06/2018020602/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018020601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
