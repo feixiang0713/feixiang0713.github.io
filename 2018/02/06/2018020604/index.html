@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>留白</title>
+  <title>外观模式 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="留白">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="定义为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。 组成1:外观类，提供观察子系统到类，供外界调用2:子系统的类，供外观类调用 适用性1:在设计初期阶段，应该有意识的奖不同等层分离，层与层之间用Facade，为复杂子系统提供简单的接口，使得藕合度降低2：在开放阶段，子系统因为不断重构而变的越来越复杂，增加Facade可以提供一个简单接口，减少">
+<meta name="keywords" content="IT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="外观模式">
+<meta property="og:url" content="http://yoursite.com/2018/02/06/2018020604/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="个人">
+<meta property="og:description" content="定义为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。 组成1:外观类，提供观察子系统到类，供外界调用2:子系统的类，供外观类调用 适用性1:在设计初期阶段，应该有意识的奖不同等层分离，层与层之间用Facade，为复杂子系统提供简单的接口，使得藕合度降低2：在开放阶段，子系统因为不断重构而变的越来越复杂，增加Facade可以提供一个简单接口，减少">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-06T15:40:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="留白">
-<meta name="twitter:description" content="个人">
+<meta name="twitter:title" content="外观模式">
+<meta name="twitter:description" content="定义为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。 组成1:外观类，提供观察子系统到类，供外界调用2:子系统的类，供外观类调用 适用性1:在设计初期阶段，应该有意识的奖不同等层分离，层与层之间用Facade，为复杂子系统提供简单的接口，使得藕合度降低2：在开放阶段，子系统因为不断重构而变的越来越复杂，增加Facade可以提供一个简单接口，减少">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -157,47 +159,59 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-AutoTest" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-2018020604" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/28/AutoTest/">自动化测试浅谈</a>
+    <h1 class="article-title" itemprop="name">
+      外观模式
     </h1>
   
 
         
-        <a href="/2017/09/28/AutoTest/" class="archive-article-date">
-  	<time datetime="2017-09-28T15:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-28</time>
+        <a href="/2018/02/06/2018020604/" class="archive-article-date">
+  	<time datetime="2018-02-06T15:25:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近被领导安排了自动化测试的工作，研究了半个月，终于在单位的测试框架中做出了一点新贡献，因此在这里写点关于自动化测试的体会心得。</p>
-<p>之前一直从事开发岗位，这次也是来帮忙开发测试工具，因此对于测试领域也是一个新手，那就从最基本多开始说起。</p>
-<h2 id="自动化测试的定义"><a href="#自动化测试的定义" class="headerlink" title="自动化测试的定义"></a>自动化测试的定义</h2><p>自动化测试按我现在理解，非人为驱动，而是采用系统批量调度工具进行驱动，通过测试工具执行具体测试案例的测试过程。<br>一次编写测试案例，以后只要批量调度工具启动着，则可以反复执行这些测试案例，来完成相应的测试任务。整个过程完全自动化，无需人工介入。</p>
-<h2 id="自动化测试的优点"><a href="#自动化测试的优点" class="headerlink" title="自动化测试的优点"></a>自动化测试的优点</h2><ul>
-<li>对于一个需要反复执行的回归测试案例，如果使用自动化测试案例，则可以节省人力。比方说一个客户端的查询测试案例，人工亲自执行一个测试案例则需要10分钟；编写一个自动化测试案例（调度框架和测试工具都具备的情况下）需要30分钟；但是这个测试案例如果需要回归验证20次，则显而易见自动化测试可以节省人力170分钟。</li>
-<li>对于复杂页面的测试案例，或者繁琐流程的测试案例，通过自动化测试，将测试人员从这些繁琐任务中解放出来，让测试人员不再觉得工作枯燥乏味。</li>
-<li>对于输入结果相近的测试案例，通过自动化测试可以比人工测试更高效。只需要复制其他案例，对于数据进行修改即可，而人工测试需要依次输入测试数据去验证。</li>
-<li>压测等复杂场景，通过自动化测试更容易实现。比方说一千人在线的场景。</li>
-<li>更好的利用计算机资源。可以将一些耗时较长的测试任务放在晚上或者周末执行，以此实现对资源的有效利用。</li>
-<li>自动化测试可保证软件质量。依赖工具自动执行，减少人为的疏忽和错误。</li>
-<li>另外大部分的软件产品会趋于稳定，后续只会有小部分的改动，而到了这个阶段，前期投入的自动化测试成本将带来巨大的收益。尤其是等一个软件产品发展到了一个庞然大物时，后续的些许变动，如果通过人工亲自进行回归测试将要消耗大量测试人力。而基于此前开发的自动化测试方式，则可以省下非常多的人力成本。</li>
-</ul>
-<h2 id="自动化测试的缺点"><a href="#自动化测试的缺点" class="headerlink" title="自动化测试的缺点"></a>自动化测试的缺点</h2><p>对于软件需求变动频繁的功能，采用自动化测试，将大大增加人力成本。如果软件需求变动过于频繁，测试人员需要根据变动的需求来更新测试用例以及相关的测试脚本，而脚本的维护本身就是一个代码开发的过程，需要修改、调试，必要的时候还要修改自动化测试的框架，如果所花费的成本不低于利用其节省的测试成本，那么自动化测试便是失败的。</p>
-<h2 id="自动化测试的选择"><a href="#自动化测试的选择" class="headerlink" title="自动化测试的选择"></a>自动化测试的选择</h2><p>对于一个需求变动频繁的项目，在项目中某些模块是相对稳定的，而某些模块需求变动性很大。我们便可以对相对稳定的模块进行自动化测试，来节省测试人力，而将测试人力投入需求变动频繁的模块中。</p>
-<h1 id="如何进行自动化测试"><a href="#如何进行自动化测试" class="headerlink" title="如何进行自动化测试"></a>如何进行自动化测试</h1><p>如定义中所讲，自动化测试有三大重要内容，一是批量调度工具，而是测试工具，三是测试案例。<br>公司现在用的调度工具是Jenkins，它是一个开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作。如果想要搭建自动化测试框架的，选用调度工具，可以考虑该软件，具体信息可访问它的<a href="https://jenkins.io/" target="_blank" rel="external">Jenkins官网</a>。<br>本次我开发完成的是针对xml报文和protobuffer报文测试工具。整体框架下设计以下功能：读取测试案例，执行测试案例，比对执行结果，上传测试结果。具体是从excel（方便测试人员编写测试案例）中读取测试案例，通过socket连接后台服务器，将报文发送给后台服务器，读取后台服务器返回的报文，解析后，执行预设在测试案例中的断言案例，并返回测试结果。<br>本测试工具比较单一简单，记录在此，方便以后继续开展相关工作时可以更快上手。</p>
-<p>未完待续</p>
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</p>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:外观类，提供观察子系统到类，供外界调用<br>2:子系统的类，供外观类调用</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:在设计初期阶段，应该有意识的奖不同等层分离，层与层之间用Facade，为复杂子系统提供简单的接口，使得藕合度降低<br>2：在开放阶段，子系统因为不断重构而变的越来越复杂，增加Facade可以提供一个简单接口，减少他们之间的依赖<br>3:对于遗留的大型系统，新系统想要使用遗留系统的功能，可以使用Facade，来提供一个简单接口，让新系统可以与复杂系统进行交互。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public class SubSystemA &#123;</div><div class="line">	public void MethodA() &#123;</div><div class="line">		System.out.println(&quot;method A&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class SubSystemB &#123;</div><div class="line">	public void MethodB() &#123;</div><div class="line">		System.out.println(&quot;Method B&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class SubSystemC &#123;</div><div class="line">	public void MethodC() &#123;</div><div class="line">		System.out.println(&quot;Method C&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Facade &#123;</div><div class="line">	SubSystemA a=null;</div><div class="line">	SubSystemB b=null;</div><div class="line">	SubSystemC c=null;</div><div class="line">	public Facade() &#123;</div><div class="line">		a=new SubSystemA();</div><div class="line">		b=new SubSystemB();</div><div class="line">		c=new SubSystemC();</div><div class="line">	&#125;</div><div class="line">	public void FacadeMethodA() &#123;</div><div class="line">		a.MethodA();</div><div class="line">		b.MethodB();</div><div class="line">	&#125;</div><div class="line">	public void FacadeMethodB() &#123;</div><div class="line">		b.MethodB();</div><div class="line">		c.MethodC();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestFacade &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Facade facade=new Facade();</div><div class="line">		facade.FacadeMethodA();</div><div class="line">		facade.FacadeMethodB();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ox67fgze3.bkt.clouddn.com/zhifubao.JPG">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -217,16 +231,75 @@ var _hmt = _hmt || [];
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/28/AutoTest/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/06/2018020604/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/06/2018020603/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">模板方法模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -246,99 +319,30 @@ var _hmt = _hmt || [];
 
 
 
+  
+  
+  
+
+  
+
+  
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/02/06/2018020604/",
+  owner: 'feixiang0713',
+  repo: 'feixiang0713.github.io',
+  oauth: {
+    client_id: '4994c86aeafdfb24073d',
+    client_secret: '09fc47c14a7eb26d4c1c98c3e19c226067c6e4f5',
+  },
+})
+gitment.render('gitment-ctn')
 </script>
-
-
   
-    <article id="post-FRM1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/27/FRM1/">FRM1</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/27/FRM1/" class="archive-article-date">
-  	<time datetime="2017-09-27T15:13:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>报名了2017年11月份的FRM一级考试，为了能够总结平时所学，同时强迫自己每日坚持学习，故准备写这一系列的FMR文章。</p>
-<h2 id="主题：Principles-for-effective-Risk-Data-Aggregation-and-Risk-Reporting"><a href="#主题：Principles-for-effective-Risk-Data-Aggregation-and-Risk-Reporting" class="headerlink" title="主题：Principles for effective Risk Data Aggregation and Risk Reporting"></a>主题：Principles for effective Risk Data Aggregation and Risk Reporting</h2><h3 id="好处-Benefits"><a href="#好处-Benefits" class="headerlink" title="好处 Benefits"></a>好处 Benefits</h3><p>1.effective<br>2.anticipate problems<br>3.profitability</p>
-<h2 id="原则-Principles"><a href="#原则-Principles" class="headerlink" title="原则 Principles"></a>原则 Principles</h2><p>三大类</p>
-<h3 id="类别一：总体"><a href="#类别一：总体" class="headerlink" title="类别一：总体"></a>类别一：总体</h3><p>1.Governance 无论做啥事，都需要领导支持授权给资源。</p>
-<p>2.Data Architecture and Infrastructure 先做好总体设计和数据架构</p>
-<h3 id="类别二：Risk-Data-Aggregation-Capabilities-数据记录方面"><a href="#类别二：Risk-Data-Aggregation-Capabilities-数据记录方面" class="headerlink" title="类别二：Risk Data Aggregation Capabilities 数据记录方面"></a>类别二：Risk Data Aggregation Capabilities 数据记录方面</h3><p>3.Accuracy and Integrity<br>4.Completness<br>5.Timeliness<br>6.Adaptability</p>
-<h3 id="类别三：Effective-Risk-Reporting-Capabilities-报表展示方面"><a href="#类别三：Effective-Risk-Reporting-Capabilities-报表展示方面" class="headerlink" title="类别三：Effective Risk Reporting Capabilities 报表展示方面"></a>类别三：Effective Risk Reporting Capabilities 报表展示方面</h3><p>7.Accuracy<br>8.Comprehensiveness<br>9.Clarity and Usefulness<br>10.Frequency<br>11.Distribution 指分发给相关人且注意保密性</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">金融</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/27/FRM1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
 
 <script>
 var _hmt = _hmt || [];
@@ -349,14 +353,6 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
-  
 
 
           </div>
@@ -379,8 +375,8 @@ var _hmt = _hmt || [];
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
