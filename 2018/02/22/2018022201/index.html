@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 设计模式 | 留白</title>
+  <title>命令模式 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="留白">
-<meta property="og:url" content="http://yoursite.com/tags/设计模式/index.html">
+  <meta name="description" content="定义将一个请求封装为一个对象，从而使你可以使用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。 组成部分Receiver接受者角色：该角色就是干活的角色，命令传递到这里是应该被执行的Command命令角色：需要执行的所有命令都在这里声明Invoker调用者角色：接收到命令，并执行命令 优点1:他能够较容易地设计成一个命令队列，2:在需要的时候，可以比较容易将命令纪录到日">
+<meta name="keywords" content="IT,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令模式">
+<meta property="og:url" content="http://yoursite.com/2018/02/22/2018022201/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="个人">
+<meta property="og:description" content="定义将一个请求封装为一个对象，从而使你可以使用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。 组成部分Receiver接受者角色：该角色就是干活的角色，命令传递到这里是应该被执行的Command命令角色：需要执行的所有命令都在这里声明Invoker调用者角色：接收到命令，并执行命令 优点1:他能够较容易地设计成一个命令队列，2:在需要的时候，可以比较容易将命令纪录到日">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-22T05:43:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="留白">
-<meta name="twitter:description" content="个人">
+<meta name="twitter:title" content="命令模式">
+<meta name="twitter:description" content="定义将一个请求封装为一个对象，从而使你可以使用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。 组成部分Receiver接受者角色：该角色就是干活的角色，命令传递到这里是应该被执行的Command命令角色：需要执行的所有命令都在这里声明Invoker调用者角色：接收到命令，并执行命令 优点1:他能够较容易地设计成一个命令队列，2:在需要的时候，可以比较容易将命令纪录到日">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -157,36 +159,63 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-2018022201" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      命令模式
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/22/2018022201/" class="archive-article-date">
+
+        
+        <a href="/2018/02/22/2018022201/" class="archive-article-date">
   	<time datetime="2018-02-22T04:37:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/22/2018022201/">命令模式</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>将一个请求封装为一个对象，从而使你可以使用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。</p>
+<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>Receiver接受者角色：该角色就是干活的角色，命令传递到这里是应该被执行的<br>Command命令角色：需要执行的所有命令都在这里声明<br>Invoker调用者角色：接收到命令，并执行命令</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1:他能够较容易地设计成一个命令队列，<br>2:在需要的时候，可以比较容易将命令纪录到日志中<br>3:允许接受请求的一方拒绝命令<br>4:可以比较轻松的对请求进行撤销和重做<br>5:增加新的具体命令的时候，增加新的具体命令类即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">//Receiver接受者角色</div><div class="line">public class Receiver &#123;</div><div class="line">	public void action() &#123;</div><div class="line">		System.out.println(&quot;执行某个命令&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//Command命令角色</div><div class="line">public abstract class Command &#123;</div><div class="line">	protected Receiver r;</div><div class="line">	public Command(Receiver receiver) &#123;</div><div class="line">		this.r=receiver;</div><div class="line">	&#125;</div><div class="line">	abstract public void execute();</div><div class="line">&#125;</div><div class="line">//Command命令角色,具体实现者</div><div class="line">public class ConcreteCommand extends Command&#123;</div><div class="line"></div><div class="line">	public ConcreteCommand(Receiver receiver) &#123;</div><div class="line">		super(receiver);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void execute() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.r.action();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//Invoker调用者角色</div><div class="line">public class Invoker &#123;</div><div class="line">	private Command command;</div><div class="line">	public Invoker(Command c) &#123;</div><div class="line">		this.command=c;</div><div class="line">	&#125;</div><div class="line">	public void execute() &#123;</div><div class="line">		command.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestCommand &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Receiver r=new Receiver();</div><div class="line">		Command c=new ConcreteCommand(r);</div><div class="line">		Invoker i=new Invoker(c);</div><div class="line">		i.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
 
-        <div class="article-info info-on-right">
-          
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ox67fgze3.bkt.clouddn.com/zhifubao.JPG">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -202,187 +231,131 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/22/2018022201/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/21/2018022102/" class="archive-article-date">
-  	<time datetime="2018-02-21T11:01:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-21</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/21/2018022102/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">桥接模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/21/2018022102/">桥接模式</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/21/2018022101/" class="archive-article-date">
-  	<time datetime="2018-02-21T07:17:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/21/2018022101/">单例模式</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/18/2018021801/" class="archive-article-date">
-  	<time datetime="2018-02-18T06:09:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/18/2018021801/">组合模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/14/2018021403/" class="archive-article-date">
-  	<time datetime="2018-02-14T11:14:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/14/2018021403/">备忘录模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/02/22/2018022201/",
+  owner: 'feixiang0713',
+  repo: 'feixiang0713.github.io',
+  oauth: {
+    client_id: '4994c86aeafdfb24073d',
+    client_secret: '09fc47c14a7eb26d4c1c98c3e19c226067c6e4f5',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
-    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
           </div>
@@ -406,9 +379,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
