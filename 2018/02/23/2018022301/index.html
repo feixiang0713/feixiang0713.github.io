@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>留白</title>
+  <title>访问者模式 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="留白">
-<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+  <meta name="description" content="定义表示作用于某对象结构中的各元素的操作。在不改变各元素的类的前提下定义作用于这些元素的新操作。 组成部分1:访问者抽象类，为每一个元素实现类定义一个方法2:访问者实现类，对元素的新操作，可以增加这样的类3:元素抽象类，定义一个Accept操作，以一个访问者为参数4:元素实现类，5:ObjectStructure类，能枚举它的元素，提供一个高层的接口以允许访问者访问它的元素 适用性1:访问者模式适">
+<meta name="keywords" content="IT,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="访问者模式">
+<meta property="og:url" content="http://yoursite.com/2018/02/23/2018022301/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="个人">
+<meta property="og:description" content="定义表示作用于某对象结构中的各元素的操作。在不改变各元素的类的前提下定义作用于这些元素的新操作。 组成部分1:访问者抽象类，为每一个元素实现类定义一个方法2:访问者实现类，对元素的新操作，可以增加这样的类3:元素抽象类，定义一个Accept操作，以一个访问者为参数4:元素实现类，5:ObjectStructure类，能枚举它的元素，提供一个高层的接口以允许访问者访问它的元素 适用性1:访问者模式适">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-23T02:53:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="留白">
-<meta name="twitter:description" content="个人">
+<meta name="twitter:title" content="访问者模式">
+<meta name="twitter:description" content="定义表示作用于某对象结构中的各元素的操作。在不改变各元素的类的前提下定义作用于这些元素的新操作。 组成部分1:访问者抽象类，为每一个元素实现类定义一个方法2:访问者实现类，对元素的新操作，可以增加这样的类3:元素抽象类，定义一个Accept操作，以一个访问者为参数4:元素实现类，5:ObjectStructure类，能枚举它的元素，提供一个高层的接口以允许访问者访问它的元素 适用性1:访问者模式适">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -157,392 +159,59 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-2018020401" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-2018022301" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/04/2018020401/">设计模式－策略模式</a>
+    <h1 class="article-title" itemprop="name">
+      访问者模式
     </h1>
   
 
         
-        <a href="/2018/02/04/2018020401/" class="archive-article-date">
-  	<time datetime="2018-02-04T14:06:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-04</time>
+        <a href="/2018/02/23/2018022301/" class="archive-article-date">
+  	<time datetime="2018-02-23T02:29:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-23</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>接下去一段时间打算把23种设计模式好好学习一下，今天是第一篇：策略模式。</p>
-<h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><p>策略模式定义了算法家族，把算法分别封装起来，让它们之间可以互相使用起来，这个模式让算法的变化，不会影响到算法的客户。</p>
-<p>组成：<br>1.抽象策略，通常是接口类或者抽象类<br>2.具体算法策略，实现了1中点接口类或者继承了1中的抽象类，有具体算法或者行为<br>3.持有一个策略类的引用，最终给客户端使用</p>
-<p>应用场景：<br>1、 多个类只区别在表现行为不同，可以使用Strategy模式，在运行时动态选择具体要执行的行为。<br>2、 需要在不同情况下使用不同的策略(算法)，或者策略还可能在未来用其它方式来实现。<br>3、 对客户隐藏具体策略(算法)的实现细节，彼此完全独立。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">//抽象算法类,计算购买商品的价格</div><div class="line">public interface CalPrice &#123;</div><div class="line">	Double getPrice(Double oriPrice);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//算法1，普通用户购买商品的价格</div><div class="line">public class NormalUser implements CalPrice &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Double getPrice(Double oriPrice) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return oriPrice;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//算法2，vip用户购买商品的价格</div><div class="line">public class VipUser implements CalPrice &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Double getPrice(Double oriPrice) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return 0.9*oriPrice;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//使用场景，用户以一个算法买东西的价格</div><div class="line">public class Person &#123;</div><div class="line">	private CalPrice calPrice;</div><div class="line">	public Person(CalPrice cal) &#123;</div><div class="line">		this.calPrice=cal;</div><div class="line">	&#125;</div><div class="line">	public Double buy(Double oriPrice) &#123;</div><div class="line">		return calPrice.getPrice(oriPrice);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//测试代码</div><div class="line">public class TestStrategy &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		CalPrice nor=new NormalUser();</div><div class="line">		Person p1=new Person(nor);</div><div class="line">		Double price1=p1.buy(100.00);</div><div class="line">		System.out.println(&quot;price=&quot;+price1);</div><div class="line">		CalPrice vip=new SuperVipUser();</div><div class="line">		Person p2=new Person(vip);</div><div class="line">		Double price2=p2.buy(100.00);</div><div class="line">		System.out.println(&quot;price=&quot;+price2);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>表示作用于某对象结构中的各元素的操作。在不改变各元素的类的前提下定义作用于这些元素的新操作。</p>
+<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:访问者抽象类，为每一个元素实现类定义一个方法<br>2:访问者实现类，对元素的新操作，可以增加这样的类<br>3:元素抽象类，定义一个Accept操作，以一个访问者为参数<br>4:元素实现类，<br>5:ObjectStructure类，能枚举它的元素，提供一个高层的接口以允许访问者访问它的元素</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:访问者模式适用于数据结构（元素个数）相对稳定的系统，它把数据结构和作用于结构上的操作之间的耦合解脱开，使得操作集合可以相对自由地演化<br>2:访问者模式增加新的操作比较容易，但不允许元素增加。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line">//访问者抽象类</div><div class="line">public abstract class Action &#123;</div><div class="line">	public abstract void getManConclusion(Man person1);</div><div class="line">	public abstract void getWomanConclusion(Woman person2);</div><div class="line">&#125;</div><div class="line">//访问者实现类</div><div class="line">public class Success extends Action&#123;</div><div class="line">	private String name=&quot;成功&quot;;</div><div class="line">	@Override</div><div class="line">	public void getManConclusion(Man person1) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person1.name+this.name+&quot;时，背后往往有一个伟大的女人。&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void getWomanConclusion(Woman person2) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person2.name+this.name+&quot;时，背后大多有一个不成功的男人。&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//访问者实现类</div><div class="line">public class Fail extends Action&#123;</div><div class="line">	private String name=&quot;失败&quot;;</div><div class="line">	@Override</div><div class="line">	public void getManConclusion(Man person1) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person1.name+this.name+&quot;时，闷头喝酒，谁也不用劝&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void getWomanConclusion(Woman person2) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person2.name+this.name+&quot;时，眼泪汪汪，谁也劝不了&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//元素抽象类</div><div class="line">public abstract class Person &#123;</div><div class="line">	public abstract void accept(Action visitor);</div><div class="line">&#125;</div><div class="line">//元素实现类</div><div class="line">public class Man extends Person&#123;</div><div class="line">	public String name=&quot;男人&quot;;</div><div class="line">	@Override</div><div class="line">	public void accept(Action visitor) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		visitor.getManConclusion(this);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//元素实现类</div><div class="line">public class Woman extends Person&#123;</div><div class="line">	public String name=&quot;女人&quot;;</div><div class="line">	@Override</div><div class="line">	public void accept(Action visitor) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		visitor.getWomanConclusion(this);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//ObjectStructure类</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line">public class ObjectStructure &#123;</div><div class="line">	private List&lt;Person&gt; elements=new ArrayList&lt;Person&gt;();</div><div class="line">	public void add(Person p) &#123;</div><div class="line">		elements.add(p);</div><div class="line">	&#125;</div><div class="line">	public void remove(Person p) &#123;</div><div class="line">		elements.remove(p);</div><div class="line">	&#125;</div><div class="line">	public void dislpay(Action visitor) &#123;</div><div class="line">		for(Person e:elements) &#123;</div><div class="line">			e.accept(visitor);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestVisitor &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Man man=new Man();</div><div class="line">		Woman woman=new Woman();</div><div class="line">		ObjectStructure  o=new ObjectStructure();</div><div class="line">		o.add(man);</div><div class="line">		o.add(woman);</div><div class="line">		Success s=new Success();</div><div class="line">		o.dislpay(s);</div><div class="line">		Fail f=new Fail();</div><div class="line">		o.dislpay(f);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/04/2018020401/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ox67fgze3.bkt.clouddn.com/zhifubao.JPG">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2017011701" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/17/2017011701/">多线程并发处理———数据库并发处理机制</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/17/2017011701/" class="archive-article-date">
-  	<time datetime="2018-01-17T13:42:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>数据库新建服务器锁信息表，主要字段如下：<br>id，锁名，状态（可用，被锁），修改时间。</p>
-<h4 id="假设处理A业务，处理后台业务并发处理机制："><a href="#假设处理A业务，处理后台业务并发处理机制：" class="headerlink" title="假设处理A业务，处理后台业务并发处理机制："></a>假设处理A业务，处理后台业务并发处理机制：</h4><h4 id="1：获取并发锁"><a href="#1：获取并发锁" class="headerlink" title="1：获取并发锁"></a>1：获取并发锁</h4><p>a：从数据库服务器锁信息表中判断A业务锁是否可用，查询的时候使用for update nowait（直到事务提交，锁才能释放，才能被查询，此锁非彼锁）<br>b1:获取成功，则修改状态为被锁，修改时间赋值为系统时间，并进入业务处理逻辑<br>b2:获取失败，则报错，不能进入业务逻辑</p>
-<h4 id="2-业务逻辑处理完成后，进入释放并发锁逻辑"><a href="#2-业务逻辑处理完成后，进入释放并发锁逻辑" class="headerlink" title="2:业务逻辑处理完成后，进入释放并发锁逻辑"></a>2:业务逻辑处理完成后，进入释放并发锁逻辑</h4><p>a：修改状态为可用，修改时间赋值为系统时间</p>
-<h4 id="3-其中需要处理异常锁状况："><a href="#3-其中需要处理异常锁状况：" class="headerlink" title="3:其中需要处理异常锁状况："></a>3:其中需要处理异常锁状况：</h4><p>定时检查a业务锁状态：当距离上次被锁时间大于一个固定时间（预估为最大处理业务逻辑时间），且状态仍旧为被锁，则修改状态为可用，修改时间赋值为系统时间，</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/17/2017011701/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2017112201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/22/2017112201/">java ECLIPSE常见的使用技巧</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/22/2017112201/" class="archive-article-date">
-  	<time datetime="2017-11-22T05:29:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>未验证</p>
-<h2 id="批量修改"><a href="#批量修改" class="headerlink" title="批量修改"></a>批量修改</h2><p>ALT+SHIFT+R</p>
-<h2 id="快速输入主方法"><a href="#快速输入主方法" class="headerlink" title="快速输入主方法"></a>快速输入主方法</h2><ol>
-<li>敲入main </li>
-<li>alt+/</li>
-</ol>
-<h2 id="快速输入System-out-println"><a href="#快速输入System-out-println" class="headerlink" title="快速输入System.out.println"></a>快速输入System.out.println</h2><ol>
-<li>敲入syso </li>
-<li>alt+/</li>
-</ol>
-<h2 id="快速输入for"><a href="#快速输入for" class="headerlink" title="快速输入for"></a>快速输入for</h2><ol>
-<li>敲入for </li>
-<li>alt+/</li>
-</ol>
-<h2 id="查看java源代码"><a href="#查看java源代码" class="headerlink" title="查看java源代码"></a>查看java源代码</h2><p>JDK里提供的类，比如String,Intger,System都是开源的，免费提供其源代码<br>可以很简便的通过eclipse就查看源码 </p>
-<ol>
-<li>先选中想要查看的方法，比如System.out.println()的 println </li>
-<li>敲键F3</li>
-</ol>
-<h2 id="代码格式化"><a href="#代码格式化" class="headerlink" title="代码格式化"></a>代码格式化</h2><p>ctrl+shift+f<br>格式化代码 </p>
-<h2 id="快速助手"><a href="#快速助手" class="headerlink" title="快速助手"></a>快速助手</h2><p>ctrl+shift+o<br>import 类<br>去掉未使用的类 等等都可以使用</p>
-<h2 id="快速注释"><a href="#快速注释" class="headerlink" title="快速注释"></a>快速注释</h2><p>选中一行或者多行代码 ctrl+shift+c</p>
-<h2 id="大小写转换"><a href="#大小写转换" class="headerlink" title="大小写转换"></a>大小写转换</h2><p>ctrl+shift+x 选中的转换为大写<br>ctrl+shift+y 选中的转换为小写</p>
-<h2 id="快速解决办法提示"><a href="#快速解决办法提示" class="headerlink" title="快速解决办法提示"></a>快速解决办法提示</h2><p>在出错误的行，使用ctrl+1。 比如忘记导入类了，就可以用这个解决</p>
-<h2 id="toString-getter-setter-构造方法的快速生成"><a href="#toString-getter-setter-构造方法的快速生成" class="headerlink" title="toString getter setter 构造方法的快速生成"></a>toString getter setter 构造方法的快速生成</h2><ol>
-<li><p>通过菜单-&gt; Source 就可以看到快速生成的选项</p>
-</li>
-<li><p>直接使用快捷键 shift+alt+s也可以弹出这个选项</p>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/22/2017112201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2017100201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/02/2017100201/">浅谈精细化管理</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/02/2017100201/" class="archive-article-date">
-  	<time datetime="2017-10-02T08:50:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>单位最近两年在推行精细化管理，起初甚是反感，项目管理＋编码工作任务已经挺重的，现在还要在一个额外的系统中有多做一遍管理的事情，实在是加大工作量，多此一举。</p>
-<p>如今想来，当初的想法有些幼稚：对于一项新的政策出来，没有好好理解（这个政策是干嘛的，为什么要落实，有啥收益，额外增加的成本是什么），起来就是抵制的情绪。这种想法是万万要不得的，显得固执保守，要是放在晚清，那不就是反对洋务运动的愚民嘛。</p>
-<p>那什么是精细化管理呢？精细化管理重点在于两个字，精和细。细在于企业战略，工作任务要拆分到每个部门，每个员工身上。精要确保完成任务有质量。它强调过程控制，它要求精确化，数据化，可通过报表鲜明的体现工作任务，完成进度。</p>
-<h2 id="收益"><a href="#收益" class="headerlink" title="收益"></a>收益</h2><p>实现精细化管理的收益是显而易见的，它可以将企业从无序粗放的管理中走出来，它将可以从全局的角度了解整个企业的工作任务，工作进度，风险情况。然后从中找到可以优化改进的阶段和流程，可有效提高生产效率。</p>
-<h2 id="成本"><a href="#成本" class="headerlink" title="成本"></a>成本</h2><p>精细化管理的推行就是主要成本，让每一位员工理解什么是精细化管理，每个人新的职责是什么，每个人在精细化管理中新的工作任务是什么？尤其是当推行初期，还没有形成良好的精细化管理氛围时，需要花较多多成本去培训员工。</p>
-<h2 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h2><p>目前在我所属的金融科技企业，精细化管理其实对于中层领导或者底层领导的要求挺高的，因为他们承载着工作任务的拆分和分配，同时需要监控并向上汇报。这要求他们需要修改原有的项目管理方式，将它与现在的精细化管理方式相结合，比如项目进度管理，比如风险监控，努力和精细化管理工具jira去结合，</p>
-<h2 id="送给自己一句话"><a href="#送给自己一句话" class="headerlink" title="送给自己一句话"></a>送给自己一句话</h2><p>改变是艰难的，但是努力坚持吧，直到把它形成一种习惯。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目管理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/02/2017100201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-AutoTest" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/28/AutoTest/">自动化测试浅谈</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/28/AutoTest/" class="archive-article-date">
-  	<time datetime="2017-09-28T15:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近被领导安排了自动化测试的工作，研究了半个月，终于在单位的测试框架中做出了一点新贡献，因此在这里写点关于自动化测试的体会心得。</p>
-<p>之前一直从事开发岗位，这次也是来帮忙开发测试工具，因此对于测试领域也是一个新手，那就从最基本多开始说起。</p>
-<h2 id="自动化测试的定义"><a href="#自动化测试的定义" class="headerlink" title="自动化测试的定义"></a>自动化测试的定义</h2><p>自动化测试按我现在理解，非人为驱动，而是采用系统批量调度工具进行驱动，通过测试工具执行具体测试案例的测试过程。<br>一次编写测试案例，以后只要批量调度工具启动着，则可以反复执行这些测试案例，来完成相应的测试任务。整个过程完全自动化，无需人工介入。</p>
-<h2 id="自动化测试的优点"><a href="#自动化测试的优点" class="headerlink" title="自动化测试的优点"></a>自动化测试的优点</h2><ul>
-<li>对于一个需要反复执行的回归测试案例，如果使用自动化测试案例，则可以节省人力。比方说一个客户端的查询测试案例，人工亲自执行一个测试案例则需要10分钟；编写一个自动化测试案例（调度框架和测试工具都具备的情况下）需要30分钟；但是这个测试案例如果需要回归验证20次，则显而易见自动化测试可以节省人力170分钟。</li>
-<li>对于复杂页面的测试案例，或者繁琐流程的测试案例，通过自动化测试，将测试人员从这些繁琐任务中解放出来，让测试人员不再觉得工作枯燥乏味。</li>
-<li>对于输入结果相近的测试案例，通过自动化测试可以比人工测试更高效。只需要复制其他案例，对于数据进行修改即可，而人工测试需要依次输入测试数据去验证。</li>
-<li>压测等复杂场景，通过自动化测试更容易实现。比方说一千人在线的场景。</li>
-<li>更好的利用计算机资源。可以将一些耗时较长的测试任务放在晚上或者周末执行，以此实现对资源的有效利用。</li>
-<li>自动化测试可保证软件质量。依赖工具自动执行，减少人为的疏忽和错误。</li>
-<li>另外大部分的软件产品会趋于稳定，后续只会有小部分的改动，而到了这个阶段，前期投入的自动化测试成本将带来巨大的收益。尤其是等一个软件产品发展到了一个庞然大物时，后续的些许变动，如果通过人工亲自进行回归测试将要消耗大量测试人力。而基于此前开发的自动化测试方式，则可以省下非常多的人力成本。</li>
-</ul>
-<h2 id="自动化测试的缺点"><a href="#自动化测试的缺点" class="headerlink" title="自动化测试的缺点"></a>自动化测试的缺点</h2><p>对于软件需求变动频繁的功能，采用自动化测试，将大大增加人力成本。如果软件需求变动过于频繁，测试人员需要根据变动的需求来更新测试用例以及相关的测试脚本，而脚本的维护本身就是一个代码开发的过程，需要修改、调试，必要的时候还要修改自动化测试的框架，如果所花费的成本不低于利用其节省的测试成本，那么自动化测试便是失败的。</p>
-<h2 id="自动化测试的选择"><a href="#自动化测试的选择" class="headerlink" title="自动化测试的选择"></a>自动化测试的选择</h2><p>对于一个需求变动频繁的项目，在项目中某些模块是相对稳定的，而某些模块需求变动性很大。我们便可以对相对稳定的模块进行自动化测试，来节省测试人力，而将测试人力投入需求变动频繁的模块中。</p>
-<h1 id="如何进行自动化测试"><a href="#如何进行自动化测试" class="headerlink" title="如何进行自动化测试"></a>如何进行自动化测试</h1><p>如定义中所讲，自动化测试有三大重要内容，一是批量调度工具，而是测试工具，三是测试案例。<br>公司现在用的调度工具是Jenkins，它是一个开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作。如果想要搭建自动化测试框架的，选用调度工具，可以考虑该软件，具体信息可访问它的<a href="https://jenkins.io/" target="_blank" rel="external">Jenkins官网</a>。<br>本次我开发完成的是针对xml报文和protobuffer报文测试工具。整体框架下设计以下功能：读取测试案例，执行测试案例，比对执行结果，上传测试结果。具体是从excel（方便测试人员编写测试案例）中读取测试案例，通过socket连接后台服务器，将报文发送给后台服务器，读取后台服务器返回的报文，解析后，执行预设在测试案例中的断言案例，并返回测试结果。<br>本测试工具比较单一简单，记录在此，方便以后继续开展相关工作时可以更快上手。</p>
-<p>未完待续</p>
-
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -555,99 +224,9 @@ var _hmt = _hmt || [];
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/28/AutoTest/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-FRM1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/27/FRM1/">FRM1</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/27/FRM1/" class="archive-article-date">
-  	<time datetime="2017-09-27T15:13:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>报名了2017年11月份的FRM一级考试，为了能够总结平时所学，同时强迫自己每日坚持学习，故准备写这一系列的FMR文章。</p>
-<h2 id="主题：Principles-for-effective-Risk-Data-Aggregation-and-Risk-Reporting"><a href="#主题：Principles-for-effective-Risk-Data-Aggregation-and-Risk-Reporting" class="headerlink" title="主题：Principles for effective Risk Data Aggregation and Risk Reporting"></a>主题：Principles for effective Risk Data Aggregation and Risk Reporting</h2><h3 id="好处-Benefits"><a href="#好处-Benefits" class="headerlink" title="好处 Benefits"></a>好处 Benefits</h3><p>1.effective<br>2.anticipate problems<br>3.profitability</p>
-<h2 id="原则-Principles"><a href="#原则-Principles" class="headerlink" title="原则 Principles"></a>原则 Principles</h2><p>三大类</p>
-<h3 id="类别一：总体"><a href="#类别一：总体" class="headerlink" title="类别一：总体"></a>类别一：总体</h3><p>1.Governance 无论做啥事，都需要领导支持授权给资源。</p>
-<p>2.Data Architecture and Infrastructure 先做好总体设计和数据架构</p>
-<h3 id="类别二：Risk-Data-Aggregation-Capabilities-数据记录方面"><a href="#类别二：Risk-Data-Aggregation-Capabilities-数据记录方面" class="headerlink" title="类别二：Risk Data Aggregation Capabilities 数据记录方面"></a>类别二：Risk Data Aggregation Capabilities 数据记录方面</h3><p>3.Accuracy and Integrity<br>4.Completness<br>5.Timeliness<br>6.Adaptability</p>
-<h3 id="类别三：Effective-Risk-Reporting-Capabilities-报表展示方面"><a href="#类别三：Effective-Risk-Reporting-Capabilities-报表展示方面" class="headerlink" title="类别三：Effective Risk Reporting Capabilities 报表展示方面"></a>类别三：Effective Risk Reporting Capabilities 报表展示方面</h3><p>7.Accuracy<br>8.Comprehensiveness<br>9.Clarity and Usefulness<br>10.Frequency<br>11.Distribution 指分发给相关人且注意保密性</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">金融</a>
-        		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
@@ -656,16 +235,75 @@ var _hmt = _hmt || [];
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/27/FRM1/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/23/2018022301/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/22/2018022204/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">享元模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -685,6 +323,31 @@ var _hmt = _hmt || [];
 
 
 
+  
+  
+  
+
+  
+
+  
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/02/23/2018022301/",
+  owner: 'feixiang0713',
+  repo: 'feixiang0713.github.io',
+  oauth: {
+    client_id: '4994c86aeafdfb24073d',
+    client_secret: '09fc47c14a7eb26d4c1c98c3e19c226067c6e4f5',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
+
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -694,14 +357,6 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
-  
 
 
           </div>
@@ -724,8 +379,8 @@ var _hmt = _hmt || [];
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

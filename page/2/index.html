@@ -159,6 +159,93 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018021401" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/14/2018021401/">状态模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/14/2018021401/" class="archive-article-date">
+  	<time datetime="2018-02-14T00:46:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类</p>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:抽象状态类<br>2:具体状态类<br>3:context类，维护一个具体状态类的实例</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>当控制一个对象状态转换的条件表达式过于复杂时的情况。把状态的判断逻辑转移到表示不同状态的一系列类当中，可以把复杂的判断逻辑简化。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">public abstract class State &#123;</div><div class="line">	protected String status;</div><div class="line">	public abstract void handle(ComOrderContext context,String action);</div><div class="line">&#125;</div><div class="line">public class FirstState extends State&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void handle(ComOrderContext context,String action) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(&quot;Y&quot;.equalsIgnoreCase(action)) &#123;</div><div class="line">			this.status=&quot;挂单中&quot;;</div><div class="line">			System.out.println(&quot;now the status:&quot;+this.status);</div><div class="line">			context.setState(new SecondeState());</div><div class="line">		&#125;else &#123;</div><div class="line">			this.status=&quot;挂单失败&quot;;</div><div class="line">			System.out.println(&quot;now the status:&quot;+this.status);</div><div class="line">			context.setState(new ThirdState());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class SecondeState extends State&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void handle(ComOrderContext context,String action) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(&quot;Y&quot;.equalsIgnoreCase(action)) &#123;</div><div class="line">			this.status=&quot;挂单成交&quot;;</div><div class="line">			System.out.println(&quot;now the status:&quot;+this.status);</div><div class="line">		&#125;else &#123;</div><div class="line">			this.status=&quot;挂单拒绝&quot;;</div><div class="line">			System.out.println(&quot;now the status:&quot;+this.status);</div><div class="line">		&#125;</div><div class="line">		context.setState(new ThirdState());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ThirdState extends State&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void handle(ComOrderContext context, String action) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;现在是终止状态，不能操作。&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ComOrderContext &#123;</div><div class="line">	private State state;</div><div class="line">	public State getState() &#123;</div><div class="line">		return state;</div><div class="line">	&#125;</div><div class="line">	public void setState(State state) &#123;</div><div class="line">		this.state = state;</div><div class="line">	&#125;</div><div class="line">	public ComOrderContext(State state) &#123;</div><div class="line">		this.state=state;</div><div class="line">	&#125;</div><div class="line">	public void Request(String action) &#123;</div><div class="line">		this.state.handle(this,action);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestState &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		ComOrderContext context=new ComOrderContext(new FirstState());</div><div class="line">		context.Request(&quot;Y&quot;);</div><div class="line">		context.Request(&quot;Y&quot;);</div><div class="line">		context.Request(&quot;Y&quot;);</div><div class="line">		ComOrderContext context2=new ComOrderContext(new FirstState());</div><div class="line">		context2.Request(&quot;N&quot;);</div><div class="line">		context2.Request(&quot;N&quot;);</div><div class="line">		context2.Request(&quot;N&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/14/2018021401/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018021301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -895,83 +982,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/02/05/2018020501/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018020401" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/04/2018020401/">设计模式－策略模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/04/2018020401/" class="archive-article-date">
-  	<time datetime="2018-02-04T14:06:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>接下去一段时间打算把23种设计模式好好学习一下，今天是第一篇：策略模式。</p>
-<h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><p>策略模式定义了算法家族，把算法分别封装起来，让它们之间可以互相使用起来，这个模式让算法的变化，不会影响到算法的客户。</p>
-<p>组成：<br>1.抽象策略，通常是接口类或者抽象类<br>2.具体算法策略，实现了1中点接口类或者继承了1中的抽象类，有具体算法或者行为<br>3.持有一个策略类的引用，最终给客户端使用</p>
-<p>应用场景：<br>1、 多个类只区别在表现行为不同，可以使用Strategy模式，在运行时动态选择具体要执行的行为。<br>2、 需要在不同情况下使用不同的策略(算法)，或者策略还可能在未来用其它方式来实现。<br>3、 对客户隐藏具体策略(算法)的实现细节，彼此完全独立。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">//抽象算法类,计算购买商品的价格</div><div class="line">public interface CalPrice &#123;</div><div class="line">	Double getPrice(Double oriPrice);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//算法1，普通用户购买商品的价格</div><div class="line">public class NormalUser implements CalPrice &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Double getPrice(Double oriPrice) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return oriPrice;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//算法2，vip用户购买商品的价格</div><div class="line">public class VipUser implements CalPrice &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Double getPrice(Double oriPrice) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return 0.9*oriPrice;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//使用场景，用户以一个算法买东西的价格</div><div class="line">public class Person &#123;</div><div class="line">	private CalPrice calPrice;</div><div class="line">	public Person(CalPrice cal) &#123;</div><div class="line">		this.calPrice=cal;</div><div class="line">	&#125;</div><div class="line">	public Double buy(Double oriPrice) &#123;</div><div class="line">		return calPrice.getPrice(oriPrice);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//测试代码</div><div class="line">public class TestStrategy &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		CalPrice nor=new NormalUser();</div><div class="line">		Person p1=new Person(nor);</div><div class="line">		Double price1=p1.buy(100.00);</div><div class="line">		System.out.println(&quot;price=&quot;+price1);</div><div class="line">		CalPrice vip=new SuperVipUser();</div><div class="line">		Person p2=new Person(vip);</div><div class="line">		Double price2=p2.buy(100.00);</div><div class="line">		System.out.println(&quot;price=&quot;+price2);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/04/2018020401/">展开全文 >></a>
         </p>
       
 
