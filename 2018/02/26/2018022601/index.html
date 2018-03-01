@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: IT | 留白</title>
+  <title>IoC容器的实现 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="留白">
-<meta property="og:url" content="http://yoursite.com/tags/IT/page/2/index.html">
+  <meta name="description" content="BeanFactoryBeanFactory接口定义了IoC容器最基本的形式，并且提供了IoC容器应该遵循的最基本的服务契约，这应当是我们IoC容器所遵守的最底层和最基本的编程规范。BeanFactory是一个接口类，没有给出具体实现。1:Object getBean(String name) throws BeansException;－－－－通过name获得指定的Bean2:  T getBe">
+<meta name="keywords" content="IT,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IoC容器的实现">
+<meta property="og:url" content="http://yoursite.com/2018/02/26/2018022601/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="个人">
+<meta property="og:description" content="BeanFactoryBeanFactory接口定义了IoC容器最基本的形式，并且提供了IoC容器应该遵循的最基本的服务契约，这应当是我们IoC容器所遵守的最底层和最基本的编程规范。BeanFactory是一个接口类，没有给出具体实现。1:Object getBean(String name) throws BeansException;－－－－通过name获得指定的Bean2:  T getBe">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-01T13:54:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="留白">
-<meta name="twitter:description" content="个人">
+<meta name="twitter:title" content="IoC容器的实现">
+<meta name="twitter:description" content="BeanFactoryBeanFactory接口定义了IoC容器最基本的形式，并且提供了IoC容器应该遵循的最基本的服务契约，这应当是我们IoC容器所遵守的最底层和最基本的编程规范。BeanFactory是一个接口类，没有给出具体实现。1:Object getBean(String name) throws BeansException;－－－－通过name获得指定的Bean2:  T getBe">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -157,36 +159,68 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-2018022601" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      IoC容器的实现
+    </h1>
+  
+
+        
+        <a href="/2018/02/26/2018022601/" class="archive-article-date">
+  	<time datetime="2018-02-26T12:33:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-26</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h3><p>BeanFactory接口定义了IoC容器最基本的形式，并且提供了IoC容器应该遵循的最基本的服务契约，这应当是我们IoC容器所遵守的最底层和最基本的编程规范。BeanFactory是一个接口类，没有给出具体实现。<br>1:<br>Object getBean(String name) throws BeansException;<br>－－－－通过name获得指定的Bean<br>2:</p>
+<p><t> T getBean(String name, @Nullable Class<t> requiredType) throws BeansException;<br>－－－－通过name获得Bean，如果不是指定类型requiredType，则抛出异常BeanNotOfRequiredTypeException<br>3:<br>Object getBean(String name, Object… args) throws BeansException;<br>－－－－通过指定参数来构造指定的Bean<br>4:<br>boolean containsBean(String name);<br>－－－－通过该接口方法让用户能够判断容器中是否含有指定名字的Bean<br>5:<br>boolean isSingleton(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法来查询指定名字的Bean是否是Singleton类型的Bean，对于Singleton属性，用户可以在BeanDifinition中指定。<br>6:<br>boolean isPrototype(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法来查询指定名字的Bean是否是prototype类型的，于Singleton属性一样，这个属性可以由用户在BeanDifinition中指定<br>7:<br>boolean isTypeMatch(String name, ResolvableType typeToMatch) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口可以查询指定名字的Bean的class类型是否是特定的class类型。<br>8:<br>Class&lt;?&gt; getType(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法查询指定名字的Bean的class类型。<br>9:<br>Class&lt;?&gt; getType(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口查询指定了名字的Bean的所有别名，这些别名是用户在BeanDifinition中定义的。</t></t></p>
+<h3 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h3><p>ApplicationContext是一个高级形态意义的IOC容器，在BeanFactory的基础上添加了附加功能：<br>1:支持不同的消息源，ApplicationContext扩展了MessageSource接口，支持国际化的实现，为开发多语言版本的应用提供服务。<br>2:访问资源，ApplicationContext扩展了ResourcePatternResolver（继承自ResourceLoader）接口，方便用户程序可以灵活地定义Bean定义信息。<br>3:支持应用事件，ApplicationContext扩展了ApplicationEventPublisher接口，在上下文中引入了事件机制，这些事件和Bean的生命周期的结合为Bean的管理提供了便利。</p>
+<h5 id="ApplicationContext容器的设计原理"><a href="#ApplicationContext容器的设计原理" class="headerlink" title="ApplicationContext容器的设计原理"></a>ApplicationContext容器的设计原理</h5><p>以FileSystemXmlApplicationContext为例说明ApplicationContext的设计原理：<br>1:一个功能是实例化这个应用上下文，同时启动IOC容器的refresh()过程，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public FileSystemXmlApplicationContext(</div><div class="line">			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)</div><div class="line">			throws BeansException &#123;</div><div class="line"></div><div class="line">		super(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		if (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>2:提供一个方法，通过文件系统路径获得加载XML的Bean定义资源位置，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">protected Resource getResourceByPath(String path) &#123;</div><div class="line">		if (path.startsWith(&quot;/&quot;)) &#123;</div><div class="line">			path = path.substring(1);</div><div class="line">		&#125;</div><div class="line">		return new FileSystemResource(path);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="IoC容器的初始化过程"><a href="#IoC容器的初始化过程" class="headerlink" title="IoC容器的初始化过程"></a>IoC容器的初始化过程</h3><p>分成以下三步：<br>1:Resource定位过程，这个Resource定位指的是对BeanDefinition的资源定位，它由ResourceLoader通过统一的Resource接口来完成，这个Resource对各种形式的BeanDefinition的使用都提供了统一的接口。如文件系统中的Bean定义信息可以通过FileSystemResource来进行抽象，如在类路径下的Bean定义信息可以使用ClassPathResource来定位。2:BeanDifinition的载入，这个过程就是把用户定义好的Bean表示成Io容器内部的数据结构（BeanDifinition）。<br>3:向IoC容器注册这些BeanDifinition，这个过程通过调用BeanDifinitionRegistry接口实现完成的。BeanDifinition实际上注入到一个HashMap中，Ioc容器通过这个HashMap持有这些BeanDefinition数据。</p>
+<h3 id="IoC容器的依赖注入"><a href="#IoC容器的依赖注入" class="headerlink" title="IoC容器的依赖注入"></a>IoC容器的依赖注入</h3><p>依赖诸如的过程是用户第一次向IoC容器索要Bean时触发的，例外情况时，在BeanDifinition信息中通过控制lazy－init属性来让容器完成对Bean的预实例化。<br>我们调用getBean后获得已经是完成依赖关系注入的完整Bean对象，所以完成依赖注入的奥秘就发生在getBean当中，要分析我们便从getBean这个入口开始吧。<br>getBean是依赖注入的起点，之后会调用createBean，Spring当中提供了两种实例化方案： BeanUtils 和 Cglib 方式。BeanUtils实现机制是通过Java的反射机制，Cglib是一个第三方类库采用的是一种字节码加强方式机制。 Spring中采用的默认实例化策略是Cglib。<br>我们要分析依赖关系是怎样注入到Bean对象当中，就需要回到 populateBean() 方法，这个方法实现是在 AbstractAutowireCapableBeanFactory中。</p>
+<h3 id="源码导入eclipse"><a href="#源码导入eclipse" class="headerlink" title="源码导入eclipse"></a>源码导入eclipse</h3><p>可以参考以下链接<a href="http://blog.csdn.net/guaoran/article/details/78563573" target="_blank" rel="external">http://blog.csdn.net/guaoran/article/details/78563573</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ox67fgze3.bkt.clouddn.com/zhifubao.JPG">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/21/2018022101/" class="archive-article-date">
-  	<time datetime="2018-02-21T07:17:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/21/2018022101/">单例模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -196,379 +230,137 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/26/2018022601/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/18/2018021801/" class="archive-article-date">
-  	<time datetime="2018-02-18T06:09:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-18</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/24/2018022401/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring的设计理念和整体框架</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/18/2018021801/">组合模式</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/14/2018021403/" class="archive-article-date">
-  	<time datetime="2018-02-14T11:14:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/14/2018021403/">备忘录模式</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/14/2018021402/" class="archive-article-date">
-  	<time datetime="2018-02-14T01:28:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-14</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/14/2018021402/">适配器</a>
-    </h1>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/02/26/2018022601/",
+  owner: 'feixiang0713',
+  repo: 'feixiang0713.github.io',
+  oauth: {
+    client_id: '4994c86aeafdfb24073d',
+    client_secret: '09fc47c14a7eb26d4c1c98c3e19c226067c6e4f5',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/14/2018021401/" class="archive-article-date">
-  	<time datetime="2018-02-14T00:46:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/14/2018021401/">状态模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/13/2018021301/" class="archive-article-date">
-  	<time datetime="2018-02-13T09:41:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/13/2018021301/">观察者模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/07/2018020702/" class="archive-article-date">
-  	<time datetime="2018-02-07T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/07/2018020702/">建造者模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/07/2018020701/" class="archive-article-date">
-  	<time datetime="2018-02-07T08:06:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/07/2018020701/">JDK1.8新特性</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/06/2018020604/" class="archive-article-date">
-  	<time datetime="2018-02-06T15:25:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/06/2018020604/">外观模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/06/2018020603/" class="archive-article-date">
-  	<time datetime="2018-02-06T14:06:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/06/2018020603/">模板方法模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/tags/IT/">&laquo; Prev</a><a class="page-number" href="/tags/IT/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/IT/page/3/">3</a><a class="extend next" rel="next" href="/tags/IT/page/3/">Next &raquo;</a>
-    </nav>
-  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
           </div>
@@ -592,9 +384,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
