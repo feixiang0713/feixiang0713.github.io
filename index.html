@@ -159,6 +159,94 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018030602" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/06/2018030602/">Spring特性－－autowiring</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/06/2018030602/" class="archive-article-date">
+  	<time datetime="2018-03-06T13:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在IoC容器实现原理中，除了通过BeanDefinition的属性值和构造函数以显式方式对Bean的依赖关系进行管理，Spring的IoC容器还提供了自动依赖装配的方式，为应用使用容器提供更大的方便。<br>自动装配中，不需要对Bean属性做显式的依赖关系声明，只需要配置好autowiring属性，IoC会根据这个属性点配置，使用反射自动查找属性的类型或者名字，然后基于属性的类型或者名字来自动匹配IoC容器中的Bean，从而自动地完成依赖注入。<br>优点：减少用户配置Bean的工作量<br>缺点：不可知的后果</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/06/2018030602/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018030601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -986,95 +1074,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022202" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022202/">职责链模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022202/" class="archive-article-date">
-  	<time datetime="2018-02-22T06:37:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>使得多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它位置。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:抽象处理者(Handler)角色：定义出一个处理请求的接口。如果需要，接口可以定义 出一个方法以设定和返回对下家的引用。这个角色通常由一个Java抽象类或者Java接口实现。上图中Handler类的聚合关系给出了具体子类对下家的引用，抽象方法handleRequest()规范了子类处理请求的操作。<br>2:具体处理者(ConcreteHandler)角色：具体处理者接到请求后，可以选择将请求处理掉，或者将请求传给下家。由于具体处理者持有对下家的引用，因此，如果需要，具体处理者可以访问下家。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div></pre></td><td class="code"><pre><div class="line">//请求类</div><div class="line">public class Request &#123;</div><div class="line">	private String requestType;</div><div class="line">	private int requestNumber;</div><div class="line">	private String requesteContent;</div><div class="line">	public String getRequestType() &#123;</div><div class="line">		return requestType;</div><div class="line">	&#125;</div><div class="line">	public void setRequestType(String requestType) &#123;</div><div class="line">		this.requestType = requestType;</div><div class="line">	&#125;</div><div class="line">	public int getRequestNumber() &#123;</div><div class="line">		return requestNumber;</div><div class="line">	&#125;</div><div class="line">	public void setRequestNumber(int requestNumber) &#123;</div><div class="line">		this.requestNumber = requestNumber;</div><div class="line">	&#125;</div><div class="line">	public String getRequesteContent() &#123;</div><div class="line">		return requesteContent;</div><div class="line">	&#125;</div><div class="line">	public void setRequesteContent(String requesteContent) &#123;</div><div class="line">		this.requesteContent = requesteContent;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">//抽象处理者</div><div class="line">public abstract class Manager &#123;</div><div class="line">	protected String name;</div><div class="line">	protected Manager superior;</div><div class="line">	public Manager getSuperior() &#123;</div><div class="line">		return superior;</div><div class="line">	&#125;</div><div class="line">	public void setSuperior(Manager superior) &#123;</div><div class="line">		this.superior = superior;</div><div class="line">	&#125;</div><div class="line">	public Manager(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	public void sendRequestToSuperior(Request request) &#123;</div><div class="line">		if(this.superior!=null) &#123;</div><div class="line">			this.superior.requestApplication(request);</div><div class="line">		&#125;else&#123;</div><div class="line">			System.out.println(name+&quot;未设置上一级管理者&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	abstract public void requestApplication(Request request);</div><div class="line">&#125;</div><div class="line">//具体实现者1</div><div class="line">public class CommonManager extends Manager&#123;</div><div class="line"></div><div class="line">	public CommonManager(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equals(&quot;请假&quot;)&amp;&amp;request.getRequestNumber()&lt;=3) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else &#123;</div><div class="line">			this.sendRequestToSuperior(request);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体实现者2</div><div class="line">public class Majordomo extends Manager&#123;</div><div class="line"></div><div class="line">	public Majordomo(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equalsIgnoreCase(&quot;请假&quot;)&amp;&amp;request.getRequestNumber()&lt;=5) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else &#123;</div><div class="line">			this.sendRequestToSuperior(request);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体实现者3</div><div class="line">public class GeneralManager extends Manager&#123;</div><div class="line"></div><div class="line">	public GeneralManager(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equalsIgnoreCase(&quot;请假&quot;)) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else if (request.getRequestType().equalsIgnoreCase(&quot;加薪&quot;)&amp;&amp;request.getRequestNumber()&lt;=500)&#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else if(request.getRequestType().equalsIgnoreCase(&quot;加薪&quot;)&amp;&amp;request.getRequestNumber()&gt;500) &#123;</div><div class="line">			System.out.println(name+&quot; 还需要考虑&quot;+request.getRequesteContent());</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestChainOfResponsibility &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		CommonManager jingli=new CommonManager(&quot;金利&quot;);</div><div class="line">		Majordomo zongjian=new Majordomo(&quot;宗建&quot;);</div><div class="line">		GeneralManager zongjinli=new GeneralManager(&quot;钟静立&quot;);</div><div class="line">		jingli.setSuperior(zongjian);</div><div class="line">		zongjian.setSuperior(zongjinli);</div><div class="line">		Request r1=new Request();</div><div class="line">		r1.setRequesteContent(&quot; xxb请假一天&quot;);</div><div class="line">		r1.setRequestNumber(1);</div><div class="line">		r1.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r2=new Request();</div><div class="line">		r2.setRequesteContent(&quot; xxb请假4天&quot;);</div><div class="line">		r2.setRequestNumber(4);</div><div class="line">		r2.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r3=new Request();</div><div class="line">		r3.setRequesteContent(&quot; xxb请假10天&quot;);</div><div class="line">		r3.setRequestNumber(10);</div><div class="line">		r3.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r4=new Request();</div><div class="line">		r4.setRequesteContent(&quot; xxb请求加薪1000快&quot;);</div><div class="line">		r4.setRequestNumber(1000);</div><div class="line">		r4.setRequestType(&quot;加薪&quot;);</div><div class="line">		jingli.requestApplication(r1);</div><div class="line">		jingli.requestApplication(r2);</div><div class="line">		jingli.requestApplication(r3);</div><div class="line">		jingli.requestApplication(r4);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022202/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1190,11 +1189,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">

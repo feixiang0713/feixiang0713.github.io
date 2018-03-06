@@ -159,6 +159,103 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018020701" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/07/2018020701/">JDK1.8新特性</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/07/2018020701/" class="archive-article-date">
+  	<time datetime="2018-02-07T08:06:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以下皆为百度结果：</p>
+<p>一：<br>Java 8允许我们给接口添加一个非抽象的方法实现，只需要使用 default关键字即可，这个特征又叫做扩展方法</p>
+<p>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public interface Animal &#123;</div><div class="line">	void desc();</div><div class="line">	void run();</div><div class="line">	default void display()&#123;</div><div class="line">		System.out.println(&quot;this is a animal.&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Dog implements Animal &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a dog&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestJDK18 &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Dog dog=new Dog();</div><div class="line">		dog.desc();</div><div class="line">		dog.display();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>二：<br>在Java 8 中你就没必要使用这种传统的匿名对象的方式了，Java 8提供了更简洁的语法，lambda表达式：</p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Collections;</div><div class="line">import java.util.Comparator;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestLambda &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		List&lt;String&gt; names=Arrays.asList(&quot;abc&quot;,&quot;golf&quot;,&quot;egg&quot;,&quot;car&quot;);</div><div class="line">		System.out.println(&quot;before sort:&quot;+names);</div><div class="line">		Collections.sort(names,new Comparator&lt;String&gt;()&#123;</div><div class="line">			@Override</div><div class="line">			public int compare(String a,String b) &#123;</div><div class="line">				return b.compareTo(a);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		System.out.println(&quot;after sort:&quot;+names);</div><div class="line">		List&lt;String&gt; names1=Arrays.asList(&quot;abc&quot;,&quot;golf&quot;,&quot;egg&quot;,&quot;car&quot;);</div><div class="line">		System.out.println(&quot;before sort:&quot;+names1);</div><div class="line">		//使用lambda表达式简化，增加可读性</div><div class="line">		Collections.sort(names1,(a,b)-&gt;a.compareTo(b));</div><div class="line">		System.out.println(&quot;after sort:&quot;+names1);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>三：</p>
+<p>Java 8 引入的一个核心概念是函数式接口。如果一个接口定义个唯一一个抽象方法，那么这个接口就成为函数式接口。比如，java.lang.Runnable就是一个函数式接口，因为它只顶一个一个抽象方法</p>
+<p>四：<br>Java 8 允许你使用 :: 关键字来传递方法或者构造函数引用</p>
+<p>五：Lambda 作用域<br>在lambda表达式中访问外层作用域和老版本的匿名对象中的方式很相似。你可以直接访问标记了final的外层局部变量，或者实例的字段以及静态变量。<br>和本地变量不同的是，lambda内部对于实例的字段以及静态变量是即可读又可写。该行为和匿名对象是一致的。<br>Lambda表达式中是无法访问到默认方法。</p>
+<p>六：Stream 接口<br>java.util.Stream 表示能应用在一组元素上一次执行的操作序列。Stream 操作分为中间操作或者最终操作两种，最终操作返回一特定类型的计算结果，而中间操作返回Stream本身，这样你就可以将多个操作依次串起来。Stream 的创建需要指定一个数据源，比如 java.util.Collection的子类，List或者Set， Map不支持。Stream的操作可以串行执行或者并行执行<br>过滤通过一个predicate接口来过滤并只保留符合条件的元素，该操作属于中间操作<br>forEach是一个最终操作，所以我们不能在forEach之后来执行其他Stream操作<br>排序是一个中间操作，返回的是排序好后的Stream。<br>中间操作map会将元素根据指定的Function接口来依次将元素转成另外的对象，下面的示例展示了将字符串转换为大写字符串。你也可以通过map来讲对象转换成其他类型，map返回的Stream类型是根据你map传递进去的函数的返回值决定的<br>Count 计数计数是一个最终操作，返回Stream中元素的个数，返回值类型是long。<br>Reduce 规约这是一个最终操作，允许通过指定的函数来讲stream中的多个元素规约为一个元素，规越后的结果是通过Optional接口表示的：</p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestSteam &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		List&lt;String&gt; nameList = new ArrayList&lt;String&gt;();</div><div class="line">		nameList.add(&quot;aaa&quot;);</div><div class="line">		nameList.add(&quot;b2b&quot;);</div><div class="line">		nameList.add(&quot;c3c&quot;);</div><div class="line">		nameList.add(&quot;a4a&quot;);</div><div class="line">		nameList.add(&quot;bbb&quot;);</div><div class="line">		nameList.add(&quot;ccc&quot;);</div><div class="line">		nameList.add(&quot;a1a&quot;);</div><div class="line">		nameList.add(&quot;b5b&quot;);</div><div class="line">		nameList.add(&quot;c6c&quot;);</div><div class="line">		nameList.stream()</div><div class="line">		.sorted((a,b)-&gt;a.compareTo(b))</div><div class="line">		.forEach(System.out::println);		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>七：Date API</p>
+<p>Java 8 在包java.time下包含了一组全新的时间日期API。<br>Clock类提供了访问当前日期和时间的方法，Clock是时区敏感的，可以用来取代 System.currentTimeMillis() 来获取当前的微秒数。某一个特定的时间点也可以使用Instant类来表示，Instant类也可以用来创建老的java.util.Date对象。<br>Timezones 时区<br>在新API中时区使用ZoneId来表示。时区可以很方便的使用静态方法of来获取到。 时区定义了到UTS时间的时间差，在Instant时间点对象到本地日期对象之间转换的时候是极其重要的。<br>LocalTime 本地时间<br>LocalTime 定义了一个没有时区信息的时间，例如 晚上10点，或者 17:30:15。下面的例子使用前面代码创建的时区创建了两个本地时间。之后比较时间并以小时和分钟为单位计算两个时间的时间差。<br>LocalDate 本地日期<br>LocalDate 表示了一个确切的日期，比如 2014-03-11。该对象值是不可变的，用起来和LocalTime基本一致。下面的例子展示了如何给Date对象加减天/月/年。另外要注意的是这些对象是不可变的，操作返回的总是一个新实例<br>LocalDateTime 本地日期时间<br>LocalDateTime 同时表示了时间和日期，相当于前两节内容合并到一个对象上了。LocalDateTime和LocalTime还有LocalDate一样，都是不可变的。LocalDateTime提供了一些能访问具体字段的方法</p>
+<p>八：<br>Annotation 注解<br>在Java 8中支持多重注解了，后续补充。。。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/07/2018020701/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018020604" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -920,96 +1017,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2017100201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/02/2017100201/">浅谈精细化管理</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/02/2017100201/" class="archive-article-date">
-  	<time datetime="2017-10-02T08:50:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>单位最近两年在推行精细化管理，起初甚是反感，项目管理＋编码工作任务已经挺重的，现在还要在一个额外的系统中有多做一遍管理的事情，实在是加大工作量，多此一举。</p>
-<p>如今想来，当初的想法有些幼稚：对于一项新的政策出来，没有好好理解（这个政策是干嘛的，为什么要落实，有啥收益，额外增加的成本是什么），起来就是抵制的情绪。这种想法是万万要不得的，显得固执保守，要是放在晚清，那不就是反对洋务运动的愚民嘛。</p>
-<p>那什么是精细化管理呢？精细化管理重点在于两个字，精和细。细在于企业战略，工作任务要拆分到每个部门，每个员工身上。精要确保完成任务有质量。它强调过程控制，它要求精确化，数据化，可通过报表鲜明的体现工作任务，完成进度。</p>
-<h2 id="收益"><a href="#收益" class="headerlink" title="收益"></a>收益</h2><p>实现精细化管理的收益是显而易见的，它可以将企业从无序粗放的管理中走出来，它将可以从全局的角度了解整个企业的工作任务，工作进度，风险情况。然后从中找到可以优化改进的阶段和流程，可有效提高生产效率。</p>
-<h2 id="成本"><a href="#成本" class="headerlink" title="成本"></a>成本</h2><p>精细化管理的推行就是主要成本，让每一位员工理解什么是精细化管理，每个人新的职责是什么，每个人在精细化管理中新的工作任务是什么？尤其是当推行初期，还没有形成良好的精细化管理氛围时，需要花较多多成本去培训员工。</p>
-<h2 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h2><p>目前在我所属的金融科技企业，精细化管理其实对于中层领导或者底层领导的要求挺高的，因为他们承载着工作任务的拆分和分配，同时需要监控并向上汇报。这要求他们需要修改原有的项目管理方式，将它与现在的精细化管理方式相结合，比如项目进度管理，比如风险监控，努力和精细化管理工具jira去结合，</p>
-<h2 id="送给自己一句话"><a href="#送给自己一句话" class="headerlink" title="送给自己一句话"></a>送给自己一句话</h2><p>改变是艰难的，但是努力坚持吧，直到把它形成一种习惯。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目管理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/02/2017100201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1125,11 +1132,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
