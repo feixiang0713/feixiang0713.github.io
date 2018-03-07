@@ -159,6 +159,99 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018030702" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/07/2018030702/">HashMap和ConcurrentHashMap的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/07/2018030702/" class="archive-article-date">
+  	<time datetime="2018-03-07T11:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近，项目组在一个交易所的项目中出现了多线程的问题，简单记录描述分享下。</p>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>在一个单例需要存放订阅关系，使用了静态，HashMap来声明，但是服务中有多个线程会同时访问这个对象，并执行写动作，从而有概率发生死循环。</p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>HashMap是非线程安全的集合框架，多线程会导致HashMap的Entry链表形成环形数据结构，查找时会陷入死循环。因此在并发线程中，建议使用ConcurrentHashMap这种集合框架。</p>
+<p>当往HashMap中添加元素时，会引起HashMap容器的扩容，源代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/** </div><div class="line">    * </div><div class="line">    * 往表中添加元素，如果插入元素之后，表长度不够，便会调用resize方法扩容 </div><div class="line">    */  </div><div class="line">   void addEntry(int hash, K key, V value, int bucketIndex) &#123;  </div><div class="line">Entry&lt;K,V&gt; e = table[bucketIndex];  </div><div class="line">       table[bucketIndex] = new Entry&lt;K,V&gt;(hash, key, value, e);  </div><div class="line">       if (size++ &gt;= threshold)  </div><div class="line">           resize(2 * table.length);  </div><div class="line">   &#125;  </div><div class="line">  </div><div class="line">   /** </div><div class="line">    * resize()方法如下，重要的是transfer方法，把旧表中的元素添加到新表中</div><div class="line">    */  </div><div class="line">   void resize(int newCapacity) &#123;  </div><div class="line">       Entry[] oldTable = table;  </div><div class="line">       int oldCapacity = oldTable.length;  </div><div class="line">       if (oldCapacity == MAXIMUM_CAPACITY) &#123;  </div><div class="line">           threshold = Integer.MAX_VALUE;  </div><div class="line">           return;  </div><div class="line">       &#125;  </div><div class="line">  </div><div class="line">       Entry[] newTable = new Entry[newCapacity];  </div><div class="line">       transfer(newTable);  </div><div class="line">       table = newTable;  </div><div class="line">       threshold = (int)(newCapacity * loadFactor);  </div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>参考上面的代码，便引入到了transfer方法，这就是HashMap并发时，会引起死循环的根本原因所在，下面结合transfer的源代码，说明一下产生死循环的原理，先列transfer代码（这是里JDK7的源码），如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * Transfers all entries from current table to newTable.</div><div class="line">     */</div><div class="line">    void transfer(Entry[] newTable, boolean rehash) &#123;</div><div class="line">        int newCapacity = newTable.length;</div><div class="line">        for (Entry&lt;K,V&gt; e : table) &#123;</div><div class="line"></div><div class="line">            while(null != e) &#123;</div><div class="line">                Entry&lt;K,V&gt; next = e.next;            ---------------------(1)</div><div class="line">                if (rehash) &#123;</div><div class="line">                    e.hash = null == e.key ? 0 : hash(e.key);</div><div class="line">                &#125;</div><div class="line">                int i = indexFor(e.hash, newCapacity); </div><div class="line">                e.next = newTable[i];</div><div class="line">                newTable[i] = e;</div><div class="line">                e = next;</div><div class="line">            &#125; // while</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>transfer这步会产生环形链表，从而导致查询的时候，陷入死循环。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/07/2018030702/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018030701" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -986,96 +1079,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022204" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022204/">享元模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022204/" class="archive-article-date">
-  	<time datetime="2018-02-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>运用共享技术有效地支持大量细粒度的对象。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:flyweight类，它时所有具体享元类的超类或接口，接受并作用于外部状态<br>2:ConcreteFlyweight是继承Flyweight类或者实现Flyweight接口，为内部状态增加存储空间。<br>3:享元工厂，创建并管理flyweighy对象。当用户需要一个flyweight对象时，提供一个实例或者创造一个（当不存在时）。</p>
-<h3 id="适用情况"><a href="#适用情况" class="headerlink" title="适用情况"></a>适用情况</h3><p>1:如果一个应用程序使用了大量的对象，而大量的这些对象造成了很大的存储开销的时候考虑使用<br>2:对象的大多数状态可以外部状态，如果删除这些对象的外部状态，可以使用相对较少的共享对象取代很多组对象，可以考虑使用</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">	private String name;</div><div class="line">	public User(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	public String getName() &#123;</div><div class="line">		return name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setName(String name) &#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public abstract class Website &#123;</div><div class="line">	public abstract void use(User user);</div><div class="line">&#125;</div><div class="line">public class ConcreteWebsite extends Website&#123;</div><div class="line">	private String name;</div><div class="line">	public ConcreteWebsite(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void use(User user) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;now &quot;+user.getName()+&quot; use the website:&quot;+name);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">import java.util.Hashtable;</div><div class="line"></div><div class="line">public class WebsiteFactory &#123;</div><div class="line">	private Hashtable&lt;String,Website&gt; websites=new Hashtable&lt;String,Website&gt;();</div><div class="line">	public Website getWebsite(String name) &#123;</div><div class="line">		if(websites.contains(name)) &#123;</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;else &#123;</div><div class="line">			websites.put(name, new ConcreteWebsite(name));</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	public int getWebsiteCount() &#123;</div><div class="line">		return websites.size();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestFlyweight &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		WebsiteFactory f=new WebsiteFactory();</div><div class="line">		User user1=new User(&quot;ldd&quot;);</div><div class="line">		User user2=new User(&quot;xxb&quot;);</div><div class="line">		User user3=new User(&quot;zh&quot;);</div><div class="line">		User user4=new User(&quot;lxx&quot;);</div><div class="line">		Website web1=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web1.use(user1);</div><div class="line">		Website web2=f.getWebsite(&quot;app&quot;);</div><div class="line">		web2.use(user2);</div><div class="line">		Website web3=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web3.use(user3);</div><div class="line">		Website web4=f.getWebsite(&quot;app&quot;);</div><div class="line">		web4.use(user4);</div><div class="line">		System.out.println(&quot;now the size:&quot;+f.getWebsiteCount());</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022204/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1191,11 +1194,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
