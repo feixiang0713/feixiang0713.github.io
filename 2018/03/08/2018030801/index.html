@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>建造者模式 | 留白</title>
+  <title>ORACLE开发－－字段定义问题 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="定义将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以用创建不同的表示。 组成1:复杂对象的产品类。2:抽象建造者类。3:具体建造者类。4:指挥者类，用来指挥建造过程。 适用性它主要用于创建一些复杂的对象，这些对象内部构建间的建造顺序通常是稳定的，但对象内部的构建通常面临复杂的变化。好处在于建造代码和表示代码分离，由于建造者隐藏了该产品时如何组装的，所以需改变一个产品的内部表示，只需要再定">
-<meta name="keywords" content="IT">
+  <meta name="description" content="ORACLE开发问题问题描述存过开发过程中，声明临时变量时，用了Varchar（20）来定义，而表中定义对应字段大小为Varchar（30），以及该字段来源表中大小为Varchar（30），导致临时变量字段对于超过20长度数据无法存放，从而导致报错。 解决方法建议临时变量使用（表名.字段％type）的形式来声明类型，这样在后续表结构字段大小改动的时候，也不需要再改动程序中的临时变量的定义。从而减少">
+<meta name="keywords" content="IT,项目问题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="建造者模式">
-<meta property="og:url" content="http://yoursite.com/2018/02/07/2018020702/index.html">
+<meta property="og:title" content="ORACLE开发－－字段定义问题">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/2018030801/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="定义将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以用创建不同的表示。 组成1:复杂对象的产品类。2:抽象建造者类。3:具体建造者类。4:指挥者类，用来指挥建造过程。 适用性它主要用于创建一些复杂的对象，这些对象内部构建间的建造顺序通常是稳定的，但对象内部的构建通常面临复杂的变化。好处在于建造代码和表示代码分离，由于建造者隐藏了该产品时如何组装的，所以需改变一个产品的内部表示，只需要再定">
+<meta property="og:description" content="ORACLE开发问题问题描述存过开发过程中，声明临时变量时，用了Varchar（20）来定义，而表中定义对应字段大小为Varchar（30），以及该字段来源表中大小为Varchar（30），导致临时变量字段对于超过20长度数据无法存放，从而导致报错。 解决方法建议临时变量使用（表名.字段％type）的形式来声明类型，这样在后续表结构字段大小改动的时候，也不需要再改动程序中的临时变量的定义。从而减少">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-07T15:05:08.000Z">
+<meta property="og:updated_time" content="2018-03-08T04:31:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="建造者模式">
-<meta name="twitter:description" content="定义将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以用创建不同的表示。 组成1:复杂对象的产品类。2:抽象建造者类。3:具体建造者类。4:指挥者类，用来指挥建造过程。 适用性它主要用于创建一些复杂的对象，这些对象内部构建间的建造顺序通常是稳定的，但对象内部的构建通常面临复杂的变化。好处在于建造代码和表示代码分离，由于建造者隐藏了该产品时如何组装的，所以需改变一个产品的内部表示，只需要再定">
+<meta name="twitter:title" content="ORACLE开发－－字段定义问题">
+<meta name="twitter:description" content="ORACLE开发问题问题描述存过开发过程中，声明临时变量时，用了Varchar（20）来定义，而表中定义对应字段大小为Varchar（30），以及该字段来源表中大小为Varchar（30），导致临时变量字段对于超过20长度数据无法存放，从而导致报错。 解决方法建议临时变量使用（表名.字段％type）的形式来声明类型，这样在后续表结构字段大小改动的时候，也不需要再改动程序中的临时变量的定义。从而减少">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -159,30 +159,29 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2018020702" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2018030801" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      建造者模式
+      ORACLE开发－－字段定义问题
     </h1>
   
 
         
-        <a href="/2018/02/07/2018020702/" class="archive-article-date">
-  	<time datetime="2018-02-07T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
+        <a href="/2018/03/08/2018030801/" class="archive-article-date">
+  	<time datetime="2018-03-08T04:11:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以用创建不同的表示。</p>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:复杂对象的产品类。<br>2:抽象建造者类。<br>3:具体建造者类。<br>4:指挥者类，用来指挥建造过程。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>它主要用于创建一些复杂的对象，这些对象内部构建间的建造顺序通常是稳定的，但对象内部的构建通常面临复杂的变化。<br>好处在于建造代码和表示代码分离，由于建造者隐藏了该产品时如何组装的，所以需改变一个产品的内部表示，只需要再定义一个具体的建造者即可。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class Product &#123;</div><div class="line">	private List&lt;String&gt; parts=new ArrayList&lt;String&gt;();</div><div class="line">	public void add(String part) &#123;</div><div class="line">		parts.add(part);</div><div class="line">	&#125;</div><div class="line">	public void show() &#123;</div><div class="line">		parts.forEach(System.out::println);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public interface Builder &#123;</div><div class="line">	void BuildPartA();</div><div class="line">	void BuildPartB();</div><div class="line">	Product GetResult();</div><div class="line">&#125;</div><div class="line">public class ConcreteBuilder1 implements Builder &#123;</div><div class="line">private Product product=new Product();</div><div class="line">	@Override</div><div class="line">	public void BuildPartA() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part A&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void BuildPartB() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part B&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Product GetResult() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return product;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ConcreteBuilder2 implements Builder &#123;</div><div class="line">	private Product product=new Product();</div><div class="line">	@Override</div><div class="line">	public void BuildPartA() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part x&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void BuildPartB() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part y&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Product GetResult() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return product;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class Director &#123;</div><div class="line">	public void Construct(Builder builder) &#123;</div><div class="line">		builder.BuildPartA();</div><div class="line">		builder.BuildPartB();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestBuilder &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Director d1=new Director();</div><div class="line">		Builder b1=new ConcreteBuilder1();</div><div class="line">		Builder b2=new ConcreteBuilder2();</div><div class="line">		d1.Construct(b1);</div><div class="line">		d1.Construct(b2);</div><div class="line">		Product p1=b1.GetResult();</div><div class="line">		Product p2=b2.GetResult();</div><div class="line">		p1.show();</div><div class="line">		p2.show();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h3 id="ORACLE开发问题"><a href="#ORACLE开发问题" class="headerlink" title="ORACLE开发问题"></a>ORACLE开发问题</h3><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>存过开发过程中，声明临时变量时，用了Varchar（20）来定义，而表中定义对应字段大小为Varchar（30），以及该字段来源表中大小为Varchar（30），导致临时变量字段对于超过20长度数据无法存放，从而导致报错。</p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>建议临时变量使用（表名.字段％type）的形式来声明类型，这样在后续表结构字段大小改动的时候，也不需要再改动程序中的临时变量的定义。从而减少出错的概率。</p>
+
       
 
       
@@ -222,6 +221,10 @@ var _hmt = _hmt || [];
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
         		</li>
       		
 		</ul>
@@ -277,7 +280,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/07/2018020702/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/03/08/2018030801/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -291,18 +294,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2018/02/13/2018021301/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          观察者模式
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/02/07/2018020701/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JDK1.8新特性</div>
+    <a href="/2018/03/08/2018030802/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2018030802</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -340,7 +334,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2018/02/07/2018020702/",
+  id: "http://yoursite.com/2018/03/08/2018030801/",
   owner: 'feixiang0713',
   repo: 'feixiang0713.github.io',
   oauth: {
