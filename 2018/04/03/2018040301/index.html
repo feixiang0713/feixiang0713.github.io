@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JDK1.8新特性 | 留白</title>
+  <title>Log4j日志配置文件说明 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="以下皆为百度结果： 一：Java 8允许我们给接口添加一个非抽象的方法实现，只需要使用 default关键字即可，这个特征又叫做扩展方法 代码如下1234567891011121314151617181920212223242526public interface Animal &amp;#123;	void desc();	void run();	default void display()&amp;#123;">
-<meta name="keywords" content="IT">
+  <meta name="description" content="转自：http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html ①配置根Logger，其语法为：  log4j.rootLogger = [level],appenderName,appenderName2,…level是日志记录的优先级，分为OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALLLog4j建议只使用四个级">
+<meta name="keywords" content="IT,JAVA">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JDK1.8新特性">
-<meta property="og:url" content="http://yoursite.com/2018/02/07/2018020701/index.html">
+<meta property="og:title" content="Log4j日志配置文件说明">
+<meta property="og:url" content="http://yoursite.com/2018/04/03/2018040301/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="以下皆为百度结果： 一：Java 8允许我们给接口添加一个非抽象的方法实现，只需要使用 default关键字即可，这个特征又叫做扩展方法 代码如下1234567891011121314151617181920212223242526public interface Animal &amp;#123;	void desc();	void run();	default void display()&amp;#123;">
+<meta property="og:description" content="转自：http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html ①配置根Logger，其语法为：  log4j.rootLogger = [level],appenderName,appenderName2,…level是日志记录的优先级，分为OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALLLog4j建议只使用四个级">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-07T12:55:04.000Z">
+<meta property="og:updated_time" content="2018-04-03T12:21:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK1.8新特性">
-<meta name="twitter:description" content="以下皆为百度结果： 一：Java 8允许我们给接口添加一个非抽象的方法实现，只需要使用 default关键字即可，这个特征又叫做扩展方法 代码如下1234567891011121314151617181920212223242526public interface Animal &amp;#123;	void desc();	void run();	default void display()&amp;#123;">
+<meta name="twitter:title" content="Log4j日志配置文件说明">
+<meta name="twitter:description" content="转自：http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html ①配置根Logger，其语法为：  log4j.rootLogger = [level],appenderName,appenderName2,…level是日志记录的优先级，分为OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALLLog4j建议只使用四个级">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -159,40 +159,52 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2018020701" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2018040301" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JDK1.8新特性
+      Log4j日志配置文件说明
     </h1>
   
 
         
-        <a href="/2018/02/07/2018020701/" class="archive-article-date">
-  	<time datetime="2018-02-07T08:06:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
+        <a href="/2018/04/03/2018040301/" class="archive-article-date">
+  	<time datetime="2018-04-03T11:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>以下皆为百度结果：</p>
-<p>一：<br>Java 8允许我们给接口添加一个非抽象的方法实现，只需要使用 default关键字即可，这个特征又叫做扩展方法</p>
-<p>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public interface Animal &#123;</div><div class="line">	void desc();</div><div class="line">	void run();</div><div class="line">	default void display()&#123;</div><div class="line">		System.out.println(&quot;this is a animal.&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Dog implements Animal &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a dog&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestJDK18 &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Dog dog=new Dog();</div><div class="line">		dog.desc();</div><div class="line">		dog.display();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>二：<br>在Java 8 中你就没必要使用这种传统的匿名对象的方式了，Java 8提供了更简洁的语法，lambda表达式：</p>
-<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Collections;</div><div class="line">import java.util.Comparator;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestLambda &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		List&lt;String&gt; names=Arrays.asList(&quot;abc&quot;,&quot;golf&quot;,&quot;egg&quot;,&quot;car&quot;);</div><div class="line">		System.out.println(&quot;before sort:&quot;+names);</div><div class="line">		Collections.sort(names,new Comparator&lt;String&gt;()&#123;</div><div class="line">			@Override</div><div class="line">			public int compare(String a,String b) &#123;</div><div class="line">				return b.compareTo(a);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		System.out.println(&quot;after sort:&quot;+names);</div><div class="line">		List&lt;String&gt; names1=Arrays.asList(&quot;abc&quot;,&quot;golf&quot;,&quot;egg&quot;,&quot;car&quot;);</div><div class="line">		System.out.println(&quot;before sort:&quot;+names1);</div><div class="line">		//使用lambda表达式简化，增加可读性</div><div class="line">		Collections.sort(names1,(a,b)-&gt;a.compareTo(b));</div><div class="line">		System.out.println(&quot;after sort:&quot;+names1);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>三：</p>
-<p>Java 8 引入的一个核心概念是函数式接口。如果一个接口定义个唯一一个抽象方法，那么这个接口就成为函数式接口。比如，java.lang.Runnable就是一个函数式接口，因为它只顶一个一个抽象方法</p>
-<p>四：<br>Java 8 允许你使用 :: 关键字来传递方法或者构造函数引用</p>
-<p>五：Lambda 作用域<br>在lambda表达式中访问外层作用域和老版本的匿名对象中的方式很相似。你可以直接访问标记了final的外层局部变量，或者实例的字段以及静态变量。<br>和本地变量不同的是，lambda内部对于实例的字段以及静态变量是即可读又可写。该行为和匿名对象是一致的。<br>Lambda表达式中是无法访问到默认方法。</p>
-<p>六：Stream 接口<br>java.util.Stream 表示能应用在一组元素上一次执行的操作序列。Stream 操作分为中间操作或者最终操作两种，最终操作返回一特定类型的计算结果，而中间操作返回Stream本身，这样你就可以将多个操作依次串起来。Stream 的创建需要指定一个数据源，比如 java.util.Collection的子类，List或者Set， Map不支持。Stream的操作可以串行执行或者并行执行<br>过滤通过一个predicate接口来过滤并只保留符合条件的元素，该操作属于中间操作<br>forEach是一个最终操作，所以我们不能在forEach之后来执行其他Stream操作<br>排序是一个中间操作，返回的是排序好后的Stream。<br>中间操作map会将元素根据指定的Function接口来依次将元素转成另外的对象，下面的示例展示了将字符串转换为大写字符串。你也可以通过map来讲对象转换成其他类型，map返回的Stream类型是根据你map传递进去的函数的返回值决定的<br>Count 计数计数是一个最终操作，返回Stream中元素的个数，返回值类型是long。<br>Reduce 规约这是一个最终操作，允许通过指定的函数来讲stream中的多个元素规约为一个元素，规越后的结果是通过Optional接口表示的：</p>
-<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestSteam &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		List&lt;String&gt; nameList = new ArrayList&lt;String&gt;();</div><div class="line">		nameList.add(&quot;aaa&quot;);</div><div class="line">		nameList.add(&quot;b2b&quot;);</div><div class="line">		nameList.add(&quot;c3c&quot;);</div><div class="line">		nameList.add(&quot;a4a&quot;);</div><div class="line">		nameList.add(&quot;bbb&quot;);</div><div class="line">		nameList.add(&quot;ccc&quot;);</div><div class="line">		nameList.add(&quot;a1a&quot;);</div><div class="line">		nameList.add(&quot;b5b&quot;);</div><div class="line">		nameList.add(&quot;c6c&quot;);</div><div class="line">		nameList.stream()</div><div class="line">		.sorted((a,b)-&gt;a.compareTo(b))</div><div class="line">		.forEach(System.out::println);		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>七：Date API</p>
-<p>Java 8 在包java.time下包含了一组全新的时间日期API。<br>Clock类提供了访问当前日期和时间的方法，Clock是时区敏感的，可以用来取代 System.currentTimeMillis() 来获取当前的微秒数。某一个特定的时间点也可以使用Instant类来表示，Instant类也可以用来创建老的java.util.Date对象。<br>Timezones 时区<br>在新API中时区使用ZoneId来表示。时区可以很方便的使用静态方法of来获取到。 时区定义了到UTS时间的时间差，在Instant时间点对象到本地日期对象之间转换的时候是极其重要的。<br>LocalTime 本地时间<br>LocalTime 定义了一个没有时区信息的时间，例如 晚上10点，或者 17:30:15。下面的例子使用前面代码创建的时区创建了两个本地时间。之后比较时间并以小时和分钟为单位计算两个时间的时间差。<br>LocalDate 本地日期<br>LocalDate 表示了一个确切的日期，比如 2014-03-11。该对象值是不可变的，用起来和LocalTime基本一致。下面的例子展示了如何给Date对象加减天/月/年。另外要注意的是这些对象是不可变的，操作返回的总是一个新实例<br>LocalDateTime 本地日期时间<br>LocalDateTime 同时表示了时间和日期，相当于前两节内容合并到一个对象上了。LocalDateTime和LocalTime还有LocalDate一样，都是不可变的。LocalDateTime提供了一些能访问具体字段的方法</p>
-<p>八：<br>Annotation 注解<br>在Java 8中支持多重注解了，后续补充。。。</p>
+        <p>转自：<a href="http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html</a></p>
+<p>①配置根Logger，其语法为： </p>
+<p>log4j.rootLogger = [level],appenderName,appenderName2,…<br>level是日志记录的优先级，分为OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALL<br>Log4j建议只使用四个级别，优先级从低到高分别是DEBUG,INFO,WARN,ERROR<br>通过在这里定义的级别，您可以控制到应用程序中相应级别的日志信息的开关<br>比如在这里定义了INFO级别，则应用程序中所有DEBUG级别的日志信息将不被打印出来<br>appenderName就是指定日志信息输出到哪个地方。可同时指定多个输出目的 </p>
+<p>②配置日志信息输出目的地Appender，其语法为： </p>
+<p>log4j.appender.appenderName = fully.qualified.name.of.appender.class<br>log4j.appender.appenderName.optionN = valueN </p>
+<p>Log4j提供的appender有以下几种：<br>1)org.apache.log4j.ConsoleAppender(输出到控制台)<br>2)org.apache.log4j.FileAppender(输出到文件)<br>3)org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件)<br>4)org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件)<br>5)org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方) </p>
+<p>1)ConsoleAppender选项属性<br> -Threshold = DEBUG:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -Target = System.err:默认值System.out,输出到控制台(err为红色,out为黑色) </p>
+<p>2)FileAppender选项属性<br> -Threshold = INFO:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:\log4j.log:指定消息输出到C:\log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
+<p>3)DailyRollingFileAppender选项属性<br> -Threshold = WARN:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:\log4j.log:指定消息输出到C:\log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -DatePattern=’.’yyyy-ww:每周滚动一次文件,即每周产生一个新的文件。还可以按用以下参数:<br>              ‘.’yyyy-MM:每月<br>              ‘.’yyyy-ww:每周<br>              ‘.’yyyy-MM-dd:每天<br>              ‘.’yyyy-MM-dd-a:每天两次<br>              ‘.’yyyy-MM-dd-HH:每小时<br>              ‘.’yyyy-MM-dd-HH-mm:每分钟<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
+<p>4)RollingFileAppender选项属性<br> -Threshold = ERROR:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:/log4j.log:指定消息输出到C:/log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -MaxFileSize = 100KB:后缀可以是KB,MB,GB.在日志文件到达该大小时,将会自动滚动.如:log4j.log.1<br> -MaxBackupIndex = 2:指定可以产生的滚动文件的最大数<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
+<p>③配置日志信息的格式(布局)，其语法为： </p>
+<p>log4j.appender.appenderName.layout = fully.qualified.name.of.layout.class<br>log4j.appender.appenderName.layout.optionN = valueN </p>
+<p>Log4j提供的layout有以下几种：<br>5)org.apache.log4j.HTMLLayout(以HTML表格形式布局)<br>6)org.apache.log4j.PatternLayout(可以灵活地指定布局模式)<br>7)org.apache.log4j.SimpleLayout(包含日志信息的级别和信息字符串)<br>8)org.apache.log4j.TTCCLayout(包含日志产生的时间、线程、类别等等信息)<br>9)org.apache.log4j.xml.XMLLayout(以XML形式布局) </p>
+<p>5)HTMLLayout选项属性<br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号<br> -Title=Struts Log Message:默认值 Log4J Log Messages </p>
+<p>6)PatternLayout选项属性<br> -ConversionPattern = %m%n:格式化指定的消息(参数意思下面有) </p>
+<p>9)XMLLayout选项属性<br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号 </p>
+<p>Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，打印参数如下：<br> %m 输出代码中指定的消息<br> %p 输出优先级，即DEBUG,INFO,WARN,ERROR,FATAL<br> %r 输出自应用启动到输出该log信息耗费的毫秒数<br> %c 输出所属的类目,通常就是所在类的全名<br> %t 输出产生该日志事件的线程名<br> %n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n”<br> %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式<br>    如：%d{yyyy年MM月dd日 HH:mm:ss,SSS}，输出类似：2012年01月05日 22:10:28,921<br> %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数<br>    如：Testlog.main(TestLog.java:10)<br> %F 输出日志消息产生时所在的文件名称<br> %L 输出代码中的行号<br> %x 输出和当前线程相关联的NDC(嵌套诊断环境),像java servlets多客户多线程的应用中<br> %% 输出一个”%”字符 </p>
+<p> 可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：<br>  %5c: 输出category名称，最小宽度是5，category<5，默认的情况下右对齐 %-5c:输出category名称，最小宽度是5，category<5，"-"号指定左对齐,会有空格="" %.5c:输出category名称，最大宽度是5，category="">5，就会将左边多出的字符截掉，<5不会有空格 %20.30c:category名称<20补空格，并且右对齐，="">30字符，就从左边交远销出的字符截掉 </5不会有空格></5，默认的情况下右对齐></p>
+<p>④指定特定包的输出特定的级别<br>log4j.logger.org.springframework=DEBUG </p>
+<p>OFF,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB,ALL<br>log4j.rootLogger =ALL,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB </p>
+<p>输出到控制台<br>log4j.appender.systemOut = org.apache.log4j.ConsoleAppender<br>log4j.appender.systemOut.layout = org.apache.log4j.PatternLayout<br>log4j.appender.systemOut.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.systemOut.Threshold = DEBUG<br>log4j.appender.systemOut.ImmediateFlush = TRUE<br>log4j.appender.systemOut.Target = System.out </p>
+<p>输出到文件<br>log4j.appender.logFile = org.apache.log4j.FileAppender<br>log4j.appender.logFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logFile.Threshold = DEBUG<br>log4j.appender.logFile.ImmediateFlush = TRUE<br>log4j.appender.logFile.Append = TRUE<br>log4j.appender.logFile.File = ../Struts2/WebRoot/log/File/log4j_Struts.log<br>log4j.appender.logFile.Encoding = UTF-8 </p>
+<p>按DatePattern输出到文件<br>log4j.appender.logDailyFile = org.apache.log4j.DailyRollingFileAppender<br>log4j.appender.logDailyFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logDailyFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logDailyFile.Threshold = DEBUG<br>log4j.appender.logDailyFile.ImmediateFlush = TRUE<br>log4j.appender.logDailyFile.Append = TRUE<br>log4j.appender.logDailyFile.File = ../Struts2/WebRoot/log/DailyFile/log4j_Struts<br>log4j.appender.logDailyFile.DatePattern = ‘.’yyyy-MM-dd-HH-mm’.log’<br>log4j.appender.logDailyFile.Encoding = UTF-8 </p>
+<p>设定文件大小输出到文件<br>log4j.appender.logRollingFile = org.apache.log4j.RollingFileAppender<br>log4j.appender.logRollingFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logRollingFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logRollingFile.Threshold = DEBUG<br>log4j.appender.logRollingFile.ImmediateFlush = TRUE<br>log4j.appender.logRollingFile.Append = TRUE<br>log4j.appender.logRollingFile.File = ../Struts2/WebRoot/log/RollingFile/log4j_Struts.log<br>log4j.appender.logRollingFile.MaxFileSize = 1MB<br>log4j.appender.logRollingFile.MaxBackupIndex = 10<br>log4j.appender.logRollingFile.Encoding = UTF-8 </p>
+<p>用Email发送日志<br>log4j.appender.logMail = org.apache.log4j.net.SMTPAppender<br>log4j.appender.logMail.layout = org.apache.log4j.HTMLLayout<br>log4j.appender.logMail.layout.LocationInfo = TRUE<br>log4j.appender.logMail.layout.Title = Struts2 Mail LogFile<br>log4j.appender.logMail.Threshold = DEBUG<br>log4j.appender.logMail.SMTPDebug = FALSE<br>log4j.appender.logMail.SMTPHost = SMTP.163.com<br>log4j.appender.logMail.From = xly3000@163.com<br>log4j.appender.logMail.To = xly3000@gmail.com<br>log4j.appender.logMail.Cc = xly3000@gmail.com<br>log4j.appender.logMail.Bcc = xly3000@gmail.com<br>log4j.appender.logMail.SMTPUsername = xly3000<br>log4j.appender.logMail.SMTPPassword = 1234567<br>log4j.appender.logMail.Subject = Log4j Log Messages<br>log4j.appender.logMail.BufferSize = 1024<br>log4j.appender.logMail.SMTPAuth = TRUE </p>
+<p>将日志登录到MySQL数据库<br>log4j.appender.logDB = org.apache.log4j.jdbc.JDBCAppender<br>log4j.appender.logDB.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logDB.Driver = com.mysql.jdbc.Driver<br>log4j.appender.logDB.URL = jdbc:mysql://127.0.0.1:3306/xly<br>log4j.appender.logDB.User = root<br>log4j.appender.logDB.Password = 123456<br>log4j.appender.logDB.Sql = INSERT INTOT_log4j(project_name,create_date,level,category,file_name,thread_name,line,all_category,message)values(‘Struts2’,’%d{yyyy-MM-ddHH:mm:ss}’,’%p’,’%c’,’%F’,’%t’,’%L’,’%l’,’%m’)</p>
 
       
 
@@ -233,6 +245,10 @@ var _hmt = _hmt || [];
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
         		</li>
       		
 		</ul>
@@ -288,7 +304,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/07/2018020701/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/04/03/2018040301/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -302,18 +318,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2018/02/07/2018020702/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          建造者模式
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/02/06/2018020604/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">外观模式</div>
+    <a href="/2018/04/02/2018040201/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SpringMVC请求流程说明</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -351,7 +358,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2018/02/07/2018020701/",
+  id: "http://yoursite.com/2018/04/03/2018040301/",
   owner: 'feixiang0713',
   repo: 'feixiang0713.github.io',
   oauth: {

@@ -159,6 +159,96 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018022201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/22/2018022201/">命令模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/22/2018022201/" class="archive-article-date">
+  	<time datetime="2018-02-22T04:37:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>将一个请求封装为一个对象，从而使你可以使用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。</p>
+<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>Receiver接受者角色：该角色就是干活的角色，命令传递到这里是应该被执行的<br>Command命令角色：需要执行的所有命令都在这里声明<br>Invoker调用者角色：接收到命令，并执行命令</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1:他能够较容易地设计成一个命令队列，<br>2:在需要的时候，可以比较容易将命令纪录到日志中<br>3:允许接受请求的一方拒绝命令<br>4:可以比较轻松的对请求进行撤销和重做<br>5:增加新的具体命令的时候，增加新的具体命令类即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">//Receiver接受者角色</div><div class="line">public class Receiver &#123;</div><div class="line">	public void action() &#123;</div><div class="line">		System.out.println(&quot;执行某个命令&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//Command命令角色</div><div class="line">public abstract class Command &#123;</div><div class="line">	protected Receiver r;</div><div class="line">	public Command(Receiver receiver) &#123;</div><div class="line">		this.r=receiver;</div><div class="line">	&#125;</div><div class="line">	abstract public void execute();</div><div class="line">&#125;</div><div class="line">//Command命令角色,具体实现者</div><div class="line">public class ConcreteCommand extends Command&#123;</div><div class="line"></div><div class="line">	public ConcreteCommand(Receiver receiver) &#123;</div><div class="line">		super(receiver);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void execute() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.r.action();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//Invoker调用者角色</div><div class="line">public class Invoker &#123;</div><div class="line">	private Command command;</div><div class="line">	public Invoker(Command c) &#123;</div><div class="line">		this.command=c;</div><div class="line">	&#125;</div><div class="line">	public void execute() &#123;</div><div class="line">		command.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestCommand &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Receiver r=new Receiver();</div><div class="line">		Command c=new ConcreteCommand(r);</div><div class="line">		Invoker i=new Invoker(c);</div><div class="line">		i.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/22/2018022201/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018022102" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -960,93 +1050,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018020604" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/2018020604/">外观模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/2018020604/" class="archive-article-date">
-  	<time datetime="2018-02-06T15:25:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</p>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:外观类，提供观察子系统到类，供外界调用<br>2:子系统的类，供外观类调用</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:在设计初期阶段，应该有意识的奖不同等层分离，层与层之间用Facade，为复杂子系统提供简单的接口，使得藕合度降低<br>2：在开放阶段，子系统因为不断重构而变的越来越复杂，增加Facade可以提供一个简单接口，减少他们之间的依赖<br>3:对于遗留的大型系统，新系统想要使用遗留系统的功能，可以使用Facade，来提供一个简单接口，让新系统可以与复杂系统进行交互。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public class SubSystemA &#123;</div><div class="line">	public void MethodA() &#123;</div><div class="line">		System.out.println(&quot;method A&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class SubSystemB &#123;</div><div class="line">	public void MethodB() &#123;</div><div class="line">		System.out.println(&quot;Method B&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class SubSystemC &#123;</div><div class="line">	public void MethodC() &#123;</div><div class="line">		System.out.println(&quot;Method C&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Facade &#123;</div><div class="line">	SubSystemA a=null;</div><div class="line">	SubSystemB b=null;</div><div class="line">	SubSystemC c=null;</div><div class="line">	public Facade() &#123;</div><div class="line">		a=new SubSystemA();</div><div class="line">		b=new SubSystemB();</div><div class="line">		c=new SubSystemC();</div><div class="line">	&#125;</div><div class="line">	public void FacadeMethodA() &#123;</div><div class="line">		a.MethodA();</div><div class="line">		b.MethodB();</div><div class="line">	&#125;</div><div class="line">	public void FacadeMethodB() &#123;</div><div class="line">		b.MethodB();</div><div class="line">		c.MethodC();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestFacade &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Facade facade=new Facade();</div><div class="line">		facade.FacadeMethodA();</div><div class="line">		facade.FacadeMethodB();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/2018020604/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1162,11 +1165,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
