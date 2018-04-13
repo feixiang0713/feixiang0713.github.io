@@ -159,6 +159,392 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018030801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/2018030801/">ORACLE开发－－字段定义问题</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/08/2018030801/" class="archive-article-date">
+  	<time datetime="2018-03-08T04:11:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="ORACLE开发问题"><a href="#ORACLE开发问题" class="headerlink" title="ORACLE开发问题"></a>ORACLE开发问题</h3><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>存过开发过程中，声明临时变量时，用了Varchar（20）来定义，而表中定义对应字段大小为Varchar（30），以及该字段来源表中大小为Varchar（30），导致临时变量字段对于超过20长度数据无法存放，从而导致报错。</p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>建议临时变量使用（表名.字段％type）的形式来声明类型，这样在后续表结构字段大小改动的时候，也不需要再改动程序中的临时变量的定义。从而减少出错的概率。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/08/2018030801/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018030802" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/2018030802/">Spring配置</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/08/2018030802/" class="archive-article-date">
+  	<time datetime="2018-03-08T04:10:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Spring配置的可选方案："><a href="#Spring配置的可选方案：" class="headerlink" title="Spring配置的可选方案："></a>Spring配置的可选方案：</h3><ul>
+<li>1:在xml中进行显式配置</li>
+<li>2：在java中进行显式配置</li>
+<li>3：隐式的bean发现机制和自动装配－－－－－－建议使用这个，显式配置越少越好</li>
+</ul>
+<h3 id="自动化装配"><a href="#自动化装配" class="headerlink" title="自动化装配"></a>自动化装配</h3><p>Spring从两个角度实现自动化装配</p>
+<ul>
+<li>1:组件扫描（component scanning）：Spring能够自动发现应用上下文所创建的bean</li>
+<li>2:自动装配（auto wiring）：Spring能够自动满足bean之间的依赖</li>
+</ul>
+<h5 id="带有-Component注解，告知Spring，为这个类创建Bean"><a href="#带有-Component注解，告知Spring，为这个类创建Bean" class="headerlink" title="带有@Component注解，告知Spring，为这个类创建Bean"></a>带有@Component注解，告知Spring，为这个类创建Bean</h5><p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">@Component</div><div class="line">public class SgtPeppers implements CompactDisc&#123;</div><div class="line">	private String title=&quot;tianmimi&quot;;</div><div class="line">	private String artist=&quot;denglijun&quot;;</div><div class="line">	public void play() &#123;</div><div class="line">		System.out.println(artist+&quot; sing &quot;+title);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="ComponentScan注解启用组件扫描"><a href="#ComponentScan注解启用组件扫描" class="headerlink" title="@ComponentScan注解启用组件扫描"></a>@ComponentScan注解启用组件扫描</h5><ul>
+<li>1.组件扫描默认不启用，所以需要在这里配置声明启用，@ComponentScan会扫描这个包以及这个包下的所有子包，查找所* 有带有@Component注解的类。</li>
+<li>2.@Configuration标注在类上，相当于把该类作为spring的xml配置文件中的<beans>，作用为：配置spring容器(应用上下文)</beans></li>
+<li>3.可通过@Component（“sgt”）为bean命名，也可使用@Named（“sgt”）进行命名，推荐使用@Component（“sgt”）这种方式</li>
+<li>4.@ComponentScan（“sound system”），可通过这种方式设置基础包，或者通过@ComponentScan（basePackages＝“sound system”），可以更加清晰表达声明，基础包也可以有多个，通过如下设置@ComponentScan（basePackages＝｛“sound system”，“video”｝），如果担心重构，修改配置的包名，则可以通过如下方式设置@ComponentScan（basePackages＝｛CDPlayer.class，DVDPlay.class｝）<br>代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import org.springframework.context.annotation.ComponentScan;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line"></div><div class="line">@Configuration</div><div class="line">@ComponentScan</div><div class="line">public class CDPlayConfig &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>测试代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import static org.junit.Assert.assertNotNull;</div><div class="line"></div><div class="line">import org.junit.Test;</div><div class="line">import org.junit.runner.RunWith;</div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.test.context.ContextConfiguration;</div><div class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(classes=CDPlayConfig.class)</div><div class="line">public class CDPlayerTest &#123;</div><div class="line">	@Autowired</div><div class="line">	private CompactDisc cd;</div><div class="line">	@Test</div><div class="line">	public void cdShouldNotBeNull() &#123;</div><div class="line">		assertNotNull(cd);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用@RunWith(SpringJUnit4ClassRunner.class)，测试开始时自动创建应用上下文<br>@ContextConfiguration(classes=CDPlayConfig.class)，告诉通过CDPlayConfig.class进行加载配置<br>@Autowired为cd自动装配<br>如果spring启动成功了，则cd应该可以自动装配，取得实例，我们通过验证cd是否为null进行判断。</p>
+<h5 id="自动装配-Autowired"><a href="#自动装配-Autowired" class="headerlink" title="自动装配@Autowired"></a>自动装配@Autowired</h5><p>1，@Autowired可以用在构造函数上<br>2，@Autowired可以用在Setter方法上活着其他方法上<br>如果@Autowired发现没有匹配的bean，会抛异常，如果有多个匹配的，也会抛异常</p>
+<h3 id="在java中进行显式配置"><a href="#在java中进行显式配置" class="headerlink" title="在java中进行显式配置"></a>在java中进行显式配置</h3><p>具体代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">public interface CompactDisc &#123;</div><div class="line">	void play();</div><div class="line">&#125;</div><div class="line">public class SgtPeppers implements CompactDisc&#123;</div><div class="line">	private String title=&quot;tianmimi&quot;;</div><div class="line">	private String artist=&quot;denglijun&quot;;</div><div class="line">	public void play() &#123;</div><div class="line">		System.out.println(artist+&quot; sing &quot;+title);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public interface MediaPlayer &#123;</div><div class="line">	public void play();</div><div class="line">&#125;</div><div class="line">public class CDPlayer implements MediaPlayer &#123;</div><div class="line">	private CompactDisc cd;</div><div class="line">	</div><div class="line">	public CDPlayer(CompactDisc cd) &#123;</div><div class="line">		this.cd=cd;</div><div class="line">	&#125;</div><div class="line">	public void play() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		cd.play();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//配置java类</div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line">@Configuration</div><div class="line"></div><div class="line">public class CDPlayConfig2 &#123;</div><div class="line">@Bean</div><div class="line">public CompactDisc sgtPeppers() &#123;</div><div class="line">	return new SgtPeppers();</div><div class="line">&#125;</div><div class="line">@Bean</div><div class="line">public CDPlayer cdPlayer() &#123;</div><div class="line">	return new CDPlayer(sgtPeppers());</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">//测试代码</div><div class="line">import static org.junit.Assert.assertEquals;</div><div class="line">import static org.junit.Assert.assertNotNull;</div><div class="line"></div><div class="line">import org.junit.Rule;</div><div class="line">import org.junit.Test;</div><div class="line">import org.junit.contrib.java.lang.system.StandardOutputStreamLog;</div><div class="line">import org.junit.runner.RunWith;</div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.test.context.ContextConfiguration;</div><div class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(classes=CDPlayConfig2.class)</div><div class="line">public class CDPlayerTest2 &#123;</div><div class="line">	@Rule</div><div class="line">	public final StandardOutputStreamLog log=new StandardOutputStreamLog();</div><div class="line">	@Autowired</div><div class="line">	private MediaPlayer player;</div><div class="line">	@Autowired</div><div class="line">	private CompactDisc cd;</div><div class="line">	@Test</div><div class="line">	public void cdShouldNotNull() &#123;</div><div class="line">		assertNotNull(cd);</div><div class="line">	&#125;</div><div class="line">	@Test</div><div class="line">	public void play() &#123;</div><div class="line">		player.play();</div><div class="line">		assertEquals(&quot;denglijun sing tianmimi\n&quot;,log.getLog());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意要点如下：<br>1:默认情况下，bean的id和带有@Bean注解的方法名一样的<br>2:也可通过如下方法设置Bean的id<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Bean(name=“sgt”)</div><div class="line">public CompactDisc sgtPeppers() &#123;</div><div class="line">	return new SgtPeppers();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3:默认情况下，Spring的bean都是单例的。</p>
+<h3 id="XML装配Bean"><a href="#XML装配Bean" class="headerlink" title="XML装配Bean"></a>XML装配Bean</h3><p>1:学习xml只是用来维护已有的xml配置，在完成新的Spring工作时，希望你会使用自动化配置和JavaConfig<br>2:xml配置的缺点，Javaconfig创建实例的方法更强大，而xml有固定方式；Bean的类型是以字符串对形式设置在class属性中，谁能保证设置在class属性的值是真正的类呢》Spring的xml配置并不能编译期的类型检查中受益。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public interface CompactDisc &#123;</div><div class="line">	void play();</div><div class="line">&#125;</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public class DVD implements CompactDisc &#123;</div><div class="line"></div><div class="line">	private String title;</div><div class="line">	private String artist;</div><div class="line">	public DVD(String title,String artist) &#123;</div><div class="line">		this.title=title;</div><div class="line">		this.artist=artist;</div><div class="line">	&#125;</div><div class="line">	public String getTitle() &#123;</div><div class="line">		return title;</div><div class="line">	&#125;</div><div class="line">	public void setTitle(String title) &#123;</div><div class="line">		this.title = title;</div><div class="line">	&#125;</div><div class="line">	public String getArtist() &#123;</div><div class="line">		return artist;</div><div class="line">	&#125;</div><div class="line">	public void setArtist(String artist) &#123;</div><div class="line">		this.artist = artist;</div><div class="line">	&#125;</div><div class="line">	public void play() &#123;</div><div class="line">		System.out.println(artist+&quot; sing &quot;+title);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public interface MediaPlayer &#123;</div><div class="line">	public void play();</div><div class="line">&#125;</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public class DVDPlayer implements MediaPlayer &#123;</div><div class="line">	private CompactDisc dvd;</div><div class="line">	public DVDPlayer(CompactDisc dvd) &#123;</div><div class="line">		this.dvd=dvd;</div><div class="line">	&#125;</div><div class="line">	public void play() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		dvd.play();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//混合配置java配置和xml配置</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line">import org.springframework.context.annotation.ImportResource;</div><div class="line">@Configuration</div><div class="line">@ImportResource(&quot;classpath:com/study/javaproject/soundsystem/dvd-config.xml&quot;)</div><div class="line">public class CDPlayConfig2 &#123;</div><div class="line">@Bean</div><div class="line">public CompactDisc sgtPeppers() &#123;</div><div class="line">	return new SgtPeppers();</div><div class="line">&#125;</div><div class="line">@Bean</div><div class="line">public CDPlayer cdPlayer() &#123;</div><div class="line">	return new CDPlayer(sgtPeppers());</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//xml配置文件</div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:jdbc=&quot;http://www.springframework.org/schema/jdbc&quot;  </div><div class="line">    xmlns:jee=&quot;http://www.springframework.org/schema/jee&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</div><div class="line">    xmlns:util=&quot;http://www.springframework.org/schema/util&quot; xmlns:task=&quot;http://www.springframework.org/schema/task&quot; xsi:schemaLocation=&quot;</div><div class="line">        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd&quot; default-lazy-init=&quot;false&quot;&gt;</div><div class="line"></div><div class="line">&lt;bean id=&quot;dvd&quot; class=&quot;com.study.javaproject.soundsystem.DVD&quot;&gt;</div><div class="line">	&lt;constructor-arg value=&quot;shuangjiegun&quot; /&gt;</div><div class="line">	&lt;constructor-arg value=&quot;denglijun&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line">&lt;bean id=&quot;dvdplayer&quot; class=&quot;com.study.javaproject.soundsystem.DVDPlayer&quot;&gt;</div><div class="line">	&lt;constructor-arg ref=&quot;dvd&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div><div class="line">//测试代码</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import static org.junit.Assert.assertEquals;</div><div class="line">import static org.junit.Assert.assertNotNull;</div><div class="line"></div><div class="line">import org.junit.Rule;</div><div class="line">import org.junit.Test;</div><div class="line">import org.junit.contrib.java.lang.system.StandardOutputStreamLog;</div><div class="line">import org.junit.runner.RunWith;</div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.test.context.ContextConfiguration;</div><div class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(classes=CDPlayConfig2.class)</div><div class="line">public class CDPlayerTest2 &#123;</div><div class="line">	@Rule</div><div class="line">	public final StandardOutputStreamLog log=new StandardOutputStreamLog();</div><div class="line">	@Autowired</div><div class="line">	private DVDPlayer player;</div><div class="line">	@Autowired</div><div class="line">	private DVD dvd;</div><div class="line">	@Test</div><div class="line">	public void cdShouldNotNull() &#123;</div><div class="line">		assertNotNull(dvd);</div><div class="line">	&#125;</div><div class="line">	@Test</div><div class="line">	public void play() &#123;</div><div class="line">		player.play();</div><div class="line">		assertEquals(&quot;denglijun sing shuangjiegun\n&quot;,log.getLog());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/08/2018030802/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018030702" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/07/2018030702/">HashMap和ConcurrentHashMap的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/07/2018030702/" class="archive-article-date">
+  	<time datetime="2018-03-07T11:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近，项目组在一个交易所的项目中出现了多线程的问题，简单记录描述分享下。</p>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>在一个单例需要存放订阅关系，使用了静态，HashMap来声明，但是服务中有多个线程会同时访问这个对象，并执行写动作，从而有概率发生死循环。</p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>HashMap是非线程安全的集合框架，多线程会导致HashMap的Entry链表形成环形数据结构，查找时会陷入死循环。因此在并发线程中，建议使用ConcurrentHashMap这种集合框架。<br>当往HashMap中添加元素时，会引起HashMap容器的扩容，源代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/** </div><div class="line">    * </div><div class="line">    * 往表中添加元素，如果插入元素之后，表长度不够，便会调用resize方法扩容 </div><div class="line">    */  </div><div class="line">   void addEntry(int hash, K key, V value, int bucketIndex) &#123;  </div><div class="line">Entry&lt;K,V&gt; e = table[bucketIndex];  </div><div class="line">       table[bucketIndex] = new Entry&lt;K,V&gt;(hash, key, value, e);  </div><div class="line">       if (size++ &gt;= threshold)  </div><div class="line">           resize(2 * table.length);  </div><div class="line">   &#125;  </div><div class="line">  </div><div class="line">   /** </div><div class="line">    * resize()方法如下，重要的是transfer方法，把旧表中的元素添加到新表中</div><div class="line">    */  </div><div class="line">   void resize(int newCapacity) &#123;  </div><div class="line">       Entry[] oldTable = table;  </div><div class="line">       int oldCapacity = oldTable.length;  </div><div class="line">       if (oldCapacity == MAXIMUM_CAPACITY) &#123;  </div><div class="line">           threshold = Integer.MAX_VALUE;  </div><div class="line">           return;  </div><div class="line">       &#125;  </div><div class="line">  </div><div class="line">       Entry[] newTable = new Entry[newCapacity];  </div><div class="line">       transfer(newTable);  </div><div class="line">       table = newTable;  </div><div class="line">       threshold = (int)(newCapacity * loadFactor);  </div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>参考上面的代码，便引入到了transfer方法，这就是HashMap并发时，会引起死循环的根本原因所在，下面结合transfer的源代码，说明一下产生死循环的原理，先列transfer代码（这是里JDK7的源码），如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * Transfers all entries from current table to newTable.</div><div class="line">     */</div><div class="line">    void transfer(Entry[] newTable, boolean rehash) &#123;</div><div class="line">        int newCapacity = newTable.length;</div><div class="line">        for (Entry&lt;K,V&gt; e : table) &#123;</div><div class="line"></div><div class="line">            while(null != e) &#123;</div><div class="line">                Entry&lt;K,V&gt; next = e.next;            ---------------------(1)</div><div class="line">                if (rehash) &#123;</div><div class="line">                    e.hash = null == e.key ? 0 : hash(e.key);</div><div class="line">                &#125;</div><div class="line">                int i = indexFor(e.hash, newCapacity); </div><div class="line">                e.next = newTable[i];</div><div class="line">                newTable[i] = e;</div><div class="line">                e = next;</div><div class="line">            &#125; // while</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>transfer这步会产生环形链表，从而导致查询的时候，陷入死循环。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/07/2018030702/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018030701" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/07/2018030701/">PRC服务和HTTP服务对比</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/07/2018030701/" class="archive-article-date">
+  	<time datetime="2018-03-07T04:58:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>此前，有人问RPC服务和HTTP服务之间的区别，自己也不太懂，今天通过百度学习下，从一些博客中摘录部分内容，做个笔记。<br>原文链接：<br><a href="http://blog.csdn.net/wangyunpeng0319/article/details/78651998" target="_blank" rel="external">http://blog.csdn.net/wangyunpeng0319/article/details/78651998</a></p>
+<h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h3><p>RPC主要是基于TCP/IP协议的，而HTTP服务主要是基于HTTP协议的，我们都知道HTTP协议是在传输层协议TCP之上的，所以效率来看的话，RPC当然是要更胜一筹.</p>
+<p>在说RPC和HTTP的区别之前，我觉的有必要了解一下OSI的七层网络结构模型（虽然实际应用中基本上都是五层），它可以分为以下几层： （从上到下）</p>
+<p>第一层：应用层。定义了用于在网络中进行通信和传输数据的接口；<br>第二层：表示层。定义不同的系统中数据的传输格式，编码和解码规范等；<br>第三层：会话层。管理用户的会话，控制用户间逻辑连接的建立和中断；<br>第四层：传输层。管理着网络中的端到端的数据传输；<br>第五层：网络层。定义网络设备间如何传输数据；<br>第六层：链路层。将上面的网络层的数据包封装成数据帧，便于物理层传输；<br>第七层：物理层。这一层主要就是传输这些二进制数据。<br>实际应用过程中，五层协议结构里面是没有表示层和会话层的。应该说它们和应用层合并了。我们应该将重点放在应用层和传输层这两个层面。因为HTTP是应用层协议，而TCP是传输层协议。好，知道了网络的分层模型以后我们可以更好地理解为什么RPC服务相比HTTP服务要Nice一些！</p>
+<h3 id="RPC基本架构"><a href="#RPC基本架构" class="headerlink" title="RPC基本架构"></a>RPC基本架构</h3><p>说说RPC服务的基本架构吧。允许我可耻地盗一幅图哈~我们可以很清楚地看到，一个完整的RPC架构里面包含了四个核心的组件，分别是Client ,Server,Client Stub以及Server Stub，这个Stub大家可以理解为存根。分别说说这几个组件：</p>
+<p>客户端（Client），服务的调用方。<br>服务端（Server），真正的服务提供者。<br>客户端存根，存放服务端的地址消息，再将客户端的请求参数打包成网络消息，然后通过网络远程发送给服务方。<br>服务端存根，接收客户端发送过来的消息，将消息解包，并调用本地的方法。<br><img src="https://obrxbqjbi.qnssl.com/blog/image/rpc-architecture.jpg" alt="Image text"></p>
+<p>RPC主要是用在大型企业里面，因为大型企业里面系统繁多，业务线复杂，而且效率优势非常重要的一块，这个时候RPC的优势就比较明显了。实际的开发当中是这么做的，项目一般使用maven来管理。比如我们有一个处理订单的系统服务，先声明它的所有的接口（这里就是具体指Java中的interface），然后将整个项目打包为一个jar包，服务端这边引入这个二方库，然后实现相应的功能，客户端这边也只需要引入这个二方库即可调用了。</p>
+<h3 id="RPC框架"><a href="#RPC框架" class="headerlink" title="RPC框架"></a>RPC框架</h3><p>目前流行的开源RPC框架还是比较多的。下面重点介绍三种：</p>
+<p>1:gRPC是Google最近公布的开源软件，基于最新的HTTP2.0协议，并支持常见的众多编程语言。 我们知道HTTP2.0是基于二进制的HTTP协议升级版本，目前各大浏览器都在快马加鞭的加以支持。 这个RPC框架是基于HTTP协议实现的，底层使用到了Netty框架的支持。<br>2:Thrift是Facebook的一个开源项目，主要是一个跨语言的服务开发框架。它有一个代码生成器来对它所定义的IDL定义文件自动生成服务代码框架。用户只要在其之前进行二次开发就行，对于底层的RPC通讯等都是透明的。不过这个对于用户来说的话需要学习特定领域语言这个特性，还是有一定成本的。<br>3:Dubbo是阿里集团开源的一个极为出名的RPC框架，在很多互联网公司和企业应用中广泛使用。协议和序列化框架都可以插拔是及其鲜明的特色。同样 的远程接口是基于Java Interface，并且依托于spring框架方便开发。可以方便的打包成单一文件，独立进程运行，和现在的微服务概念一致。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>RPC服务和HTTP服务还是存在很多的不同点的，一般来说，RPC服务主要是针对大型企业的，而HTTP服务主要是针对小企业的，因为RPC效率更高，而HTTP服务开发迭代会更快。总之，选用什么样的框架不是按照市场上流行什么而决定的，而是要对整个项目进行完整地评估，从而在仔细比较两种开发框架对于整个项目的影响，最后再决定什么才是最适合这个项目的。一定不要为了使用RPC而每个项目都用RPC，而是要因地制宜，具体情况具体分析。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/07/2018030701/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018030602" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -712,368 +1098,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022302" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/2018022302/">解释器模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/23/2018022302/" class="archive-article-date">
-  	<time datetime="2018-02-23T03:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:Context类，包含解释器之外的全局信息<br>2:抽象表达式，声明一个抽象的解释操作，这个接口为抽象语法树中所有节点所共享。<br>3:终结符表达式，实现文法中与终结符相关的解释操作。<br>4:非终结符表示式，实现文法中与非终结符相关的解释操作。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:如果一个特定类型的问题发生频率足够高，那么可能就值得将改问题的各个实例表述为一个简单语言中的句子，这样可以构建一个解释器，该解释器通过解释这些句子来解决问题。<br>2:当有一个语言需要解释执行，并且可将该语言中的句子表示为一个抽象语法树，可使用解释器模式。<br>3:解释器需要为每一个规则至少定义一个类，因此当文法非常复杂时，使用其他的技术如语法分析程序或者编译器生成器来解决问题。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">//Context类</div><div class="line">public class Context &#123;</div><div class="line">	private String input;</div><div class="line">	private String output;</div><div class="line">	public String getInput() &#123;</div><div class="line">		return input;</div><div class="line">	&#125;</div><div class="line">	public void setInput(String input) &#123;</div><div class="line">		this.input = input;</div><div class="line">	&#125;</div><div class="line">	public String getOutput() &#123;</div><div class="line">		return output;</div><div class="line">	&#125;</div><div class="line">	public void setOutput(String output) &#123;</div><div class="line">		this.output = output;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//抽象表达式</div><div class="line">public abstract class AbstractExpression &#123;</div><div class="line">	public abstract void interpret(Context context);</div><div class="line">&#125;</div><div class="line">//终结符表达式</div><div class="line">public class TerminalExpression extends AbstractExpression&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void interpret(Context context) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;Terminal Expression.&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//非终结符表示式</div><div class="line">public class NonterminalExpression extends AbstractExpression&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void interpret(Context context) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;NonterminalExpression&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestInterpreter &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Context context=new Context();</div><div class="line">		List&lt;AbstractExpression&gt; list=new ArrayList&lt;AbstractExpression&gt;();</div><div class="line">		list.add(new TerminalExpression());</div><div class="line">		list.add(new NonterminalExpression());</div><div class="line">		list.add(new TerminalExpression());</div><div class="line">		list.add(new TerminalExpression());</div><div class="line">		for(AbstractExpression e:list) &#123;</div><div class="line">			e.interpret(context);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/23/2018022302/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/2018022301/">访问者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/23/2018022301/" class="archive-article-date">
-  	<time datetime="2018-02-23T02:29:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>表示作用于某对象结构中的各元素的操作。在不改变各元素的类的前提下定义作用于这些元素的新操作。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:访问者抽象类，为每一个元素实现类定义一个方法<br>2:访问者实现类，对元素的新操作，可以增加这样的类<br>3:元素抽象类，定义一个Accept操作，以一个访问者为参数<br>4:元素实现类，<br>5:ObjectStructure类，能枚举它的元素，提供一个高层的接口以允许访问者访问它的元素</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:访问者模式适用于数据结构（元素个数）相对稳定的系统，它把数据结构和作用于结构上的操作之间的耦合解脱开，使得操作集合可以相对自由地演化<br>2:访问者模式增加新的操作比较容易，但不允许元素增加。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line">//访问者抽象类</div><div class="line">public abstract class Action &#123;</div><div class="line">	public abstract void getManConclusion(Man person1);</div><div class="line">	public abstract void getWomanConclusion(Woman person2);</div><div class="line">&#125;</div><div class="line">//访问者实现类</div><div class="line">public class Success extends Action&#123;</div><div class="line">	private String name=&quot;成功&quot;;</div><div class="line">	@Override</div><div class="line">	public void getManConclusion(Man person1) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person1.name+this.name+&quot;时，背后往往有一个伟大的女人。&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void getWomanConclusion(Woman person2) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person2.name+this.name+&quot;时，背后大多有一个不成功的男人。&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//访问者实现类</div><div class="line">public class Fail extends Action&#123;</div><div class="line">	private String name=&quot;失败&quot;;</div><div class="line">	@Override</div><div class="line">	public void getManConclusion(Man person1) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person1.name+this.name+&quot;时，闷头喝酒，谁也不用劝&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void getWomanConclusion(Woman person2) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(person2.name+this.name+&quot;时，眼泪汪汪，谁也劝不了&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//元素抽象类</div><div class="line">public abstract class Person &#123;</div><div class="line">	public abstract void accept(Action visitor);</div><div class="line">&#125;</div><div class="line">//元素实现类</div><div class="line">public class Man extends Person&#123;</div><div class="line">	public String name=&quot;男人&quot;;</div><div class="line">	@Override</div><div class="line">	public void accept(Action visitor) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		visitor.getManConclusion(this);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//元素实现类</div><div class="line">public class Woman extends Person&#123;</div><div class="line">	public String name=&quot;女人&quot;;</div><div class="line">	@Override</div><div class="line">	public void accept(Action visitor) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		visitor.getWomanConclusion(this);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//ObjectStructure类</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line">public class ObjectStructure &#123;</div><div class="line">	private List&lt;Person&gt; elements=new ArrayList&lt;Person&gt;();</div><div class="line">	public void add(Person p) &#123;</div><div class="line">		elements.add(p);</div><div class="line">	&#125;</div><div class="line">	public void remove(Person p) &#123;</div><div class="line">		elements.remove(p);</div><div class="line">	&#125;</div><div class="line">	public void dislpay(Action visitor) &#123;</div><div class="line">		for(Person e:elements) &#123;</div><div class="line">			e.accept(visitor);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestVisitor &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Man man=new Man();</div><div class="line">		Woman woman=new Woman();</div><div class="line">		ObjectStructure  o=new ObjectStructure();</div><div class="line">		o.add(man);</div><div class="line">		o.add(woman);</div><div class="line">		Success s=new Success();</div><div class="line">		o.dislpay(s);</div><div class="line">		Fail f=new Fail();</div><div class="line">		o.dislpay(f);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/23/2018022301/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022204" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022204/">享元模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022204/" class="archive-article-date">
-  	<time datetime="2018-02-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>运用共享技术有效地支持大量细粒度的对象。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:flyweight类，它时所有具体享元类的超类或接口，接受并作用于外部状态<br>2:ConcreteFlyweight是继承Flyweight类或者实现Flyweight接口，为内部状态增加存储空间。<br>3:享元工厂，创建并管理flyweighy对象。当用户需要一个flyweight对象时，提供一个实例或者创造一个（当不存在时）。</p>
-<h3 id="适用情况"><a href="#适用情况" class="headerlink" title="适用情况"></a>适用情况</h3><p>1:如果一个应用程序使用了大量的对象，而大量的这些对象造成了很大的存储开销的时候考虑使用<br>2:对象的大多数状态可以外部状态，如果删除这些对象的外部状态，可以使用相对较少的共享对象取代很多组对象，可以考虑使用</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">	private String name;</div><div class="line">	public User(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	public String getName() &#123;</div><div class="line">		return name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setName(String name) &#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public abstract class Website &#123;</div><div class="line">	public abstract void use(User user);</div><div class="line">&#125;</div><div class="line">public class ConcreteWebsite extends Website&#123;</div><div class="line">	private String name;</div><div class="line">	public ConcreteWebsite(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void use(User user) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;now &quot;+user.getName()+&quot; use the website:&quot;+name);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">import java.util.Hashtable;</div><div class="line"></div><div class="line">public class WebsiteFactory &#123;</div><div class="line">	private Hashtable&lt;String,Website&gt; websites=new Hashtable&lt;String,Website&gt;();</div><div class="line">	public Website getWebsite(String name) &#123;</div><div class="line">		if(websites.contains(name)) &#123;</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;else &#123;</div><div class="line">			websites.put(name, new ConcreteWebsite(name));</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	public int getWebsiteCount() &#123;</div><div class="line">		return websites.size();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestFlyweight &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		WebsiteFactory f=new WebsiteFactory();</div><div class="line">		User user1=new User(&quot;ldd&quot;);</div><div class="line">		User user2=new User(&quot;xxb&quot;);</div><div class="line">		User user3=new User(&quot;zh&quot;);</div><div class="line">		User user4=new User(&quot;lxx&quot;);</div><div class="line">		Website web1=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web1.use(user1);</div><div class="line">		Website web2=f.getWebsite(&quot;app&quot;);</div><div class="line">		web2.use(user2);</div><div class="line">		Website web3=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web3.use(user3);</div><div class="line">		Website web4=f.getWebsite(&quot;app&quot;);</div><div class="line">		web4.use(user4);</div><div class="line">		System.out.println(&quot;now the size:&quot;+f.getWebsiteCount());</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022204/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022203" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022203/">中介者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022203/" class="archive-article-date">
-  	<time datetime="2018-02-22T07:57:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>用一个中介对象来封装一系列的对象交互，中介者使得各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变他们之间的交互。</p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>将网状通信变为星状通信，将交互集中到中间者这个类中。</p>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>中介者会变得异常复杂，从而难以维护。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>系统中对象之间存在比较复杂的引用关系，导致它们之间的依赖关系结构混乱而且难以复用该对象。 2、想通过一个中间类来封装多个类中的行为，而又不想生成太多的子类。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public abstract class Colleague &#123;</div><div class="line">	protected Mediator mediator;</div><div class="line">	public Colleague(Mediator m) &#123;</div><div class="line">		this.mediator=m;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class ConcreteColleague1 extends Colleague&#123;</div><div class="line"></div><div class="line">	public ConcreteColleague1(Mediator m) &#123;</div><div class="line">		super(m);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line">	public void send(String message) &#123;</div><div class="line">		mediator.send(message, this);</div><div class="line">	&#125;</div><div class="line">	public void notify(String message) &#123;</div><div class="line">		System.out.println(&quot;c1 get the message:&quot;+message);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ConcreteColleague2 extends Colleague&#123;</div><div class="line">	public ConcreteColleague2(Mediator m) &#123;</div><div class="line">		super(m);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line">	public void send(String message) &#123;</div><div class="line">		mediator.send(message, this);</div><div class="line">	&#125;</div><div class="line">	public void notify(String message) &#123;</div><div class="line">		System.out.println(&quot;c2 get the message:&quot;+message);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public abstract class Mediator &#123;</div><div class="line">	public abstract void send(String message,Colleague colleague);</div><div class="line">&#125;</div><div class="line">public class ConcreteMediator extends Mediator&#123;</div><div class="line">	private ConcreteColleague1 c1;</div><div class="line">	private ConcreteColleague2 c2;</div><div class="line">	public void setC1(ConcreteColleague1 c1) &#123;</div><div class="line">		this.c1 = c1;</div><div class="line">	&#125;</div><div class="line">	public void setC2(ConcreteColleague2 c2) &#123;</div><div class="line">		this.c2 = c2;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void send(String message, Colleague colleague) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(colleague instanceof ConcreteColleague1) &#123;</div><div class="line">			c2.notify(message);</div><div class="line">		&#125;else &#123;</div><div class="line">			c1.notify(message);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestMediator &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		ConcreteMediator m1=new ConcreteMediator();</div><div class="line">		ConcreteColleague1 c1=new ConcreteColleague1(m1);</div><div class="line">		ConcreteColleague2 c2=new ConcreteColleague2(m1);</div><div class="line">		m1.setC1(c1);</div><div class="line">		m1.setC2(c2);</div><div class="line">		c1.send(&quot;hi,i am c1&quot;);</div><div class="line">		c2.send(&quot;hi,i am c2&quot;);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022203/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1189,15 +1213,23 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
               </li>
              
               <li class="article-tag-list-item">
