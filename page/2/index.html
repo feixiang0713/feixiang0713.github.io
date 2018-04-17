@@ -159,6 +159,102 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018032101" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/21/2018032101/">类图</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/21/2018032101/" class="archive-article-date">
+  	<time datetime="2018-03-21T13:46:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近公司强调程序设计，回顾下大学时的东西，方便今后工作开展，今天先学习类图设计。</p>
+<h3 id="类图的作用和目的"><a href="#类图的作用和目的" class="headerlink" title="类图的作用和目的"></a>类图的作用和目的</h3><p>类图一般在详细设计过程中出现，主要用来描述系统中各个模块中类之间的关系，包括类或者类与接口的继承关系，类之间的依赖、聚合等关系。它还描述每一个类的详细信息，包括变量，和方法。<br>通过类图，就能实际的把系统中的各个类，即对象描述清楚，下一步就是按照这个详细的设计编码了。</p>
+<h3 id="如何画图"><a href="#如何画图" class="headerlink" title="如何画图"></a>如何画图</h3><h5 id="类和接口"><a href="#类和接口" class="headerlink" title="类和接口"></a>类和接口</h5><p><img src="http://img.blog.csdn.net/20160317160653320" alt="Image text"><br>首先，看动物矩形框，它代表一个类。<br>类图分三层：<br>1:第一层表示类的名称，如果是抽象类，则用斜体<br>2:第二层表示类的特性，通常是字段和属性<br>3:第三层表示类的操作，通常是方法和行为。<br>＋表示public<br>－表示private<br>＃表示protected</p>
+<p>接口（图中是飞翔）分两层<br>第一行是接口名称，第二行表示接口方法</p>
+<h5 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h5><p>1:继承关系，鸟基础动物，用空心三角形＋实线来表示<br>2:接口实现关系，大雁实现飞翔接口，用空心三角形＋虚线表示<br>3:聚合关系（Aggregation）大雁和雁群，用空心的菱形（雁群）＋实线箭头（大雁）来表示，弱拥有关系<br>4:组合（Composition）关系一种强的拥有关系，体现了严格的部分和整体的关系，部分和整体的生命周期一样。在这里鸟和其翅膀就是组合关系，因为它们是部分和整体的关系，并且翅膀和鸟的生命周期是相同的。组合关系用实习的菱形（鸟） + 实线箭头（翅膀）来表示<br>5:依赖关系，动物的几大特征，比如有新陈代谢，能繁殖。而动物要有生命力，需要氧气、水以及食物等。也就是说，动物依赖于氧气和水。他们之间是依赖关系（Dependency），用虚线箭头来表示</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">UML</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/21/2018032101/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018030801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1009,95 +1105,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022303" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/2018022303/">抽象工厂模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/23/2018022303/" class="archive-article-date">
-  	<time datetime="2018-02-23T10:13:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>为创建一组相关或者依赖的对象提供一个接口，而不需要知道具体的对象。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:系统不依赖于产品类实例如何被创建，组合和表达的细节。<br>2.系统的产品有多于一个的产品族，而系统只消费其中某一族的产品（抽象工厂模式的原始用意Unix&amp;Windows）<br>Button—&gt;UnixButton/WinButton<br>Text—–&gt;UnixText/WinText<br>Unix产品族和Windows产品族，不会同时使用。<br>Factory—&gt;UnixFactory/WinFactory<br>3.同属于同一个产品族是在一起使用的。这一约束必须在系统的设计中体现出来。<br>4.系统提供一个产品类的库，所有产品以同样的接口出现，从而使客户端不依赖于实现</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">public abstract class AbstractButton &#123;</div><div class="line">	public abstract void desc();</div><div class="line">&#125;</div><div class="line">public abstract class AbstractText &#123;</div><div class="line">	public abstract void desc();</div><div class="line">&#125;</div><div class="line">public abstract class AbstractFactory &#123;</div><div class="line">	public abstract AbstractButton createButton();</div><div class="line">	public abstract AbstractText createText();</div><div class="line">&#125;</div><div class="line">public class UnixButton extends AbstractButton&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is unixButtion.&quot;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public class UnixText extends AbstractText&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is UnixText&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class UnixFactory extends AbstractFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractButton createButton() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new UnixButton();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractText createText() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new UnixText();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class WindowsButton extends AbstractButton&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is WindowsButton&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class WindowsText extends AbstractText&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is WindowsText&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class WindowsFactory extends AbstractFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractButton createButton() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new WindowsButton();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractText createText() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new WindowsText();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestAbstractFactory &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		AbstractFactory f=new WindowsFactory();</div><div class="line">		AbstractButton b=f.createButton();</div><div class="line">		b.desc();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/23/2018022303/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1221,15 +1228,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UML</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UML</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1238,6 +1241,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>
