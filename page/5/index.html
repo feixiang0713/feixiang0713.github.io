@@ -159,6 +159,94 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018020601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/06/2018020601/">工厂方法模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/06/2018020601/" class="archive-article-date">
+  	<time datetime="2018-02-06T11:43:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><h4 id="组成："><a href="#组成：" class="headerlink" title="组成："></a>组成：</h4><p>1.抽象类<br>2.实现子类<br>3.简单工厂</p>
+<h4 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">//抽象类</div><div class="line">public abstract class Animal &#123;</div><div class="line">	public abstract void desc();</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Bird extends Animal&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a bird&quot;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Cat extends Animal &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a cat&quot;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Dog extends Animal &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a dog&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//静态工厂</div><div class="line">public class AnimalFactory &#123;</div><div class="line">   public static final int paramCat=1;</div><div class="line">   public static final int paramDog=2;</div><div class="line">   public static final int paramBird=3;</div><div class="line">   public static Animal CreateAnimal(int param) &#123;</div><div class="line">	   switch(param) &#123;</div><div class="line">		   case 1:</div><div class="line">			   return new Cat();</div><div class="line">		   case 2:</div><div class="line">			   return new Dog();</div><div class="line">		  default:</div><div class="line">			  return new Bird();</div><div class="line">	   &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">//测试方法</div><div class="line">public class TestAniaml &#123;</div><div class="line">      public static void main(String[] args) &#123;</div><div class="line">    	   		Animal cat=AnimalFactory.CreateAnimal(AnimalFactory.paramCat);</div><div class="line">    	   		cat.desc();</div><div class="line">    	   		Animal bird=MutiAnimalFactory.newBird();</div><div class="line">    	   		bird.desc();</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>定义了一个用于创建对象的接口，让子类决定实例化哪个类，工厂方法使一个类的实例化延迟到其子类。<br>组成<br>1:抽象类<br>2:实现子类<br>3:抽象工厂<br>4:具体实现工厂</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">//抽象类</div><div class="line">public interface Animal &#123;</div><div class="line">	public void desc();</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Bird implements Animal&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a bird.&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Fish implements Animal&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a fish&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//抽象工厂</div><div class="line">public interface AnimalFactory &#123;</div><div class="line">	public Animal create();</div><div class="line">&#125;</div><div class="line">//具体工厂</div><div class="line">public class BirdFactory implements AnimalFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Animal create() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new Bird();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体工厂</div><div class="line">public class FishFactory implements AnimalFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Animal create() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new Fish();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试方法</div><div class="line">public class TestAbstractFactory &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		AnimalFactory f=new BirdFactory();</div><div class="line">		Animal bird=f.create();</div><div class="line">		bird.desc();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="比较："><a href="#比较：" class="headerlink" title="比较："></a>比较：</h3><p>简单工厂：当需要扩展的时候，比如新增一个鸡类，除了扩展鸡这个类，同时需要修改简单工厂类，这违背了开闭原则。<br>工厂方法：如果需要扩展，可以新增一个鸡类，除了扩展鸡这个具体类，还需要新增一个具体实现的工厂，虽然多了一个开发工作量，多写一个工厂类，但遵循了开闭原则。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/06/2018020601/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018020502" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -977,11 +1065,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UML</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -990,10 +1086,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>

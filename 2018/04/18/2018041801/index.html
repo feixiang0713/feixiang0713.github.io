@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>留白</title>
+  <title>Oracle性能问题 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="留白">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="问题现象前台查询某机构的当日成交明细，查询时效达到20多秒。查询交易记录表A有九万多条数据，交易日切B表里有40多条记录，现在是根据A表里的机构代码查询B表的当日日期，并查询出A表里的交易日期等于B表当日日期。 select * from A where  A.tradeDate=(select B.workDate from B where B.branchid=A.branchid ) and">
+<meta name="keywords" content="ORACLE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle性能问题">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/2018041801/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="个人">
+<meta property="og:description" content="问题现象前台查询某机构的当日成交明细，查询时效达到20多秒。查询交易记录表A有九万多条数据，交易日切B表里有40多条记录，现在是根据A表里的机构代码查询B表的当日日期，并查询出A表里的交易日期等于B表当日日期。 select * from A where  A.tradeDate=(select B.workDate from B where B.branchid=A.branchid ) and">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-18T13:04:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="留白">
-<meta name="twitter:description" content="个人">
+<meta name="twitter:title" content="Oracle性能问题">
+<meta name="twitter:description" content="问题现象前台查询某机构的当日成交明细，查询时效达到20多秒。查询交易记录表A有九万多条数据，交易日切B表里有40多条记录，现在是根据A表里的机构代码查询B表的当日日期，并查询出A表里的交易日期等于B表当日日期。 select * from A where  A.tradeDate=(select B.workDate from B where B.branchid=A.branchid ) and">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -157,16 +159,14 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-2018041801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-2018041801" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/18/2018041801/">Oracle性能问题</a>
+    <h1 class="article-title" itemprop="name">
+      Oracle性能问题
     </h1>
   
 
@@ -193,6 +193,32 @@ and A.branchid= is_branchid;
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ox67fgze3.bkt.clouddn.com/zhifubao.JPG">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -211,16 +237,75 @@ and A.branchid= is_branchid;
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/18/2018041801/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/04/18/2018041801/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/16/2018041601/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">注解学习</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -240,94 +325,30 @@ and A.branchid= is_branchid;
 
 
 
+  
+  
+  
+
+  
+
+  
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/04/18/2018041801/",
+  owner: 'feixiang0713',
+  repo: 'feixiang0713.github.io',
+  oauth: {
+    client_id: '4994c86aeafdfb24073d',
+    client_secret: '09fc47c14a7eb26d4c1c98c3e19c226067c6e4f5',
+  },
+})
+gitment.render('gitment-ctn')
 </script>
-
-
   
-    <article id="post-2018041601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/16/2018041601/">注解学习</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/16/2018041601/" class="archive-article-date">
-  	<time datetime="2018-04-16T11:15:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="注解定义"><a href="#注解定义" class="headerlink" title="注解定义"></a>注解定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">modifiers @interface AnnotationName&#123;</div><div class="line">    	element declaration1</div><div class="line">	element declaration2</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>举例来说：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public @interface BugReport</div><div class="line">&#123;</div><div class="line">	String assignedTo() default “[none]”;</div><div class="line">	int severity=0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>可以按以下格式使用注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@BugReport（assignedTo＝“Harry”，severity＝10）</div></pre></td></tr></table></figure></p>
-<p>如果元素名字是value，只能按照下面形式书写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public @interface JasonFiled&#123;</div><div class="line">	String value();</div><div class="line">&#125;</div><div class="line"></div><div class="line">@JasonFiled(“Name”)</div></pre></td></tr></table></figure></p>
-<p>所有注解接口隐式扩展java.lang.annotation.Annotation接口</p>
-<h3 id="标准注解"><a href="#标准注解" class="headerlink" title="标准注解"></a>标准注解</h3><p>@Deprecated注解，可以添加到任何不再鼓励使用的项上；如果使用了一个过时的项，编译器会报警。<br>@SuppressWarnings注解会告知编译器阻止特殊类型的警告信息。例如@SuppressWarning（”unchecked”）.<br>@Override 这种注解只能应用到方法上，编译器会阻止具有这种注解的方法来覆盖一个超类的方法。<br>@PostConstruct标记了这些注解的方法，在构建之后被调用<br>@PreDestroy表姐了这个注解点方法，在移除之前被调用。<br>@Resource注解用于资源注入。<br>@Target，元注解，用于一个注解，限制该注解可以用到哪些项上。<br>@Retention，元注解，用于指定一个注解应该保留多长时间，默认值为RetentionPolicy.CLASS（类文件中的注解，但是虚拟机不需要将它们载入）。其他如RetentionPolicy.SOURCE（不包括在类文件中的注解），RetentionPolicy.RUNTIME（类文件中的注解，由虚拟机载入，通过反射API可获得它们。）<br>@Documented，元注解，为像Javadoc这样的文档工具提供了一些提示。<br>@Inherited 允许子类继承父类中的注解。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/16/2018041601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
 
 <script>
 var _hmt = _hmt || [];
@@ -338,770 +359,6 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
-  
-    <article id="post-2018041302" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/13/2018041302/">如何考察一个人java技术功底</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/13/2018041302/" class="archive-article-date">
-  	<time datetime="2018-04-13T11:38:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近单位组织面试外援，百度些内容，作为如何面试的参考</p>
-<h3 id="先让其自我介绍"><a href="#先让其自我介绍" class="headerlink" title="先让其自我介绍"></a>先让其自我介绍</h3><p>关注其表达能力，能否将项目内容讲解清楚，将使用的技术框架讲解清楚，以及个人工作内容责讲解清楚</p>
-<h3 id="关注工作经验的契合度"><a href="#关注工作经验的契合度" class="headerlink" title="关注工作经验的契合度"></a>关注工作经验的契合度</h3><h3 id="关注解决问题的能力"><a href="#关注解决问题的能力" class="headerlink" title="关注解决问题的能力"></a>关注解决问题的能力</h3><p>抛出一个问题，咨询他如何解决。</p>
-<h3 id="一些简单技术（JAVA）问题"><a href="#一些简单技术（JAVA）问题" class="headerlink" title="一些简单技术（JAVA）问题"></a>一些简单技术（JAVA）问题</h3><p>（1）：“==”和equals()之间的区别。<br>值类型（int,char,long,boolean等）都是用==判断相等性。对象引用的话，==判断引用所指的对象是否是同一个。equals是Object的成员函数，有些类会覆盖（override）这个方法，用于判断对象的等价性。例如String类，两个引用所指向的String都是”abc”，但可能出现他们实际对应的对象并不是同一个（和jvm实现方式有关），因此用==判断他们可能不相等，但用equals判断一定是相等的<br>（2）equals()和hashCode()方法被隐式调用时的约定？<br>equals()方法与hashCode()方法的隐式调用时的约定是:<br>1.如果两个对象相等(equals),那么他们必须拥有相同的哈希吗(hashCode)<br>2.即使两个对象拥有相同的hashCode，他们也不一定相等.<br>（3）面向对象的特征<br>封装<br>最常见的是把属性私有化封装在一个类里面，只能通过方法去访问<br>继承<br>子类继承父类，从而继承了父类的方法和属性<br>抽象<br>比如一个英雄类，抽象出了name,hp这些属性，使得开发过程中更加易于理解<br>多态<br>多态分操作符的多态和类的多态。 类的多态指父类引用指向子类对象，并且有继承，有重写。<br>（4）面相对象的设计目标<br>可扩展性Extensibility：有了新的需求，新的性能可以容易添加到系统中，不影响现有的性能，也不会带来新的缺陷。<br>可修改性Flexibility：系统一部分的代码要修改时不会破坏系统的现有结构，也不会影响到其它的部分。<br>可替换性Pluggability：可以将系统中的某些代码替换为相同接口的其它类，不会影响到系统。<br>（5）设计原则<br>单一职责原则<br>开放封闭原则<br>依赖倒置原则－－－－面向接口编程<br>里氏代换原则－－－－子类可替换父类<br>接口隔离原则<br>迪米特法则－－－－－不直接访问的类，不要直接发生相互作用，降低成员到访问权限<br>合成／聚合服用原则－－－尽量使用合成／聚合，尽量不要使用继承。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/13/2018041302/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018041201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/12/2018041201/">Spring Security学习（1）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/12/2018041201/" class="archive-article-date">
-  	<time datetime="2018-04-12T13:47:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Spring Security是基于Spring AOP和Servlet规范中的Filter实现的安全框架。<br>它为基于Spring的应用程序提供声明式安全保护的安全性框架。<br>它提供了完整的安全性解决方案，能够在Web请求级别和方法调用级别处理身份认证和授权。</p>
-<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>1，ACL：支持通过访问控制列表为域对象提供安全性。<br>2，切面：一个很小的模块，当使用Spring Security注解时，会使用基于AspectJ的切面，而不是使用标准的Spring AOP。<br>3，CAS客户端：提供于Jasig的中心认证服务（Central Authentication Service，CAS）进行集成的功能。<br>4，配置（Configuration）：包含通过XML和Java配置Spring Security的功能支持。<br>5，核心（Core）：提供Spring Security基本库。<br>6，加密（Cryptography）：提供了加密和密码编码的功能。<br>7，LDAP：支持基于LDAP进行认证。<br>8，OpenID：支持使用OpenID进行集中式认证。<br>9，Remoting：提供了对Spring Remoting的支持。<br>10，标签库（Tag Library），Spring Security的JSP标签库。<br>11，Web：提供了Spring Security基于Filter的Web安全性支持。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/12/2018041201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040502" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/05/2018040502/">项目总结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/05/2018040502/" class="archive-article-date">
-  	<time datetime="2018-04-05T09:25:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近做了一个交易所前置项目，我作为开发经理带领团队完成了相应的开发。</p>
-<p>1:项目背景是总行交易员需要和同业客户在交易所完成同业借款和存款业务。因而需要一个前置完成和交易所的对接。我们项目团队就是需要完成开发一个前置，实现行内业务系统和交易所系统的报文交互。<br>2:技术架构方面，主要用Spring boot＋dubbo框架进行搭建这个前置服务；同时使用了交易所的fix协议完成和交易所的报文交互。<br>为什么使用这两个框架，一方面公司内部拥抱变化，鼓励采用一些开源框架来进行开发，Spring框架是现在最流行的开源框架之一，而Spring boot继承了Spring框架的优点，并新增了特性，可让编码更简单快速，因而选择了它。<br>而使用dubbo框架是因为公司内部使用它来进行服务化设计，用于不同系统间接口交互。<br>3:功能列表<br>dubbo服务化接口相关功能。<br>交易所API接口实现相关功能。<br>报文处理相关功能。<br>路由功能。<br>限流功能。<br>日志功能。<br>报文重发功能。<br>4:功能实现和设计思路<br>因为是新搭前置，同时为了考虑以后的扩展性，在报文交互的层面使用了模板模式进行设计，设计了一个基类，定义了报文处理类，在基类中定义主要报文处理的先后步骤，比如第一步报文检验步骤，第二步报文生成步骤，第三步报文发送步骤。而这些步骤的实现延迟到子类中实现，这方便后续业务报文扩展。<br>同时我们这个保护处理是分三层结构，第一层是基类，第二层是外联前置类，在这层的类中实现了报文发送步骤，第三层中实现具体业务报文处理。<br>为了支持后续外联前置的扩展，我们增加了路由功能。路由其实就是映射关系，外联前置将会注册到路由的map中，而内部应用接口也会注册到路由的map中，而映射关系配置在文件中，内部报文过来，根据报文头的相关字段，从map取到外联前置，并发送报文。外部报文过来，通过sessionid，取到需要转发到内部的接口类，并发送报文。<br>限流功能则使用了行内的底层限流构件，并做了一层封装，增加了限流开关，同时使用了工厂模式获得限流类，实现了不同接口使用不同限流类的需求。<br>5：开发中遇到问题<br>开发过程中也遇到了一些问题，框架刚搭建完成，遇到了日志打印不出来的问题。查阅了一些资料，发现因为是各个框架都使用了不同日志框架导致的，有logback，log4j的。但幸好这些框架在日志方面都设计了不错，都使用了slf4j这个门面接口，我在桥接器和日志框架中做了删除，只留下一种，日志便顺利可以打印了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/05/2018040502/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040501" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/05/2018040501/">Spring注解学习第二课</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/05/2018040501/" class="archive-article-date">
-  	<time datetime="2018-04-05T08:34:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1:@EnableWebMvc<br>启用Spring MVC支持</p>
-<p>2:@Controller<br>这是一个构造型（stereotype）的注解，基于@Component<br>注解在类上，声明该类是controller类型的bean；可被组件扫描。  </p>
-<p>3:@RequestMapping<br>可以使用@RequestMapping来映射URL到控制器类，或者是到Controller控制器的处理方法上。当@RequestMapping标记在Controller类上的时候，里面使用@RequestMapping标记的方法的请求地址都是相对于类上的@RequestMapping而言的；当Controller类上没有标记@RequestMapping注解时，方法上的@RequestMapping都是绝对路径。这种绝对路径和相对路径所组合成的最终路径都是相对于根路径“/”而言的。</p>
-<p>4：@Repository<br>@Repository只能标注在 DAO 类上呢？这是因为该注解的作用不只是将类识别为Bean，同时它还能将所标注的类中抛出的数据访问异常封装为 Spring 的数据访问异常类型。 Spring本身提供了一个丰富的并且是与具体的数据访问技术无关的数据访问异常结构，用于封装不同的持久层框架抛出的异常，使得异常独立于底层的框架。</p>
-<p>Spring 2.5 在 @Repository的基础上增加了功能类似的额外三个注解：@Component、@Service、@Constroller，它们分别用于软件系统的不同层次：</p>
-<p>@Component 是一个泛化的概念，仅仅表示一个组件 (Bean) ，可以作用在任何层次。<br>@Service 通常作用在业务层，但是目前该功能与 @Component 相同。<br>@Constroller 通常作用在控制层，但是目前该功能与 @Component 相同。</p>
-<p>5:@Scope<br>Spring容器最初提供了两种bean的scope类型：singleton和 prototype，但发布2.0之后，又引入了另外三种scope类型，即request，session和global session类型。不过这三种类型有所限制，只能在web应用中使用<br>singleton类型的bean定义，在一个容器中只存在一个实例，所有对该类型bean的依赖都引用这一单一实例；<br>scope为prototype的bean，容器在接受到该类型的对象的请求的时候，会每次都重新 生成一个新的对象给请求方，虽然这种类型的对象的实例化以及属性设置等工作都是由容器负责的，但是只要准备完毕，并且对象实例返回给请求方之后，容器就不 在拥有当前对象的引用，请求方需要自己负责当前对象后继生命周期的管理工作，包括该对象的销毁。也就是说，容器每次返回请求方该对象的一个新的实例之后， 就由这个对象“自生自灭”了；</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/05/2018040501/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040302" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/03/2018040302/">Spring注解学习第一课</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/03/2018040302/" class="archive-article-date">
-  	<time datetime="2018-04-03T13:15:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1:@SpringBootApplication<br>从源代码中得知 @SpringBootApplication 被 @Configuration、@EnableAutoConfiguration、@ComponentScan 注解所修饰，换言之 Springboot 提供了统一的注解来替代以上三个注解，简化程序的配置</p>
-<p>2:@Configuration<br>@Configuration的注解类标识这个类可以使用Spring IoC容器作为bean定义的来源.表示这个是一个配置类</p>
-<p>3:@EnableAutoConfiguration<br>@EnableAutoConfiguration：能够自动配置spring的上下文，试图猜测和配置你想要的bean类，通常会自动根据你的类路径和你的bean定义自动配置</p>
-<p>4:@ComponentScan<br>@ComponentScan：会自动扫描指定包下的全部标有@Component的类，并注册成bean，当然包括@Component下的子注解@Service,@Repository,@Controller</p>
-<p>5:@ImportResource<br>@ImportResource：导入Spring的配置文件，让配置文件里面的内容生效</p>
-<p>6:@Bean(initMethod=“start”)<br>@Bean是一个方法级别上的注解，主要用在@Configuration注解的类里，也可以用在@Component注解的类里。添加的bean的id为方法名</p>
-<p>7：@Service<br>@service一般标注在service层的bean上</p>
-<p>8:@Autowired<br> @Autowired 注释，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/03/2018040302/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/03/2018040301/">Log4j日志配置文件说明</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/03/2018040301/" class="archive-article-date">
-  	<time datetime="2018-04-03T11:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>转自：<a href="http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html</a></p>
-<p>①配置根Logger，其语法为： </p>
-<p>log4j.rootLogger = [level],appenderName,appenderName2,…<br>level是日志记录的优先级，分为OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALL<br>Log4j建议只使用四个级别，优先级从低到高分别是DEBUG,INFO,WARN,ERROR<br>通过在这里定义的级别，您可以控制到应用程序中相应级别的日志信息的开关<br>比如在这里定义了INFO级别，则应用程序中所有DEBUG级别的日志信息将不被打印出来<br>appenderName就是指定日志信息输出到哪个地方。可同时指定多个输出目的 </p>
-<p>②配置日志信息输出目的地Appender，其语法为： </p>
-<p>log4j.appender.appenderName = fully.qualified.name.of.appender.class<br>log4j.appender.appenderName.optionN = valueN </p>
-<p>Log4j提供的appender有以下几种：<br>1)org.apache.log4j.ConsoleAppender(输出到控制台)<br>2)org.apache.log4j.FileAppender(输出到文件)<br>3)org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件)<br>4)org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件)<br>5)org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方) </p>
-<p>1)ConsoleAppender选项属性<br> -Threshold = DEBUG:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -Target = System.err:默认值System.out,输出到控制台(err为红色,out为黑色) </p>
-<p>2)FileAppender选项属性<br> -Threshold = INFO:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:\log4j.log:指定消息输出到C:\log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
-<p>3)DailyRollingFileAppender选项属性<br> -Threshold = WARN:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:\log4j.log:指定消息输出到C:\log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -DatePattern=’.’yyyy-ww:每周滚动一次文件,即每周产生一个新的文件。还可以按用以下参数:<br>              ‘.’yyyy-MM:每月<br>              ‘.’yyyy-ww:每周<br>              ‘.’yyyy-MM-dd:每天<br>              ‘.’yyyy-MM-dd-a:每天两次<br>              ‘.’yyyy-MM-dd-HH:每小时<br>              ‘.’yyyy-MM-dd-HH-mm:每分钟<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
-<p>4)RollingFileAppender选项属性<br> -Threshold = ERROR:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:/log4j.log:指定消息输出到C:/log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -MaxFileSize = 100KB:后缀可以是KB,MB,GB.在日志文件到达该大小时,将会自动滚动.如:log4j.log.1<br> -MaxBackupIndex = 2:指定可以产生的滚动文件的最大数<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
-<p>③配置日志信息的格式(布局)，其语法为： </p>
-<p>log4j.appender.appenderName.layout = fully.qualified.name.of.layout.class<br>log4j.appender.appenderName.layout.optionN = valueN </p>
-<p>Log4j提供的layout有以下几种：<br>5)org.apache.log4j.HTMLLayout(以HTML表格形式布局)<br>6)org.apache.log4j.PatternLayout(可以灵活地指定布局模式)<br>7)org.apache.log4j.SimpleLayout(包含日志信息的级别和信息字符串)<br>8)org.apache.log4j.TTCCLayout(包含日志产生的时间、线程、类别等等信息)<br>9)org.apache.log4j.xml.XMLLayout(以XML形式布局) </p>
-<p>5)HTMLLayout选项属性<br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号<br> -Title=Struts Log Message:默认值 Log4J Log Messages </p>
-<p>6)PatternLayout选项属性<br> -ConversionPattern = %m%n:格式化指定的消息(参数意思下面有) </p>
-<p>9)XMLLayout选项属性<br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号 </p>
-<p>Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，打印参数如下：<br> %m 输出代码中指定的消息<br> %p 输出优先级，即DEBUG,INFO,WARN,ERROR,FATAL<br> %r 输出自应用启动到输出该log信息耗费的毫秒数<br> %c 输出所属的类目,通常就是所在类的全名<br> %t 输出产生该日志事件的线程名<br> %n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n”<br> %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式<br>    如：%d{yyyy年MM月dd日 HH:mm:ss,SSS}，输出类似：2012年01月05日 22:10:28,921<br> %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数<br>    如：Testlog.main(TestLog.java:10)<br> %F 输出日志消息产生时所在的文件名称<br> %L 输出代码中的行号<br> %x 输出和当前线程相关联的NDC(嵌套诊断环境),像java servlets多客户多线程的应用中<br> %% 输出一个”%”字符 </p>
-<p> 可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：<br>  %5c: 输出category名称，最小宽度是5，category<5，默认的情况下右对齐 %-5c:输出category名称，最小宽度是5，category<5，"-"号指定左对齐,会有空格="" %.5c:输出category名称，最大宽度是5，category="">5，就会将左边多出的字符截掉，<5不会有空格 %20.30c:category名称<20补空格，并且右对齐，="">30字符，就从左边交远销出的字符截掉 </5不会有空格></5，默认的情况下右对齐></p>
-<p>④指定特定包的输出特定的级别<br>log4j.logger.org.springframework=DEBUG </p>
-<p>OFF,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB,ALL<br>log4j.rootLogger =ALL,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB </p>
-<p>输出到控制台<br>log4j.appender.systemOut = org.apache.log4j.ConsoleAppender<br>log4j.appender.systemOut.layout = org.apache.log4j.PatternLayout<br>log4j.appender.systemOut.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.systemOut.Threshold = DEBUG<br>log4j.appender.systemOut.ImmediateFlush = TRUE<br>log4j.appender.systemOut.Target = System.out </p>
-<p>输出到文件<br>log4j.appender.logFile = org.apache.log4j.FileAppender<br>log4j.appender.logFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logFile.Threshold = DEBUG<br>log4j.appender.logFile.ImmediateFlush = TRUE<br>log4j.appender.logFile.Append = TRUE<br>log4j.appender.logFile.File = ../Struts2/WebRoot/log/File/log4j_Struts.log<br>log4j.appender.logFile.Encoding = UTF-8 </p>
-<p>按DatePattern输出到文件<br>log4j.appender.logDailyFile = org.apache.log4j.DailyRollingFileAppender<br>log4j.appender.logDailyFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logDailyFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logDailyFile.Threshold = DEBUG<br>log4j.appender.logDailyFile.ImmediateFlush = TRUE<br>log4j.appender.logDailyFile.Append = TRUE<br>log4j.appender.logDailyFile.File = ../Struts2/WebRoot/log/DailyFile/log4j_Struts<br>log4j.appender.logDailyFile.DatePattern = ‘.’yyyy-MM-dd-HH-mm’.log’<br>log4j.appender.logDailyFile.Encoding = UTF-8 </p>
-<p>设定文件大小输出到文件<br>log4j.appender.logRollingFile = org.apache.log4j.RollingFileAppender<br>log4j.appender.logRollingFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logRollingFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logRollingFile.Threshold = DEBUG<br>log4j.appender.logRollingFile.ImmediateFlush = TRUE<br>log4j.appender.logRollingFile.Append = TRUE<br>log4j.appender.logRollingFile.File = ../Struts2/WebRoot/log/RollingFile/log4j_Struts.log<br>log4j.appender.logRollingFile.MaxFileSize = 1MB<br>log4j.appender.logRollingFile.MaxBackupIndex = 10<br>log4j.appender.logRollingFile.Encoding = UTF-8 </p>
-<p>用Email发送日志<br>log4j.appender.logMail = org.apache.log4j.net.SMTPAppender<br>log4j.appender.logMail.layout = org.apache.log4j.HTMLLayout<br>log4j.appender.logMail.layout.LocationInfo = TRUE<br>log4j.appender.logMail.layout.Title = Struts2 Mail LogFile<br>log4j.appender.logMail.Threshold = DEBUG<br>log4j.appender.logMail.SMTPDebug = FALSE<br>log4j.appender.logMail.SMTPHost = SMTP.163.com<br>log4j.appender.logMail.From = xly3000@163.com<br>log4j.appender.logMail.To = xly3000@gmail.com<br>log4j.appender.logMail.Cc = xly3000@gmail.com<br>log4j.appender.logMail.Bcc = xly3000@gmail.com<br>log4j.appender.logMail.SMTPUsername = xly3000<br>log4j.appender.logMail.SMTPPassword = 1234567<br>log4j.appender.logMail.Subject = Log4j Log Messages<br>log4j.appender.logMail.BufferSize = 1024<br>log4j.appender.logMail.SMTPAuth = TRUE </p>
-<p>将日志登录到MySQL数据库<br>log4j.appender.logDB = org.apache.log4j.jdbc.JDBCAppender<br>log4j.appender.logDB.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logDB.Driver = com.mysql.jdbc.Driver<br>log4j.appender.logDB.URL = jdbc:mysql://127.0.0.1:3306/xly<br>log4j.appender.logDB.User = root<br>log4j.appender.logDB.Password = 123456<br>log4j.appender.logDB.Sql = INSERT INTOT_log4j(project_name,create_date,level,category,file_name,thread_name,line,all_category,message)values(‘Struts2’,’%d{yyyy-MM-ddHH:mm:ss}’,’%p’,’%c’,’%F’,’%t’,’%L’,’%l’,’%m’)</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/03/2018040301/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/2018040201/">SpringMVC请求流程说明</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/02/2018040201/" class="archive-article-date">
-  	<time datetime="2018-04-02T04:33:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>下图将展示一个请求过来时，SpringMVC是如何处理请求，内部扭转的工作流程。<br><img src="http://ox67fgze3.bkt.clouddn.com/SpringMVC.png" alt="Image text"></p>
-<p>第一步：<br>用户在浏览器上提交后，请求会带着用户所提交信息来到第一站Spring的DispatcherServlet(前端控制器)。前端控制器是常用的web应用程序模式，在这里一个单实例的Servlet将请求委托给应用程序的其他组件来执行实际的处理。DispatcherServlet的任务是将请求发送给Spring MVC控制器（controller）。<br>第二步：<br> DispatcherServlet会查询一个或多个处理器映射（handler mapping）来确定发送给哪个处理器。<br>第三步：<br>到了控制器，请求会将用户信息提交给控制器处理，并等待反馈。<br>设计良好的控制器，本身不处理工作，将业务逻辑委托给一个或者多个服务对象处理。<br>第四和第五步：<br>将模型数据打包，并且标示出用于渲染输出的视图名，并将以上信息发送给DispatcherServlet。<br>第六步：<br>DispatcherServlet会使用视图解析器（view resolver）来讲逻辑视图名匹配一个特定的视图来实现。<br>第七步：<br>视图将使用模型数据渲染输出，这个输出会通过响应对象传递给客户端。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/02/2018040201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018032601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/26/2018032601/">log4j和slf4j关系</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/26/2018032601/" class="archive-article-date">
-  	<time datetime="2018-03-26T06:53:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做系统搭建的过程中遇到日志jar包冲突的问题，在查询资料的时候发现下文说的很清晰，记录下，作为备忘。<br>原文地址如下：<br><a href="https://blog.csdn.net/kxcfzyk/article/details/38613861" target="_blank" rel="external">https://blog.csdn.net/kxcfzyk/article/details/38613861</a></p>
-<p>摘录了一些内容<br>Java日志体系大体可以分为三个部分：日志门面接口、桥接器、日志框架具体实现。<br>Java日志框架有很多种，最简单的是Java自带的java.util.logging，而最经典的是log4j，后来又出现了一个比log4j性能更好的logback，其他的日志框架就不怎么常用了。</p>
-<p>最早的日志门面接口是commons-logging，但目前最受欢迎的是slf4j。</p>
-<p>日志门面接口本身通常并没有实际的日志输出能力，它底层还是需要去调用具体的日志框架API的，也就是实际上它需要跟具体的日志框架结合使用。由于具体日志框架比较多，而且互相也大都不兼容，日志门面接口要想实现与任意日志框架结合可能需要对应的桥接器，就好像JDBC与各种不同的数据库之间的结合需要对应的JDBC驱动一样。</p>
-<p>说白了，所谓“桥接器”，不过就是对某套API的伪实现。这种实现并不是直接去完成API所声明的功能，而是去调用有类似功能的别的API。这样就完成了从“某套API”到“别的API”的转调。如果同时存在A-to-B.jar和B-to-A.jar这两个桥接器，那么可以想象当应用程序开始调用A或者B的API时，会发生什么事。这就是最开始引出的那个stack overflow异常的基本原理。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/26/2018032601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -1124,8 +381,8 @@ var _hmt = _hmt || [];
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -159,6 +159,99 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018032201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/2018032201/">AOP</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/22/2018032201/" class="archive-article-date">
+  	<time datetime="2018-03-22T05:00:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是面向切面编程"><a href="#什么是面向切面编程" class="headerlink" title="什么是面向切面编程"></a>什么是面向切面编程</h3><p>比如安全，日志，事务和缓存这些功能，会在各业务场景中出现，如果需要重用这些功能的话，常用的方式是继承或者委托，继承会导致一个脆弱类，而委托导致委托对象的复杂调用。切面提供了另外一种选择。<br>面向切面编程时，我们可以在一个地方定义通用功能，但可以通过声明的方式定义功能在何处以何种方式使用，而不需要修改受影响的类。横切关注点可被模块化为特殊的类，这些类被称为切面（aspect）。<br>好处：<br>1:关注点都集中于一个地方，而不是分散到多个地方，方便维护<br>2:服务模块更简洁，只需要关心核心功能，次要关注点呗转移到切面中。</p>
+<h3 id="AOP术语"><a href="#AOP术语" class="headerlink" title="AOP术语"></a>AOP术语</h3><p>＊ 通知advice：通知定义了切面是什么以及何时调用。<br>通知类型：前置通知（Before）（执行前调用），后置通知（After）（执行后调用），返回通知（After－returning）（成功返回后调用），异常通知（After－throwing）（抛出异常后调用），环绕通知（Around）（调用前和后执行）<br>＊ 连接点（Join point）：在应用执行过程中能够插入到切面的一个点，这个点可以是调用方法，抛出异常，或者修改一个字段。切面代码可利用这些点插入到应用正常流程中，添加新的行为。Spring只支持方法级别的连接点。如果需要使用其他连接点，可使用Aspect来补充。<br>＊ 切点（Pointcut）：明确执行范围<br>＊ 切面（Aspect），是通知和切点的结合，明确是什么，在何时何地执行。<br>＊ 引入（Introduction）允许我们向现有类添加新方法和属性。<br>＊ 织入（Weaving），织入是把切面应用到目标对象并创建新的代理对象的过程。<br>＊ 织入方式：<br>编译期：切面在目标类被编译的时候织入。AspectJ就是这种方式。<br>类加载期：切面在目标类加载到JVM时被织入。<br>运行期：切面在运行的某个时期被织入。AOP为目标对象动态创建一个代理对象，Spring AOP以这种方式织入切面。</p>
+<h3 id="编写切点"><a href="#编写切点" class="headerlink" title="编写切点"></a>编写切点</h3><p>定义一个接口，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">public interface Performance &#123;</div><div class="line">	public void perform();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>定义切面：<br>// execution(<em> concert.Performance.perform(..))&amp;&amp; within(concert.</em>)<br>//其中execution表示方法concert.Performance.perform执行时触发，＊表示不关心返回值，..表示任意入参都可以。within限制制定包。<br>//execution(<em> concert.Performance.perform(..))and bean(‘woodstock’)<br>//限定切点只匹配bean的ID为woodstock的方法<br>//execution(</em> concert.Performance.perform(..))and bean(‘woodstock’)<br>//限定切点只匹配bean的ID不为woodstock的方法<br>具体示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.AfterThrowing;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">//表示切面</div><div class="line">@Aspect</div><div class="line">public class Audience &#123;</div><div class="line">	//执行前</div><div class="line">	@Before(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void silenceCellPhone() &#123;</div><div class="line">		System.out.println(&quot;silencing Cell Phones&quot;);</div><div class="line">	&#125;</div><div class="line">	//执行前</div><div class="line">	@Before(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void takeSeats() &#123;</div><div class="line">		System.out.println(&quot;Taking seats&quot;);</div><div class="line">	&#125;</div><div class="line">	//返回成功后</div><div class="line">	@AfterReturning(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void applause() &#123;</div><div class="line">		System.out.println(&quot;ha ha ha&quot;);</div><div class="line">	&#125;</div><div class="line">	//返回异常后</div><div class="line">	@AfterThrowing(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void demandRefund() &#123;</div><div class="line">		System.out.println(&quot;Demanding refund&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另外两种：@After，返回或抛出异常调用；@Around，将目标方法包装起来。<br>@PointCut定义可重用的切点,和上面比简化表达式重复书写。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.AfterThrowing;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line">@Aspect</div><div class="line">public class Audience &#123;</div><div class="line">	@Pointcut(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void performance()&#123;&#125;</div><div class="line"></div><div class="line">	@Before(&quot;performance()&quot;)</div><div class="line">	public void silenceCellPhone() &#123;</div><div class="line">		System.out.println(&quot;silencing Cell Phones&quot;);</div><div class="line">	&#125;</div><div class="line">	@Before(&quot;performance()&quot;)</div><div class="line">	public void takeSeats() &#123;</div><div class="line">		System.out.println(&quot;Taking seats&quot;);</div><div class="line">	&#125;</div><div class="line">	@AfterReturning(&quot;performance()&quot;)</div><div class="line">	public void applause() &#123;</div><div class="line">		System.out.println(&quot;ha ha ha&quot;);</div><div class="line">	&#125;</div><div class="line">	@AfterThrowing(&quot;performance()&quot;)</div><div class="line">	public void demandRefund() &#123;</div><div class="line">		System.out.println(&quot;Demanding refund&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="XML中配置举例"><a href="#XML中配置举例" class="headerlink" title="XML中配置举例"></a>XML中配置举例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd&quot;&gt;</div><div class="line">    &lt;!-- 目标对象 --&gt;</div><div class="line">    &lt;bean id=&quot;knight&quot; class=&quot;com.cjh.aop2.BraveKnight&quot;/&gt;</div><div class="line">    &lt;!-- 切面bean --&gt;</div><div class="line">    &lt;bean id=&quot;mistrel&quot; class=&quot;com.cjh.aop2.Minstrel&quot;/&gt;</div><div class="line">    &lt;!-- 面向切面编程 --&gt;</div><div class="line">    &lt;aop:config&gt;</div><div class="line">        &lt;aop:aspect ref=&quot;mistrel&quot;&gt;</div><div class="line">            &lt;!-- 定义切点 --&gt;</div><div class="line">            &lt;aop:pointcut expression=&quot;execution(* *.saying(..))&quot; id=&quot;embark&quot;/&gt;</div><div class="line">            &lt;!-- 声明前置通知 (在切点方法被执行前调用)--&gt;</div><div class="line">            &lt;aop:before method=&quot;beforSay&quot; pointcut-ref=&quot;embark&quot;/&gt;</div><div class="line">            &lt;!-- 声明后置通知 (在切点方法被执行后调用)--&gt;</div><div class="line">            &lt;aop:after method=&quot;afterSay&quot; pointcut-ref=&quot;embark&quot;/&gt;</div><div class="line">        &lt;/aop:aspect&gt;</div><div class="line">    &lt;/aop:config&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/22/2018032201/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018032101" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1013,98 +1106,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022401" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/24/2018022401/">Spring的设计理念和整体框架</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/24/2018022401/" class="archive-article-date">
-  	<time datetime="2018-02-24T08:49:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前正在学习Spring框架，做点笔记提高学习效率。</p>
-<h3 id="Spring的设计目的"><a href="#Spring的设计目的" class="headerlink" title="Spring的设计目的"></a>Spring的设计目的</h3><p>Spring为开发者提供一个一站式的轻量级应用开发框架，抽象我们在开发过程中遇到的共性问题，以便简化整个开发流程。</p>
-<h3 id="Spring的设计理念"><a href="#Spring的设计理念" class="headerlink" title="Spring的设计理念"></a>Spring的设计理念</h3><p>在JAVA EE的应用开发中，支持POJO和使用javaBean的开发方式，也就是面向接口开发，充分支持OO（面向对象）的设计方法。<br>Spring的设计理念采用了相对EJB而言的轻量级开发思想，也就是采用POJO的开发方式，只需要使用简单的java对象或者JavaBean就能实现Java EE的开发。</p>
-<h3 id="Spring的层次"><a href="#Spring的层次" class="headerlink" title="Spring的层次"></a>Spring的层次</h3><p>1:Spring的核心，IOC容器和AOP模块，最为基础的底层抽象，同时也是其他模块的基础。<br>2:即开即用服务，Spring MVC，Spring JDBC／Spring ORM，Spring事务处理，Spring远端调用。<br>3:Spring应用，也就是Spring子项目。</p>
-<h3 id="Spring应用场景"><a href="#Spring应用场景" class="headerlink" title="Spring应用场景"></a>Spring应用场景</h3><p>SSH架构开发web应用，Struts作为Web UI层，Spring作为中间件平台，Hibernate作为数据持久化工具，Apache Tomcate，MySQL数据库和Linux环境，完全开源的软件组合来搭建企业应用。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/24/2018022401/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1228,11 +1229,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UML</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1241,10 +1250,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>

@@ -159,6 +159,98 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018022401" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/24/2018022401/">Spring的设计理念和整体框架</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/24/2018022401/" class="archive-article-date">
+  	<time datetime="2018-02-24T08:49:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目前正在学习Spring框架，做点笔记提高学习效率。</p>
+<h3 id="Spring的设计目的"><a href="#Spring的设计目的" class="headerlink" title="Spring的设计目的"></a>Spring的设计目的</h3><p>Spring为开发者提供一个一站式的轻量级应用开发框架，抽象我们在开发过程中遇到的共性问题，以便简化整个开发流程。</p>
+<h3 id="Spring的设计理念"><a href="#Spring的设计理念" class="headerlink" title="Spring的设计理念"></a>Spring的设计理念</h3><p>在JAVA EE的应用开发中，支持POJO和使用javaBean的开发方式，也就是面向接口开发，充分支持OO（面向对象）的设计方法。<br>Spring的设计理念采用了相对EJB而言的轻量级开发思想，也就是采用POJO的开发方式，只需要使用简单的java对象或者JavaBean就能实现Java EE的开发。</p>
+<h3 id="Spring的层次"><a href="#Spring的层次" class="headerlink" title="Spring的层次"></a>Spring的层次</h3><p>1:Spring的核心，IOC容器和AOP模块，最为基础的底层抽象，同时也是其他模块的基础。<br>2:即开即用服务，Spring MVC，Spring JDBC／Spring ORM，Spring事务处理，Spring远端调用。<br>3:Spring应用，也就是Spring子项目。</p>
+<h3 id="Spring应用场景"><a href="#Spring应用场景" class="headerlink" title="Spring应用场景"></a>Spring应用场景</h3><p>SSH架构开发web应用，Struts作为Web UI层，Spring作为中间件平台，Hibernate作为数据持久化工具，Apache Tomcate，MySQL数据库和Linux环境，完全开源的软件组合来搭建企业应用。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/24/2018022401/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018022303" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -968,96 +1060,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018021801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/18/2018021801/">组合模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/18/2018021801/" class="archive-article-date">
-  	<time datetime="2018-02-18T06:09:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>定义<br>将对象组合成树形结构以“部分－整体”的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。</p>
-<p>适用性<br>当你发现需求时体现部分与整体层次的结构时，以及希望用户可以忽略组合对象与单个对象的不同时，统一使用组合机构中的所有对象时，可以使用组合模式。</p>
-<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div></pre></td><td class="code"><pre><div class="line">public abstract class Company &#123;</div><div class="line">	protected String name;</div><div class="line">	public Company(String name) &#123;</div><div class="line">		this.name=name;</div><div class="line">	&#125;</div><div class="line">	abstract void add(Company c);</div><div class="line">	abstract void remove(Company c);</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		StringBuilder s=new StringBuilder();</div><div class="line">		for(int i=0;i&lt;depth;i++) &#123;</div><div class="line">			s.append(&apos;-&apos;);</div><div class="line">		&#125;</div><div class="line">		System.out.println(s+name);	</div><div class="line">	&#125;</div><div class="line">	abstract void duty();</div><div class="line">&#125;</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class ConcreteCompany extends Company &#123;</div><div class="line">	</div><div class="line">	private List&lt;Company&gt; children=new ArrayList&lt;Company&gt;();</div><div class="line">	</div><div class="line">	public ConcreteCompany(String name) &#123;</div><div class="line">		super(name);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void add(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.children.add(c);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void remove(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.children.remove(c);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.display(depth);</div><div class="line">		for(Company c:this.children) &#123;</div><div class="line">			c.display(depth+2);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void duty() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		for(Company c:this.children) &#123;</div><div class="line">			c.duty();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class FinanceDepartment extends Company&#123;</div><div class="line"></div><div class="line">	public FinanceDepartment(String name) &#123;</div><div class="line">		super(name);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void add(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void remove(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.display(depth);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void duty() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(name+&quot; 财务管理&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class HRDepartment extends Company&#123;</div><div class="line"></div><div class="line">	public HRDepartment(String name) &#123;</div><div class="line">		super(name);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void add(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void remove(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.display(depth);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void duty() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(name+&quot; 员工招聘管理&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试代码</div><div class="line">public class TestComponet &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		ConcreteCompany root=new ConcreteCompany(&quot;杭州总公司&quot;);</div><div class="line">		root.add(new HRDepartment(&quot;总公司人力资源部&quot;));</div><div class="line">		root.add(new FinanceDepartment(&quot;总公司财务部&quot;));</div><div class="line">		ConcreteCompany comp1=new ConcreteCompany(&quot;富阳分公司&quot;);</div><div class="line">		comp1.add(new  HRDepartment(&quot;富阳分公司人力资源部&quot;));</div><div class="line">		comp1.add(new  FinanceDepartment(&quot;富阳分公司财务部&quot;));</div><div class="line">		root.add(comp1);</div><div class="line">		root.display(1);</div><div class="line">		root.duty();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/18/2018021801/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1181,11 +1183,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UML</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UML</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,10 +1204,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>
