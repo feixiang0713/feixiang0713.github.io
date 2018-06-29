@@ -159,6 +159,98 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018032601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/26/2018032601/">log4j和slf4j关系</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/26/2018032601/" class="archive-article-date">
+  	<time datetime="2018-03-26T06:53:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在做系统搭建的过程中遇到日志jar包冲突的问题，在查询资料的时候发现下文说的很清晰，记录下，作为备忘。<br>原文地址如下：<br><a href="https://blog.csdn.net/kxcfzyk/article/details/38613861" target="_blank" rel="external">https://blog.csdn.net/kxcfzyk/article/details/38613861</a></p>
+<p>摘录了一些内容<br>Java日志体系大体可以分为三个部分：日志门面接口、桥接器、日志框架具体实现。<br>Java日志框架有很多种，最简单的是Java自带的java.util.logging，而最经典的是log4j，后来又出现了一个比log4j性能更好的logback，其他的日志框架就不怎么常用了。</p>
+<p>最早的日志门面接口是commons-logging，但目前最受欢迎的是slf4j。</p>
+<p>日志门面接口本身通常并没有实际的日志输出能力，它底层还是需要去调用具体的日志框架API的，也就是实际上它需要跟具体的日志框架结合使用。由于具体日志框架比较多，而且互相也大都不兼容，日志门面接口要想实现与任意日志框架结合可能需要对应的桥接器，就好像JDBC与各种不同的数据库之间的结合需要对应的JDBC驱动一样。</p>
+<p>说白了，所谓“桥接器”，不过就是对某套API的伪实现。这种实现并不是直接去完成API所声明的功能，而是去调用有类似功能的别的API。这样就完成了从“某套API”到“别的API”的转调。如果同时存在A-to-B.jar和B-to-A.jar这两个桥接器，那么可以想象当应用程序开始调用A或者B的API时，会发生什么事。这就是最开始引出的那个stack overflow异常的基本原理。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/26/2018032601/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018032201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1011,101 +1103,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/26/2018022601/">IoC容器的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/26/2018022601/" class="archive-article-date">
-  	<time datetime="2018-02-26T12:33:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h3><p>BeanFactory接口定义了IoC容器最基本的形式，并且提供了IoC容器应该遵循的最基本的服务契约，这应当是我们IoC容器所遵守的最底层和最基本的编程规范。BeanFactory是一个接口类，没有给出具体实现。<br>1:<br>Object getBean(String name) throws BeansException;<br>－－－－通过name获得指定的Bean<br>2:</p>
-<p><t> T getBean(String name, @Nullable Class<t> requiredType) throws BeansException;<br>－－－－通过name获得Bean，如果不是指定类型requiredType，则抛出异常BeanNotOfRequiredTypeException<br>3:<br>Object getBean(String name, Object… args) throws BeansException;<br>－－－－通过指定参数来构造指定的Bean<br>4:<br>boolean containsBean(String name);<br>－－－－通过该接口方法让用户能够判断容器中是否含有指定名字的Bean<br>5:<br>boolean isSingleton(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法来查询指定名字的Bean是否是Singleton类型的Bean，对于Singleton属性，用户可以在BeanDifinition中指定。<br>6:<br>boolean isPrototype(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法来查询指定名字的Bean是否是prototype类型的，于Singleton属性一样，这个属性可以由用户在BeanDifinition中指定<br>7:<br>boolean isTypeMatch(String name, ResolvableType typeToMatch) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口可以查询指定名字的Bean的class类型是否是特定的class类型。<br>8:<br>Class&lt;?&gt; getType(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法查询指定名字的Bean的class类型。<br>9:<br>Class&lt;?&gt; getType(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口查询指定了名字的Bean的所有别名，这些别名是用户在BeanDifinition中定义的。</t></t></p>
-<h3 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h3><p>ApplicationContext是一个高级形态意义的IOC容器，在BeanFactory的基础上添加了附加功能：<br>1:支持不同的消息源，ApplicationContext扩展了MessageSource接口，支持国际化的实现，为开发多语言版本的应用提供服务。<br>2:访问资源，ApplicationContext扩展了ResourcePatternResolver（继承自ResourceLoader）接口，方便用户程序可以灵活地定义Bean定义信息。<br>3:支持应用事件，ApplicationContext扩展了ApplicationEventPublisher接口，在上下文中引入了事件机制，这些事件和Bean的生命周期的结合为Bean的管理提供了便利。</p>
-<h5 id="ApplicationContext容器的设计原理"><a href="#ApplicationContext容器的设计原理" class="headerlink" title="ApplicationContext容器的设计原理"></a>ApplicationContext容器的设计原理</h5><p>以FileSystemXmlApplicationContext为例说明ApplicationContext的设计原理：<br>1:一个功能是实例化这个应用上下文，同时启动IOC容器的refresh()过程，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public FileSystemXmlApplicationContext(</div><div class="line">			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)</div><div class="line">			throws BeansException &#123;</div><div class="line"></div><div class="line">		super(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		if (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>2:提供一个方法，通过文件系统路径获得加载XML的Bean定义资源位置，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">protected Resource getResourceByPath(String path) &#123;</div><div class="line">		if (path.startsWith(&quot;/&quot;)) &#123;</div><div class="line">			path = path.substring(1);</div><div class="line">		&#125;</div><div class="line">		return new FileSystemResource(path);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="IoC容器的初始化过程"><a href="#IoC容器的初始化过程" class="headerlink" title="IoC容器的初始化过程"></a>IoC容器的初始化过程</h3><p>分成以下三步：<br>1:Resource定位过程，这个Resource定位指的是对BeanDefinition的资源定位，它由ResourceLoader通过统一的Resource接口来完成，这个Resource对各种形式的BeanDefinition的使用都提供了统一的接口。如文件系统中的Bean定义信息可以通过FileSystemResource来进行抽象，如在类路径下的Bean定义信息可以使用ClassPathResource来定位。2:BeanDifinition的载入，这个过程就是把用户定义好的Bean表示成Io容器内部的数据结构（BeanDifinition）。<br>3:向IoC容器注册这些BeanDifinition，这个过程通过调用BeanDifinitionRegistry接口实现完成的。BeanDifinition实际上注入到一个HashMap中，Ioc容器通过这个HashMap持有这些BeanDefinition数据。</p>
-<h3 id="IoC容器的依赖注入"><a href="#IoC容器的依赖注入" class="headerlink" title="IoC容器的依赖注入"></a>IoC容器的依赖注入</h3><p>依赖诸如的过程是用户第一次向IoC容器索要Bean时触发的，例外情况时，在BeanDifinition信息中通过控制lazy－init属性来让容器完成对Bean的预实例化。<br>我们调用getBean后获得已经是完成依赖关系注入的完整Bean对象，所以完成依赖注入的奥秘就发生在getBean当中，要分析我们便从getBean这个入口开始吧。<br>getBean是依赖注入的起点，之后会调用createBean，Spring当中提供了两种实例化方案： BeanUtils 和 Cglib 方式。BeanUtils实现机制是通过Java的反射机制，Cglib是一个第三方类库采用的是一种字节码加强方式机制。 Spring中采用的默认实例化策略是Cglib。<br>我们要分析依赖关系是怎样注入到Bean对象当中，就需要回到 populateBean() 方法，这个方法实现是在 AbstractAutowireCapableBeanFactory中。</p>
-<h3 id="源码导入eclipse"><a href="#源码导入eclipse" class="headerlink" title="源码导入eclipse"></a>源码导入eclipse</h3><p>可以参考以下链接<a href="http://blog.csdn.net/guaoran/article/details/78563573" target="_blank" rel="external">http://blog.csdn.net/guaoran/article/details/78563573</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/26/2018022601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1233,11 +1230,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">

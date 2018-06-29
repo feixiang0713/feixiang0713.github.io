@@ -159,6 +159,100 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-20180626" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/26/20180626/">并发编程学习一</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/26/20180626/" class="archive-article-date">
+  	<time datetime="2018-06-26T11:00:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="为什么要并发编程"><a href="#为什么要并发编程" class="headerlink" title="为什么要并发编程"></a>为什么要并发编程</h3><p>1:资源利用，在程序等待外部操作的时候，可以执行其他的程序，促进程序的高效。<br>2:公平，用户各程序可以以平等的优先级共享资源。<br>3:清晰，不同任务通过单独任务执行，更易理解。</p>
+<h3 id="并发的优势-amp-劣势"><a href="#并发的优势-amp-劣势" class="headerlink" title="并发的优势&amp;劣势"></a>并发的优势&amp;劣势</h3><p>线程间可以共享数据，但是一个线程修改其他线程正在使用的数据，会导致糟糕的结果。</p>
+<h3 id="多线程的优点"><a href="#多线程的优点" class="headerlink" title="多线程的优点"></a>多线程的优点</h3><p>1:当I/O堵塞时，多线程可以更高效地利用CPU资源。<br>2:各种任务单独作为一个线程开发，逻辑清晰简单，更容易维护。</p>
+<h3 id="并发管理"><a href="#并发管理" class="headerlink" title="并发管理"></a>并发管理</h3><p>无论何时，只要有多于一个的线程访问给定的状态变量，而且其中某个线程会写入该变量，此时必须使用同步来协调线程对该变量的访问。</p>
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>当多个线程访问同一个类时，如果不用考虑这些线程在运行时环境下的调度和交替执行，并且不需要额外的同步以及在调用方代码不必作其他的协调，这个类点行为仍然是正确的。那就称为线程安全的。</p>
+<p>1:无状态对象永远都是线程安全的。</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>1:＋＋count 非原子操作，是读改写三个离散操作。<br>2:原子操作，要么都执行，要么都不执行。</p>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p>Java 提供了强制原子性的内置锁机制：synchronized块。内部锁扮演了互斥锁的角色。<br>synchronized块的同步机制简化了代码逻辑，但是增加了性能问题。</p>
+<h3 id="重进入"><a href="#重进入" class="headerlink" title="重进入"></a>重进入</h3><p>当一个线程请求其他线程已经占有的锁事，请求线程将被阻塞，然而内部锁事可以重进入的。线程在试图获得它自己占有的锁时，请求会成功。重进入意味着请求是基于per－thread，不是基于per－invocation。重进入的实现是通过为每个锁关联一个请求计数和一个占有它的线程，当计数为0时，认为锁未被占有。线程请求一个未被占有的锁时，JVM将纪录锁的占有者，并将请求计数置为1.如果同一线程再次请求这个锁时，计数将递增。每次占用线程退出同步块，计数器值将递减。直到计数器达到0时。锁被释放。</p>
+<h3 id="用锁保护状态"><a href="#用锁保护状态" class="headerlink" title="用锁保护状态"></a>用锁保护状态</h3><p>复核操作在完整运行期间需要占有锁，以确保其行为为原子的。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>谨慎控制synchronized块的大小，可通过缩小快的大小，提高性能，但是同时需要确保原子操作在同一个synchronized块中。有些耗时的计算或操作，比如网络或控制台I/O，难以快速完成，执行这些操作期间不要占有锁。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/26/20180626/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018041801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1005,98 +1099,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018032601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/26/2018032601/">log4j和slf4j关系</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/26/2018032601/" class="archive-article-date">
-  	<time datetime="2018-03-26T06:53:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做系统搭建的过程中遇到日志jar包冲突的问题，在查询资料的时候发现下文说的很清晰，记录下，作为备忘。<br>原文地址如下：<br><a href="https://blog.csdn.net/kxcfzyk/article/details/38613861" target="_blank" rel="external">https://blog.csdn.net/kxcfzyk/article/details/38613861</a></p>
-<p>摘录了一些内容<br>Java日志体系大体可以分为三个部分：日志门面接口、桥接器、日志框架具体实现。<br>Java日志框架有很多种，最简单的是Java自带的java.util.logging，而最经典的是log4j，后来又出现了一个比log4j性能更好的logback，其他的日志框架就不怎么常用了。</p>
-<p>最早的日志门面接口是commons-logging，但目前最受欢迎的是slf4j。</p>
-<p>日志门面接口本身通常并没有实际的日志输出能力，它底层还是需要去调用具体的日志框架API的，也就是实际上它需要跟具体的日志框架结合使用。由于具体日志框架比较多，而且互相也大都不兼容，日志门面接口要想实现与任意日志框架结合可能需要对应的桥接器，就好像JDBC与各种不同的数据库之间的结合需要对应的JDBC驱动一样。</p>
-<p>说白了，所谓“桥接器”，不过就是对某套API的伪实现。这种实现并不是直接去完成API所声明的功能，而是去调用有类似功能的别的API。这样就完成了从“某套API”到“别的API”的转调。如果同时存在A-to-B.jar和B-to-A.jar这两个桥接器，那么可以想象当应用程序开始调用A或者B的API时，会发生什么事。这就是最开始引出的那个stack overflow异常的基本原理。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/26/2018032601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1224,11 +1226,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
