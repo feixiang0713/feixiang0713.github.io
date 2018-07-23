@@ -159,6 +159,366 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018022204" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/22/2018022204/">享元模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/22/2018022204/" class="archive-article-date">
+  	<time datetime="2018-02-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>运用共享技术有效地支持大量细粒度的对象。</p>
+<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:flyweight类，它时所有具体享元类的超类或接口，接受并作用于外部状态<br>2:ConcreteFlyweight是继承Flyweight类或者实现Flyweight接口，为内部状态增加存储空间。<br>3:享元工厂，创建并管理flyweighy对象。当用户需要一个flyweight对象时，提供一个实例或者创造一个（当不存在时）。</p>
+<h3 id="适用情况"><a href="#适用情况" class="headerlink" title="适用情况"></a>适用情况</h3><p>1:如果一个应用程序使用了大量的对象，而大量的这些对象造成了很大的存储开销的时候考虑使用<br>2:对象的大多数状态可以外部状态，如果删除这些对象的外部状态，可以使用相对较少的共享对象取代很多组对象，可以考虑使用</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">	private String name;</div><div class="line">	public User(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	public String getName() &#123;</div><div class="line">		return name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setName(String name) &#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public abstract class Website &#123;</div><div class="line">	public abstract void use(User user);</div><div class="line">&#125;</div><div class="line">public class ConcreteWebsite extends Website&#123;</div><div class="line">	private String name;</div><div class="line">	public ConcreteWebsite(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void use(User user) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;now &quot;+user.getName()+&quot; use the website:&quot;+name);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">import java.util.Hashtable;</div><div class="line"></div><div class="line">public class WebsiteFactory &#123;</div><div class="line">	private Hashtable&lt;String,Website&gt; websites=new Hashtable&lt;String,Website&gt;();</div><div class="line">	public Website getWebsite(String name) &#123;</div><div class="line">		if(websites.contains(name)) &#123;</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;else &#123;</div><div class="line">			websites.put(name, new ConcreteWebsite(name));</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	public int getWebsiteCount() &#123;</div><div class="line">		return websites.size();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestFlyweight &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		WebsiteFactory f=new WebsiteFactory();</div><div class="line">		User user1=new User(&quot;ldd&quot;);</div><div class="line">		User user2=new User(&quot;xxb&quot;);</div><div class="line">		User user3=new User(&quot;zh&quot;);</div><div class="line">		User user4=new User(&quot;lxx&quot;);</div><div class="line">		Website web1=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web1.use(user1);</div><div class="line">		Website web2=f.getWebsite(&quot;app&quot;);</div><div class="line">		web2.use(user2);</div><div class="line">		Website web3=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web3.use(user3);</div><div class="line">		Website web4=f.getWebsite(&quot;app&quot;);</div><div class="line">		web4.use(user4);</div><div class="line">		System.out.println(&quot;now the size:&quot;+f.getWebsiteCount());</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/22/2018022204/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018022203" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/22/2018022203/">中介者模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/22/2018022203/" class="archive-article-date">
+  	<time datetime="2018-02-22T07:57:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>用一个中介对象来封装一系列的对象交互，中介者使得各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变他们之间的交互。</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>将网状通信变为星状通信，将交互集中到中间者这个类中。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>中介者会变得异常复杂，从而难以维护。</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>系统中对象之间存在比较复杂的引用关系，导致它们之间的依赖关系结构混乱而且难以复用该对象。 2、想通过一个中间类来封装多个类中的行为，而又不想生成太多的子类。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public abstract class Colleague &#123;</div><div class="line">	protected Mediator mediator;</div><div class="line">	public Colleague(Mediator m) &#123;</div><div class="line">		this.mediator=m;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class ConcreteColleague1 extends Colleague&#123;</div><div class="line"></div><div class="line">	public ConcreteColleague1(Mediator m) &#123;</div><div class="line">		super(m);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line">	public void send(String message) &#123;</div><div class="line">		mediator.send(message, this);</div><div class="line">	&#125;</div><div class="line">	public void notify(String message) &#123;</div><div class="line">		System.out.println(&quot;c1 get the message:&quot;+message);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ConcreteColleague2 extends Colleague&#123;</div><div class="line">	public ConcreteColleague2(Mediator m) &#123;</div><div class="line">		super(m);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line">	public void send(String message) &#123;</div><div class="line">		mediator.send(message, this);</div><div class="line">	&#125;</div><div class="line">	public void notify(String message) &#123;</div><div class="line">		System.out.println(&quot;c2 get the message:&quot;+message);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public abstract class Mediator &#123;</div><div class="line">	public abstract void send(String message,Colleague colleague);</div><div class="line">&#125;</div><div class="line">public class ConcreteMediator extends Mediator&#123;</div><div class="line">	private ConcreteColleague1 c1;</div><div class="line">	private ConcreteColleague2 c2;</div><div class="line">	public void setC1(ConcreteColleague1 c1) &#123;</div><div class="line">		this.c1 = c1;</div><div class="line">	&#125;</div><div class="line">	public void setC2(ConcreteColleague2 c2) &#123;</div><div class="line">		this.c2 = c2;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void send(String message, Colleague colleague) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(colleague instanceof ConcreteColleague1) &#123;</div><div class="line">			c2.notify(message);</div><div class="line">		&#125;else &#123;</div><div class="line">			c1.notify(message);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestMediator &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		ConcreteMediator m1=new ConcreteMediator();</div><div class="line">		ConcreteColleague1 c1=new ConcreteColleague1(m1);</div><div class="line">		ConcreteColleague2 c2=new ConcreteColleague2(m1);</div><div class="line">		m1.setC1(c1);</div><div class="line">		m1.setC2(c2);</div><div class="line">		c1.send(&quot;hi,i am c1&quot;);</div><div class="line">		c2.send(&quot;hi,i am c2&quot;);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/22/2018022203/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018022202" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/22/2018022202/">职责链模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/22/2018022202/" class="archive-article-date">
+  	<time datetime="2018-02-22T06:37:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>使得多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它位置。</p>
+<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:抽象处理者(Handler)角色：定义出一个处理请求的接口。如果需要，接口可以定义 出一个方法以设定和返回对下家的引用。这个角色通常由一个Java抽象类或者Java接口实现。上图中Handler类的聚合关系给出了具体子类对下家的引用，抽象方法handleRequest()规范了子类处理请求的操作。<br>2:具体处理者(ConcreteHandler)角色：具体处理者接到请求后，可以选择将请求处理掉，或者将请求传给下家。由于具体处理者持有对下家的引用，因此，如果需要，具体处理者可以访问下家。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div></pre></td><td class="code"><pre><div class="line">//请求类</div><div class="line">public class Request &#123;</div><div class="line">	private String requestType;</div><div class="line">	private int requestNumber;</div><div class="line">	private String requesteContent;</div><div class="line">	public String getRequestType() &#123;</div><div class="line">		return requestType;</div><div class="line">	&#125;</div><div class="line">	public void setRequestType(String requestType) &#123;</div><div class="line">		this.requestType = requestType;</div><div class="line">	&#125;</div><div class="line">	public int getRequestNumber() &#123;</div><div class="line">		return requestNumber;</div><div class="line">	&#125;</div><div class="line">	public void setRequestNumber(int requestNumber) &#123;</div><div class="line">		this.requestNumber = requestNumber;</div><div class="line">	&#125;</div><div class="line">	public String getRequesteContent() &#123;</div><div class="line">		return requesteContent;</div><div class="line">	&#125;</div><div class="line">	public void setRequesteContent(String requesteContent) &#123;</div><div class="line">		this.requesteContent = requesteContent;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">//抽象处理者</div><div class="line">public abstract class Manager &#123;</div><div class="line">	protected String name;</div><div class="line">	protected Manager superior;</div><div class="line">	public Manager getSuperior() &#123;</div><div class="line">		return superior;</div><div class="line">	&#125;</div><div class="line">	public void setSuperior(Manager superior) &#123;</div><div class="line">		this.superior = superior;</div><div class="line">	&#125;</div><div class="line">	public Manager(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	public void sendRequestToSuperior(Request request) &#123;</div><div class="line">		if(this.superior!=null) &#123;</div><div class="line">			this.superior.requestApplication(request);</div><div class="line">		&#125;else&#123;</div><div class="line">			System.out.println(name+&quot;未设置上一级管理者&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	abstract public void requestApplication(Request request);</div><div class="line">&#125;</div><div class="line">//具体实现者1</div><div class="line">public class CommonManager extends Manager&#123;</div><div class="line"></div><div class="line">	public CommonManager(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equals(&quot;请假&quot;)&amp;&amp;request.getRequestNumber()&lt;=3) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else &#123;</div><div class="line">			this.sendRequestToSuperior(request);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体实现者2</div><div class="line">public class Majordomo extends Manager&#123;</div><div class="line"></div><div class="line">	public Majordomo(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equalsIgnoreCase(&quot;请假&quot;)&amp;&amp;request.getRequestNumber()&lt;=5) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else &#123;</div><div class="line">			this.sendRequestToSuperior(request);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体实现者3</div><div class="line">public class GeneralManager extends Manager&#123;</div><div class="line"></div><div class="line">	public GeneralManager(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equalsIgnoreCase(&quot;请假&quot;)) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else if (request.getRequestType().equalsIgnoreCase(&quot;加薪&quot;)&amp;&amp;request.getRequestNumber()&lt;=500)&#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else if(request.getRequestType().equalsIgnoreCase(&quot;加薪&quot;)&amp;&amp;request.getRequestNumber()&gt;500) &#123;</div><div class="line">			System.out.println(name+&quot; 还需要考虑&quot;+request.getRequesteContent());</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestChainOfResponsibility &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		CommonManager jingli=new CommonManager(&quot;金利&quot;);</div><div class="line">		Majordomo zongjian=new Majordomo(&quot;宗建&quot;);</div><div class="line">		GeneralManager zongjinli=new GeneralManager(&quot;钟静立&quot;);</div><div class="line">		jingli.setSuperior(zongjian);</div><div class="line">		zongjian.setSuperior(zongjinli);</div><div class="line">		Request r1=new Request();</div><div class="line">		r1.setRequesteContent(&quot; xxb请假一天&quot;);</div><div class="line">		r1.setRequestNumber(1);</div><div class="line">		r1.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r2=new Request();</div><div class="line">		r2.setRequesteContent(&quot; xxb请假4天&quot;);</div><div class="line">		r2.setRequestNumber(4);</div><div class="line">		r2.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r3=new Request();</div><div class="line">		r3.setRequesteContent(&quot; xxb请假10天&quot;);</div><div class="line">		r3.setRequestNumber(10);</div><div class="line">		r3.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r4=new Request();</div><div class="line">		r4.setRequesteContent(&quot; xxb请求加薪1000快&quot;);</div><div class="line">		r4.setRequestNumber(1000);</div><div class="line">		r4.setRequestType(&quot;加薪&quot;);</div><div class="line">		jingli.requestApplication(r1);</div><div class="line">		jingli.requestApplication(r2);</div><div class="line">		jingli.requestApplication(r3);</div><div class="line">		jingli.requestApplication(r4);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/22/2018022202/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018022201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/22/2018022201/">命令模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/22/2018022201/" class="archive-article-date">
+  	<time datetime="2018-02-22T04:37:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>将一个请求封装为一个对象，从而使你可以使用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。</p>
+<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>Receiver接受者角色：该角色就是干活的角色，命令传递到这里是应该被执行的<br>Command命令角色：需要执行的所有命令都在这里声明<br>Invoker调用者角色：接收到命令，并执行命令</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1:他能够较容易地设计成一个命令队列，<br>2:在需要的时候，可以比较容易将命令纪录到日志中<br>3:允许接受请求的一方拒绝命令<br>4:可以比较轻松的对请求进行撤销和重做<br>5:增加新的具体命令的时候，增加新的具体命令类即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">//Receiver接受者角色</div><div class="line">public class Receiver &#123;</div><div class="line">	public void action() &#123;</div><div class="line">		System.out.println(&quot;执行某个命令&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//Command命令角色</div><div class="line">public abstract class Command &#123;</div><div class="line">	protected Receiver r;</div><div class="line">	public Command(Receiver receiver) &#123;</div><div class="line">		this.r=receiver;</div><div class="line">	&#125;</div><div class="line">	abstract public void execute();</div><div class="line">&#125;</div><div class="line">//Command命令角色,具体实现者</div><div class="line">public class ConcreteCommand extends Command&#123;</div><div class="line"></div><div class="line">	public ConcreteCommand(Receiver receiver) &#123;</div><div class="line">		super(receiver);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void execute() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.r.action();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//Invoker调用者角色</div><div class="line">public class Invoker &#123;</div><div class="line">	private Command command;</div><div class="line">	public Invoker(Command c) &#123;</div><div class="line">		this.command=c;</div><div class="line">	&#125;</div><div class="line">	public void execute() &#123;</div><div class="line">		command.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestCommand &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Receiver r=new Receiver();</div><div class="line">		Command c=new ConcreteCommand(r);</div><div class="line">		Invoker i=new Invoker(c);</div><div class="line">		i.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/22/2018022201/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018022102" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -691,362 +1051,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018021301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/13/2018021301/">观察者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/13/2018021301/" class="archive-article-date">
-  	<time datetime="2018-02-13T09:41:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听一个主题对象，这个主题对象在状态发生变化时，会通知所有观察者对象，让它们能够自动更新自己。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:抽象通知者<br>2:实现通知者<br>3:抽象观察者<br>4:具体观察者</p>
-<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><p>1:当一个对象的改变同时需要改变其他对象的时候，而且不知道有多少对象需要改变时</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">public abstract class Observer &#123;</div><div class="line">	public abstract void update() ;</div><div class="line">&#125;</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line">public abstract class Subject &#123;</div><div class="line">	protected List&lt;Observer&gt; observers=new ArrayList&lt;Observer&gt;();</div><div class="line">	//增加观察者</div><div class="line">	public void add(Observer ob) &#123;</div><div class="line">		observers.add(ob);</div><div class="line">	&#125;</div><div class="line">	//减少 观察者 </div><div class="line">	public void remove(Observer ob) &#123;</div><div class="line">		observers.remove(ob);</div><div class="line">	&#125;</div><div class="line">	//通知</div><div class="line">	public abstract void notifyObserver();</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public class PricePush extends Subject&#123;</div><div class="line"></div><div class="line">	private String pirce;</div><div class="line"></div><div class="line">	public String getPirce() &#123;</div><div class="line">		return pirce;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setPirce(String pirce) &#123;</div><div class="line">		this.pirce = pirce;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void notifyObserver() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		for(Observer ob:this.observers) &#123;</div><div class="line">			ob.update();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public class Subscribe extends Observer &#123;</div><div class="line">	private String contract;</div><div class="line">	private PricePush pricePush;</div><div class="line">	public Subscribe(PricePush subject,String name) &#123;</div><div class="line">		this.contract=name;</div><div class="line">		this.pricePush=subject;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void update() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		String curPrice=this.pricePush.getPirce();</div><div class="line">		System.out.println(&quot;contract:&quot;+contract+&quot; current price is：&quot;+curPrice);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestObserver &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		PricePush pricePush=new PricePush();</div><div class="line">		pricePush.add(new Subscribe(pricePush,&quot;Ag1211&quot;));</div><div class="line">		pricePush.add(new Subscribe(pricePush,&quot;Ag1212&quot;));</div><div class="line">		pricePush.setPirce(&quot;100.00&quot;);</div><div class="line">		pricePush.notifyObserver();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/13/2018021301/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018020702" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/07/2018020702/">建造者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/07/2018020702/" class="archive-article-date">
-  	<time datetime="2018-02-07T14:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以用创建不同的表示。</p>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:复杂对象的产品类。<br>2:抽象建造者类。<br>3:具体建造者类。<br>4:指挥者类，用来指挥建造过程。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>它主要用于创建一些复杂的对象，这些对象内部构建间的建造顺序通常是稳定的，但对象内部的构建通常面临复杂的变化。<br>好处在于建造代码和表示代码分离，由于建造者隐藏了该产品时如何组装的，所以需改变一个产品的内部表示，只需要再定义一个具体的建造者即可。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class Product &#123;</div><div class="line">	private List&lt;String&gt; parts=new ArrayList&lt;String&gt;();</div><div class="line">	public void add(String part) &#123;</div><div class="line">		parts.add(part);</div><div class="line">	&#125;</div><div class="line">	public void show() &#123;</div><div class="line">		parts.forEach(System.out::println);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public interface Builder &#123;</div><div class="line">	void BuildPartA();</div><div class="line">	void BuildPartB();</div><div class="line">	Product GetResult();</div><div class="line">&#125;</div><div class="line">public class ConcreteBuilder1 implements Builder &#123;</div><div class="line">private Product product=new Product();</div><div class="line">	@Override</div><div class="line">	public void BuildPartA() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part A&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void BuildPartB() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part B&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Product GetResult() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return product;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ConcreteBuilder2 implements Builder &#123;</div><div class="line">	private Product product=new Product();</div><div class="line">	@Override</div><div class="line">	public void BuildPartA() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part x&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void BuildPartB() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		product.add(&quot;part y&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Product GetResult() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return product;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class Director &#123;</div><div class="line">	public void Construct(Builder builder) &#123;</div><div class="line">		builder.BuildPartA();</div><div class="line">		builder.BuildPartB();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestBuilder &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Director d1=new Director();</div><div class="line">		Builder b1=new ConcreteBuilder1();</div><div class="line">		Builder b2=new ConcreteBuilder2();</div><div class="line">		d1.Construct(b1);</div><div class="line">		d1.Construct(b2);</div><div class="line">		Product p1=b1.GetResult();</div><div class="line">		Product p2=b2.GetResult();</div><div class="line">		p1.show();</div><div class="line">		p2.show();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/07/2018020702/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018020701" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/07/2018020701/">JDK1.8新特性</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/07/2018020701/" class="archive-article-date">
-  	<time datetime="2018-02-07T08:06:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以下皆为百度结果：</p>
-<p>一：<br>Java 8允许我们给接口添加一个非抽象的方法实现，只需要使用 default关键字即可，这个特征又叫做扩展方法</p>
-<p>代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public interface Animal &#123;</div><div class="line">	void desc();</div><div class="line">	void run();</div><div class="line">	default void display()&#123;</div><div class="line">		System.out.println(&quot;this is a animal.&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Dog implements Animal &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a dog&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestJDK18 &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Dog dog=new Dog();</div><div class="line">		dog.desc();</div><div class="line">		dog.display();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>二：<br>在Java 8 中你就没必要使用这种传统的匿名对象的方式了，Java 8提供了更简洁的语法，lambda表达式：</p>
-<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import java.util.Arrays;</div><div class="line">import java.util.Collections;</div><div class="line">import java.util.Comparator;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestLambda &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		List&lt;String&gt; names=Arrays.asList(&quot;abc&quot;,&quot;golf&quot;,&quot;egg&quot;,&quot;car&quot;);</div><div class="line">		System.out.println(&quot;before sort:&quot;+names);</div><div class="line">		Collections.sort(names,new Comparator&lt;String&gt;()&#123;</div><div class="line">			@Override</div><div class="line">			public int compare(String a,String b) &#123;</div><div class="line">				return b.compareTo(a);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		System.out.println(&quot;after sort:&quot;+names);</div><div class="line">		List&lt;String&gt; names1=Arrays.asList(&quot;abc&quot;,&quot;golf&quot;,&quot;egg&quot;,&quot;car&quot;);</div><div class="line">		System.out.println(&quot;before sort:&quot;+names1);</div><div class="line">		//使用lambda表达式简化，增加可读性</div><div class="line">		Collections.sort(names1,(a,b)-&gt;a.compareTo(b));</div><div class="line">		System.out.println(&quot;after sort:&quot;+names1);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>三：</p>
-<p>Java 8 引入的一个核心概念是函数式接口。如果一个接口定义个唯一一个抽象方法，那么这个接口就成为函数式接口。比如，java.lang.Runnable就是一个函数式接口，因为它只顶一个一个抽象方法</p>
-<p>四：<br>Java 8 允许你使用 :: 关键字来传递方法或者构造函数引用</p>
-<p>五：Lambda 作用域<br>在lambda表达式中访问外层作用域和老版本的匿名对象中的方式很相似。你可以直接访问标记了final的外层局部变量，或者实例的字段以及静态变量。<br>和本地变量不同的是，lambda内部对于实例的字段以及静态变量是即可读又可写。该行为和匿名对象是一致的。<br>Lambda表达式中是无法访问到默认方法。</p>
-<p>六：Stream 接口<br>java.util.Stream 表示能应用在一组元素上一次执行的操作序列。Stream 操作分为中间操作或者最终操作两种，最终操作返回一特定类型的计算结果，而中间操作返回Stream本身，这样你就可以将多个操作依次串起来。Stream 的创建需要指定一个数据源，比如 java.util.Collection的子类，List或者Set， Map不支持。Stream的操作可以串行执行或者并行执行<br>过滤通过一个predicate接口来过滤并只保留符合条件的元素，该操作属于中间操作<br>forEach是一个最终操作，所以我们不能在forEach之后来执行其他Stream操作<br>排序是一个中间操作，返回的是排序好后的Stream。<br>中间操作map会将元素根据指定的Function接口来依次将元素转成另外的对象，下面的示例展示了将字符串转换为大写字符串。你也可以通过map来讲对象转换成其他类型，map返回的Stream类型是根据你map传递进去的函数的返回值决定的<br>Count 计数计数是一个最终操作，返回Stream中元素的个数，返回值类型是long。<br>Reduce 规约这是一个最终操作，允许通过指定的函数来讲stream中的多个元素规约为一个元素，规越后的结果是通过Optional接口表示的：</p>
-<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestSteam &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		List&lt;String&gt; nameList = new ArrayList&lt;String&gt;();</div><div class="line">		nameList.add(&quot;aaa&quot;);</div><div class="line">		nameList.add(&quot;b2b&quot;);</div><div class="line">		nameList.add(&quot;c3c&quot;);</div><div class="line">		nameList.add(&quot;a4a&quot;);</div><div class="line">		nameList.add(&quot;bbb&quot;);</div><div class="line">		nameList.add(&quot;ccc&quot;);</div><div class="line">		nameList.add(&quot;a1a&quot;);</div><div class="line">		nameList.add(&quot;b5b&quot;);</div><div class="line">		nameList.add(&quot;c6c&quot;);</div><div class="line">		nameList.stream()</div><div class="line">		.sorted((a,b)-&gt;a.compareTo(b))</div><div class="line">		.forEach(System.out::println);		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>七：Date API</p>
-<p>Java 8 在包java.time下包含了一组全新的时间日期API。<br>Clock类提供了访问当前日期和时间的方法，Clock是时区敏感的，可以用来取代 System.currentTimeMillis() 来获取当前的微秒数。某一个特定的时间点也可以使用Instant类来表示，Instant类也可以用来创建老的java.util.Date对象。<br>Timezones 时区<br>在新API中时区使用ZoneId来表示。时区可以很方便的使用静态方法of来获取到。 时区定义了到UTS时间的时间差，在Instant时间点对象到本地日期对象之间转换的时候是极其重要的。<br>LocalTime 本地时间<br>LocalTime 定义了一个没有时区信息的时间，例如 晚上10点，或者 17:30:15。下面的例子使用前面代码创建的时区创建了两个本地时间。之后比较时间并以小时和分钟为单位计算两个时间的时间差。<br>LocalDate 本地日期<br>LocalDate 表示了一个确切的日期，比如 2014-03-11。该对象值是不可变的，用起来和LocalTime基本一致。下面的例子展示了如何给Date对象加减天/月/年。另外要注意的是这些对象是不可变的，操作返回的总是一个新实例<br>LocalDateTime 本地日期时间<br>LocalDateTime 同时表示了时间和日期，相当于前两节内容合并到一个对象上了。LocalDateTime和LocalTime还有LocalDate一样，都是不可变的。LocalDateTime提供了一些能访问具体字段的方法</p>
-<p>八：<br>Annotation 注解<br>在Java 8中支持多重注解了，后续补充。。。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/07/2018020701/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018020604" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/2018020604/">外观模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/2018020604/" class="archive-article-date">
-  	<time datetime="2018-02-06T15:25:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</p>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:外观类，提供观察子系统到类，供外界调用<br>2:子系统的类，供外观类调用</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:在设计初期阶段，应该有意识的奖不同等层分离，层与层之间用Facade，为复杂子系统提供简单的接口，使得藕合度降低<br>2：在开放阶段，子系统因为不断重构而变的越来越复杂，增加Facade可以提供一个简单接口，减少他们之间的依赖<br>3:对于遗留的大型系统，新系统想要使用遗留系统的功能，可以使用Facade，来提供一个简单接口，让新系统可以与复杂系统进行交互。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public class SubSystemA &#123;</div><div class="line">	public void MethodA() &#123;</div><div class="line">		System.out.println(&quot;method A&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class SubSystemB &#123;</div><div class="line">	public void MethodB() &#123;</div><div class="line">		System.out.println(&quot;Method B&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class SubSystemC &#123;</div><div class="line">	public void MethodC() &#123;</div><div class="line">		System.out.println(&quot;Method C&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Facade &#123;</div><div class="line">	SubSystemA a=null;</div><div class="line">	SubSystemB b=null;</div><div class="line">	SubSystemC c=null;</div><div class="line">	public Facade() &#123;</div><div class="line">		a=new SubSystemA();</div><div class="line">		b=new SubSystemB();</div><div class="line">		c=new SubSystemC();</div><div class="line">	&#125;</div><div class="line">	public void FacadeMethodA() &#123;</div><div class="line">		a.MethodA();</div><div class="line">		b.MethodB();</div><div class="line">	&#125;</div><div class="line">	public void FacadeMethodB() &#123;</div><div class="line">		b.MethodB();</div><div class="line">		c.MethodC();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestFacade &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Facade facade=new Facade();</div><div class="line">		facade.FacadeMethodA();</div><div class="line">		facade.FacadeMethodB();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/2018020604/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1162,11 +1166,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1178,11 +1182,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">

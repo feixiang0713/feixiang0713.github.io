@@ -159,6 +159,370 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018030702" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/07/2018030702/">HashMap和ConcurrentHashMap的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/07/2018030702/" class="archive-article-date">
+  	<time datetime="2018-03-07T11:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近，项目组在一个交易所的项目中出现了多线程的问题，简单记录描述分享下。</p>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>在一个单例需要存放订阅关系，使用了静态，HashMap来声明，但是服务中有多个线程会同时访问这个对象，并执行写动作，从而有概率发生死循环。</p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>HashMap是非线程安全的集合框架，多线程会导致HashMap的Entry链表形成环形数据结构，查找时会陷入死循环。因此在并发线程中，建议使用ConcurrentHashMap这种集合框架。<br>当往HashMap中添加元素时，会引起HashMap容器的扩容，源代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/** </div><div class="line">    * </div><div class="line">    * 往表中添加元素，如果插入元素之后，表长度不够，便会调用resize方法扩容 </div><div class="line">    */  </div><div class="line">   void addEntry(int hash, K key, V value, int bucketIndex) &#123;  </div><div class="line">Entry&lt;K,V&gt; e = table[bucketIndex];  </div><div class="line">       table[bucketIndex] = new Entry&lt;K,V&gt;(hash, key, value, e);  </div><div class="line">       if (size++ &gt;= threshold)  </div><div class="line">           resize(2 * table.length);  </div><div class="line">   &#125;  </div><div class="line">  </div><div class="line">   /** </div><div class="line">    * resize()方法如下，重要的是transfer方法，把旧表中的元素添加到新表中</div><div class="line">    */  </div><div class="line">   void resize(int newCapacity) &#123;  </div><div class="line">       Entry[] oldTable = table;  </div><div class="line">       int oldCapacity = oldTable.length;  </div><div class="line">       if (oldCapacity == MAXIMUM_CAPACITY) &#123;  </div><div class="line">           threshold = Integer.MAX_VALUE;  </div><div class="line">           return;  </div><div class="line">       &#125;  </div><div class="line">  </div><div class="line">       Entry[] newTable = new Entry[newCapacity];  </div><div class="line">       transfer(newTable);  </div><div class="line">       table = newTable;  </div><div class="line">       threshold = (int)(newCapacity * loadFactor);  </div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>参考上面的代码，便引入到了transfer方法，这就是HashMap并发时，会引起死循环的根本原因所在，下面结合transfer的源代码，说明一下产生死循环的原理，先列transfer代码（这是里JDK7的源码），如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * Transfers all entries from current table to newTable.</div><div class="line">     */</div><div class="line">    void transfer(Entry[] newTable, boolean rehash) &#123;</div><div class="line">        int newCapacity = newTable.length;</div><div class="line">        for (Entry&lt;K,V&gt; e : table) &#123;</div><div class="line"></div><div class="line">            while(null != e) &#123;</div><div class="line">                Entry&lt;K,V&gt; next = e.next;            ---------------------(1)</div><div class="line">                if (rehash) &#123;</div><div class="line">                    e.hash = null == e.key ? 0 : hash(e.key);</div><div class="line">                &#125;</div><div class="line">                int i = indexFor(e.hash, newCapacity); </div><div class="line">                e.next = newTable[i];</div><div class="line">                newTable[i] = e;</div><div class="line">                e = next;</div><div class="line">            &#125; // while</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>transfer这步会产生环形链表，从而导致查询的时候，陷入死循环。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/07/2018030702/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018030701" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/07/2018030701/">PRC服务和HTTP服务对比</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/07/2018030701/" class="archive-article-date">
+  	<time datetime="2018-03-07T04:58:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>此前，有人问RPC服务和HTTP服务之间的区别，自己也不太懂，今天通过百度学习下，从一些博客中摘录部分内容，做个笔记。<br>原文链接：<br><a href="http://blog.csdn.net/wangyunpeng0319/article/details/78651998" target="_blank" rel="external">http://blog.csdn.net/wangyunpeng0319/article/details/78651998</a></p>
+<h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h3><p>RPC主要是基于TCP/IP协议的，而HTTP服务主要是基于HTTP协议的，我们都知道HTTP协议是在传输层协议TCP之上的，所以效率来看的话，RPC当然是要更胜一筹.</p>
+<p>在说RPC和HTTP的区别之前，我觉的有必要了解一下OSI的七层网络结构模型（虽然实际应用中基本上都是五层），它可以分为以下几层： （从上到下）</p>
+<p>第一层：应用层。定义了用于在网络中进行通信和传输数据的接口；<br>第二层：表示层。定义不同的系统中数据的传输格式，编码和解码规范等；<br>第三层：会话层。管理用户的会话，控制用户间逻辑连接的建立和中断；<br>第四层：传输层。管理着网络中的端到端的数据传输；<br>第五层：网络层。定义网络设备间如何传输数据；<br>第六层：链路层。将上面的网络层的数据包封装成数据帧，便于物理层传输；<br>第七层：物理层。这一层主要就是传输这些二进制数据。<br>实际应用过程中，五层协议结构里面是没有表示层和会话层的。应该说它们和应用层合并了。我们应该将重点放在应用层和传输层这两个层面。因为HTTP是应用层协议，而TCP是传输层协议。好，知道了网络的分层模型以后我们可以更好地理解为什么RPC服务相比HTTP服务要Nice一些！</p>
+<h3 id="RPC基本架构"><a href="#RPC基本架构" class="headerlink" title="RPC基本架构"></a>RPC基本架构</h3><p>说说RPC服务的基本架构吧。允许我可耻地盗一幅图哈~我们可以很清楚地看到，一个完整的RPC架构里面包含了四个核心的组件，分别是Client ,Server,Client Stub以及Server Stub，这个Stub大家可以理解为存根。分别说说这几个组件：</p>
+<p>客户端（Client），服务的调用方。<br>服务端（Server），真正的服务提供者。<br>客户端存根，存放服务端的地址消息，再将客户端的请求参数打包成网络消息，然后通过网络远程发送给服务方。<br>服务端存根，接收客户端发送过来的消息，将消息解包，并调用本地的方法。<br><img src="https://obrxbqjbi.qnssl.com/blog/image/rpc-architecture.jpg" alt="Image text"></p>
+<p>RPC主要是用在大型企业里面，因为大型企业里面系统繁多，业务线复杂，而且效率优势非常重要的一块，这个时候RPC的优势就比较明显了。实际的开发当中是这么做的，项目一般使用maven来管理。比如我们有一个处理订单的系统服务，先声明它的所有的接口（这里就是具体指Java中的interface），然后将整个项目打包为一个jar包，服务端这边引入这个二方库，然后实现相应的功能，客户端这边也只需要引入这个二方库即可调用了。</p>
+<h3 id="RPC框架"><a href="#RPC框架" class="headerlink" title="RPC框架"></a>RPC框架</h3><p>目前流行的开源RPC框架还是比较多的。下面重点介绍三种：</p>
+<p>1:gRPC是Google最近公布的开源软件，基于最新的HTTP2.0协议，并支持常见的众多编程语言。 我们知道HTTP2.0是基于二进制的HTTP协议升级版本，目前各大浏览器都在快马加鞭的加以支持。 这个RPC框架是基于HTTP协议实现的，底层使用到了Netty框架的支持。<br>2:Thrift是Facebook的一个开源项目，主要是一个跨语言的服务开发框架。它有一个代码生成器来对它所定义的IDL定义文件自动生成服务代码框架。用户只要在其之前进行二次开发就行，对于底层的RPC通讯等都是透明的。不过这个对于用户来说的话需要学习特定领域语言这个特性，还是有一定成本的。<br>3:Dubbo是阿里集团开源的一个极为出名的RPC框架，在很多互联网公司和企业应用中广泛使用。协议和序列化框架都可以插拔是及其鲜明的特色。同样 的远程接口是基于Java Interface，并且依托于spring框架方便开发。可以方便的打包成单一文件，独立进程运行，和现在的微服务概念一致。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>RPC服务和HTTP服务还是存在很多的不同点的，一般来说，RPC服务主要是针对大型企业的，而HTTP服务主要是针对小企业的，因为RPC效率更高，而HTTP服务开发迭代会更快。总之，选用什么样的框架不是按照市场上流行什么而决定的，而是要对整个项目进行完整地评估，从而在仔细比较两种开发框架对于整个项目的影响，最后再决定什么才是最适合这个项目的。一定不要为了使用RPC而每个项目都用RPC，而是要因地制宜，具体情况具体分析。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/07/2018030701/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018030602" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/06/2018030602/">Spring特性－－autowiring</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/06/2018030602/" class="archive-article-date">
+  	<time datetime="2018-03-06T13:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在IoC容器实现原理中，除了通过BeanDefinition的属性值和构造函数以显式方式对Bean的依赖关系进行管理，Spring的IoC容器还提供了自动依赖装配的方式，为应用使用容器提供更大的方便。<br>自动装配中，不需要对Bean属性做显式的依赖关系声明，只需要配置好autowiring属性，IoC会根据这个属性点配置，使用反射自动查找属性的类型或者名字，然后基于属性的类型或者名字来自动匹配IoC容器中的Bean，从而自动地完成依赖注入。<br>优点：减少用户配置Bean的工作量<br>缺点：不可知的后果</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/06/2018030602/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018030601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/06/2018030601/">项目中遇到的问题1</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/06/2018030601/" class="archive-article-date">
+  	<time datetime="2018-03-06T10:14:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为一个系列，把在项目开发过程遇到的问题都罗列出来，为今后项目开发作为经验积累。</p>
+<h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>先说下我们的系统架构，CS结构，后台服务通过F5负载均衡部署，部署了4个后台服务。客户端登陆，只会连上其中一个后台。现在后台服务有一个定时任务，该任务是将符合条件的交易记录的状态置为已成交，并将该状态变化的消息通知给所有连上这个后台的客户端。这里我们做了机构隔离，只会转发给这笔交易记录所属机构的客户端。但是如果该机构的客户端连上了其他后台服务器，则获取不到该状态变化的消息，在客户端上面的交易状态则不是最新状态。</p>
+<h5 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h5><p>显然这是当初架构设计的时候，没有考虑到生产环境的具体情况，没有考虑到多后台对于之类场景是否支持。</p>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><p>方案一：客户端定时查询，向后台load最新状态，优点，改动简单，不需要改动现有架构，弊端，会有很多无效请求，浪费系统资源。<br>方案二：做一个消息中间件服务器，将需要广播的消息发送给消息中间件，四个后台订阅该广播消息。优点，不用多说了，缺点就是需要改变现有系统架构，需要时间和人力资源去完成。<br>后续待补充。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/06/2018030601/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018030301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -714,366 +1078,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022204" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022204/">享元模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022204/" class="archive-article-date">
-  	<time datetime="2018-02-22T14:18:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>运用共享技术有效地支持大量细粒度的对象。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:flyweight类，它时所有具体享元类的超类或接口，接受并作用于外部状态<br>2:ConcreteFlyweight是继承Flyweight类或者实现Flyweight接口，为内部状态增加存储空间。<br>3:享元工厂，创建并管理flyweighy对象。当用户需要一个flyweight对象时，提供一个实例或者创造一个（当不存在时）。</p>
-<h3 id="适用情况"><a href="#适用情况" class="headerlink" title="适用情况"></a>适用情况</h3><p>1:如果一个应用程序使用了大量的对象，而大量的这些对象造成了很大的存储开销的时候考虑使用<br>2:对象的大多数状态可以外部状态，如果删除这些对象的外部状态，可以使用相对较少的共享对象取代很多组对象，可以考虑使用</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">	private String name;</div><div class="line">	public User(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	public String getName() &#123;</div><div class="line">		return name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setName(String name) &#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public abstract class Website &#123;</div><div class="line">	public abstract void use(User user);</div><div class="line">&#125;</div><div class="line">public class ConcreteWebsite extends Website&#123;</div><div class="line">	private String name;</div><div class="line">	public ConcreteWebsite(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void use(User user) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;now &quot;+user.getName()+&quot; use the website:&quot;+name);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">import java.util.Hashtable;</div><div class="line"></div><div class="line">public class WebsiteFactory &#123;</div><div class="line">	private Hashtable&lt;String,Website&gt; websites=new Hashtable&lt;String,Website&gt;();</div><div class="line">	public Website getWebsite(String name) &#123;</div><div class="line">		if(websites.contains(name)) &#123;</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;else &#123;</div><div class="line">			websites.put(name, new ConcreteWebsite(name));</div><div class="line">			return websites.get(name);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	public int getWebsiteCount() &#123;</div><div class="line">		return websites.size();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestFlyweight &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		WebsiteFactory f=new WebsiteFactory();</div><div class="line">		User user1=new User(&quot;ldd&quot;);</div><div class="line">		User user2=new User(&quot;xxb&quot;);</div><div class="line">		User user3=new User(&quot;zh&quot;);</div><div class="line">		User user4=new User(&quot;lxx&quot;);</div><div class="line">		Website web1=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web1.use(user1);</div><div class="line">		Website web2=f.getWebsite(&quot;app&quot;);</div><div class="line">		web2.use(user2);</div><div class="line">		Website web3=f.getWebsite(&quot;blog&quot;);</div><div class="line">		web3.use(user3);</div><div class="line">		Website web4=f.getWebsite(&quot;app&quot;);</div><div class="line">		web4.use(user4);</div><div class="line">		System.out.println(&quot;now the size:&quot;+f.getWebsiteCount());</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022204/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022203" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022203/">中介者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022203/" class="archive-article-date">
-  	<time datetime="2018-02-22T07:57:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>用一个中介对象来封装一系列的对象交互，中介者使得各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变他们之间的交互。</p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>将网状通信变为星状通信，将交互集中到中间者这个类中。</p>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>中介者会变得异常复杂，从而难以维护。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>系统中对象之间存在比较复杂的引用关系，导致它们之间的依赖关系结构混乱而且难以复用该对象。 2、想通过一个中间类来封装多个类中的行为，而又不想生成太多的子类。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public abstract class Colleague &#123;</div><div class="line">	protected Mediator mediator;</div><div class="line">	public Colleague(Mediator m) &#123;</div><div class="line">		this.mediator=m;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class ConcreteColleague1 extends Colleague&#123;</div><div class="line"></div><div class="line">	public ConcreteColleague1(Mediator m) &#123;</div><div class="line">		super(m);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line">	public void send(String message) &#123;</div><div class="line">		mediator.send(message, this);</div><div class="line">	&#125;</div><div class="line">	public void notify(String message) &#123;</div><div class="line">		System.out.println(&quot;c1 get the message:&quot;+message);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class ConcreteColleague2 extends Colleague&#123;</div><div class="line">	public ConcreteColleague2(Mediator m) &#123;</div><div class="line">		super(m);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line">	public void send(String message) &#123;</div><div class="line">		mediator.send(message, this);</div><div class="line">	&#125;</div><div class="line">	public void notify(String message) &#123;</div><div class="line">		System.out.println(&quot;c2 get the message:&quot;+message);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public abstract class Mediator &#123;</div><div class="line">	public abstract void send(String message,Colleague colleague);</div><div class="line">&#125;</div><div class="line">public class ConcreteMediator extends Mediator&#123;</div><div class="line">	private ConcreteColleague1 c1;</div><div class="line">	private ConcreteColleague2 c2;</div><div class="line">	public void setC1(ConcreteColleague1 c1) &#123;</div><div class="line">		this.c1 = c1;</div><div class="line">	&#125;</div><div class="line">	public void setC2(ConcreteColleague2 c2) &#123;</div><div class="line">		this.c2 = c2;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public void send(String message, Colleague colleague) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(colleague instanceof ConcreteColleague1) &#123;</div><div class="line">			c2.notify(message);</div><div class="line">		&#125;else &#123;</div><div class="line">			c1.notify(message);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestMediator &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		ConcreteMediator m1=new ConcreteMediator();</div><div class="line">		ConcreteColleague1 c1=new ConcreteColleague1(m1);</div><div class="line">		ConcreteColleague2 c2=new ConcreteColleague2(m1);</div><div class="line">		m1.setC1(c1);</div><div class="line">		m1.setC2(c2);</div><div class="line">		c1.send(&quot;hi,i am c1&quot;);</div><div class="line">		c2.send(&quot;hi,i am c2&quot;);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022203/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022202" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022202/">职责链模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022202/" class="archive-article-date">
-  	<time datetime="2018-02-22T06:37:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>使得多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它位置。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:抽象处理者(Handler)角色：定义出一个处理请求的接口。如果需要，接口可以定义 出一个方法以设定和返回对下家的引用。这个角色通常由一个Java抽象类或者Java接口实现。上图中Handler类的聚合关系给出了具体子类对下家的引用，抽象方法handleRequest()规范了子类处理请求的操作。<br>2:具体处理者(ConcreteHandler)角色：具体处理者接到请求后，可以选择将请求处理掉，或者将请求传给下家。由于具体处理者持有对下家的引用，因此，如果需要，具体处理者可以访问下家。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div></pre></td><td class="code"><pre><div class="line">//请求类</div><div class="line">public class Request &#123;</div><div class="line">	private String requestType;</div><div class="line">	private int requestNumber;</div><div class="line">	private String requesteContent;</div><div class="line">	public String getRequestType() &#123;</div><div class="line">		return requestType;</div><div class="line">	&#125;</div><div class="line">	public void setRequestType(String requestType) &#123;</div><div class="line">		this.requestType = requestType;</div><div class="line">	&#125;</div><div class="line">	public int getRequestNumber() &#123;</div><div class="line">		return requestNumber;</div><div class="line">	&#125;</div><div class="line">	public void setRequestNumber(int requestNumber) &#123;</div><div class="line">		this.requestNumber = requestNumber;</div><div class="line">	&#125;</div><div class="line">	public String getRequesteContent() &#123;</div><div class="line">		return requesteContent;</div><div class="line">	&#125;</div><div class="line">	public void setRequesteContent(String requesteContent) &#123;</div><div class="line">		this.requesteContent = requesteContent;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">//抽象处理者</div><div class="line">public abstract class Manager &#123;</div><div class="line">	protected String name;</div><div class="line">	protected Manager superior;</div><div class="line">	public Manager getSuperior() &#123;</div><div class="line">		return superior;</div><div class="line">	&#125;</div><div class="line">	public void setSuperior(Manager superior) &#123;</div><div class="line">		this.superior = superior;</div><div class="line">	&#125;</div><div class="line">	public Manager(String n) &#123;</div><div class="line">		this.name=n;</div><div class="line">	&#125;</div><div class="line">	public void sendRequestToSuperior(Request request) &#123;</div><div class="line">		if(this.superior!=null) &#123;</div><div class="line">			this.superior.requestApplication(request);</div><div class="line">		&#125;else&#123;</div><div class="line">			System.out.println(name+&quot;未设置上一级管理者&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	abstract public void requestApplication(Request request);</div><div class="line">&#125;</div><div class="line">//具体实现者1</div><div class="line">public class CommonManager extends Manager&#123;</div><div class="line"></div><div class="line">	public CommonManager(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equals(&quot;请假&quot;)&amp;&amp;request.getRequestNumber()&lt;=3) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else &#123;</div><div class="line">			this.sendRequestToSuperior(request);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体实现者2</div><div class="line">public class Majordomo extends Manager&#123;</div><div class="line"></div><div class="line">	public Majordomo(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equalsIgnoreCase(&quot;请假&quot;)&amp;&amp;request.getRequestNumber()&lt;=5) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else &#123;</div><div class="line">			this.sendRequestToSuperior(request);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体实现者3</div><div class="line">public class GeneralManager extends Manager&#123;</div><div class="line"></div><div class="line">	public GeneralManager(String n) &#123;</div><div class="line">		super(n);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void requestApplication(Request request) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		if(request.getRequestType().equalsIgnoreCase(&quot;请假&quot;)) &#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else if (request.getRequestType().equalsIgnoreCase(&quot;加薪&quot;)&amp;&amp;request.getRequestNumber()&lt;=500)&#123;</div><div class="line">			System.out.println(name+&quot; agree this request&quot;+request.getRequesteContent());</div><div class="line">		&#125;else if(request.getRequestType().equalsIgnoreCase(&quot;加薪&quot;)&amp;&amp;request.getRequestNumber()&gt;500) &#123;</div><div class="line">			System.out.println(name+&quot; 还需要考虑&quot;+request.getRequesteContent());</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestChainOfResponsibility &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		CommonManager jingli=new CommonManager(&quot;金利&quot;);</div><div class="line">		Majordomo zongjian=new Majordomo(&quot;宗建&quot;);</div><div class="line">		GeneralManager zongjinli=new GeneralManager(&quot;钟静立&quot;);</div><div class="line">		jingli.setSuperior(zongjian);</div><div class="line">		zongjian.setSuperior(zongjinli);</div><div class="line">		Request r1=new Request();</div><div class="line">		r1.setRequesteContent(&quot; xxb请假一天&quot;);</div><div class="line">		r1.setRequestNumber(1);</div><div class="line">		r1.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r2=new Request();</div><div class="line">		r2.setRequesteContent(&quot; xxb请假4天&quot;);</div><div class="line">		r2.setRequestNumber(4);</div><div class="line">		r2.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r3=new Request();</div><div class="line">		r3.setRequesteContent(&quot; xxb请假10天&quot;);</div><div class="line">		r3.setRequestNumber(10);</div><div class="line">		r3.setRequestType(&quot;请假&quot;);</div><div class="line">		</div><div class="line">		Request r4=new Request();</div><div class="line">		r4.setRequesteContent(&quot; xxb请求加薪1000快&quot;);</div><div class="line">		r4.setRequestNumber(1000);</div><div class="line">		r4.setRequestType(&quot;加薪&quot;);</div><div class="line">		jingli.requestApplication(r1);</div><div class="line">		jingli.requestApplication(r2);</div><div class="line">		jingli.requestApplication(r3);</div><div class="line">		jingli.requestApplication(r4);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022202/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/22/2018022201/">命令模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/22/2018022201/" class="archive-article-date">
-  	<time datetime="2018-02-22T04:37:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>将一个请求封装为一个对象，从而使你可以使用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>Receiver接受者角色：该角色就是干活的角色，命令传递到这里是应该被执行的<br>Command命令角色：需要执行的所有命令都在这里声明<br>Invoker调用者角色：接收到命令，并执行命令</p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1:他能够较容易地设计成一个命令队列，<br>2:在需要的时候，可以比较容易将命令纪录到日志中<br>3:允许接受请求的一方拒绝命令<br>4:可以比较轻松的对请求进行撤销和重做<br>5:增加新的具体命令的时候，增加新的具体命令类即可</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">//Receiver接受者角色</div><div class="line">public class Receiver &#123;</div><div class="line">	public void action() &#123;</div><div class="line">		System.out.println(&quot;执行某个命令&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//Command命令角色</div><div class="line">public abstract class Command &#123;</div><div class="line">	protected Receiver r;</div><div class="line">	public Command(Receiver receiver) &#123;</div><div class="line">		this.r=receiver;</div><div class="line">	&#125;</div><div class="line">	abstract public void execute();</div><div class="line">&#125;</div><div class="line">//Command命令角色,具体实现者</div><div class="line">public class ConcreteCommand extends Command&#123;</div><div class="line"></div><div class="line">	public ConcreteCommand(Receiver receiver) &#123;</div><div class="line">		super(receiver);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void execute() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.r.action();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//Invoker调用者角色</div><div class="line">public class Invoker &#123;</div><div class="line">	private Command command;</div><div class="line">	public Invoker(Command c) &#123;</div><div class="line">		this.command=c;</div><div class="line">	&#125;</div><div class="line">	public void execute() &#123;</div><div class="line">		command.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">public class TestCommand &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Receiver r=new Receiver();</div><div class="line">		Command c=new ConcreteCommand(r);</div><div class="line">		Invoker i=new Invoker(c);</div><div class="line">		i.execute();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/22/2018022201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1189,11 +1193,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1205,11 +1209,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">

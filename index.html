@@ -159,6 +159,354 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018071104" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/18/2018071104/">java并发学习四</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/18/2018071104/" class="archive-article-date">
+  	<time datetime="2018-07-18T04:28:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="并发容器"><a href="#并发容器" class="headerlink" title="并发容器"></a>并发容器</h3><p>Java 通过提供几种并发的容器类改进同步容器。同步容器通过对容器的所有状态进行串行访问，从而实现它们的线程安全，这样做的代价是削弱并发性，当多个线程共同竞争容器级的锁时，吞吐量就会降低了。</p>
+<h4 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h4><p>ConcurrentHashMap用来替代同步的HashMap实现。ConcurrentHashMap和HashMap一样是一个哈希表，但是它使用完全不同的锁策略，可以提供更好的并发性和可伸缩性。在ConcurrentHashMap之前，程序使用一个公共锁同步每一个方法，并严格限制只能有一个线程可以同时访问容器，而ConcurrentHashMap使用了更加细化的锁机制（分离锁），这个机制允许更深层次的共享访问。任意数量读线程可以并发访问map，读写可以并发访问map，有限数量写线程可以并发修改map，通过以上机制带来更高的吞吐量，几乎没有损失单个线程访问的性能。ConcurrentHashMap返回的迭代器具有弱一致性。<br>同步map实现提供的一个特性是为独占的访问加锁，而这在ConcurrentHashMap中并没有实现。<br>在ConcurrentHashMap中，常见的复核操作，“缺少即加入”，“相等便移除”，“相等便替换”都已实现原子操作，已在接口中声明。</p>
+<h4 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h4><p>CopyOnWriteArrayList是同步List的一个并发替代品，通常情况下它提供了更好的并发性，并避免了在迭代期间对容器加锁和复制。<br>访问它将不再需要更多的同步，每次修改时，它们会创建并重新发布一个新的容器拷贝。以此来实现可变性。<br>显而易见，每次容器改变时复制基础数据需要一定的开销，特别当容器比较大多时候，当容器迭代操作的频率远高于对容器修改的频率时，使用写入时复制容器时个合理的选择。</p>
+<h4 id="Blocking-queue"><a href="#Blocking-queue" class="headerlink" title="Blocking queue"></a>Blocking queue</h4><p> Blocking queue提供了可阻塞的put和take方法， queue满时，put方法会被阻塞直到有空间可用。如果queue空的，那么take方法会被阻塞。<br>阻塞队列支持生产者和消费者设计模式。最常见的生产者－消费者设计是将线程池与工作队列相结合。<br>“有界队列是强大的资源管理工具，用来建立可靠的应用程序：它们遏制哪些可以产生过多工作量、具有威胁的活动，从而让你的程序在面对超负荷工作时更加健壮。”<br>LinkedBlockingQueue和ArrayBlockingQueue是BlockingQueue的实现，是FIFO队列。PriorityBlockingQueue是含有优先级的实现。</p>
+<h4 id="Synchronizer"><a href="#Synchronizer" class="headerlink" title="Synchronizer"></a>Synchronizer</h4><p>Synchronizer是一个对象，它根据本身的状态调节线程的控制流。阻塞队列可以扮演一个Synchronizer的角色。<br>其他类型的Synchronizer包括信号量，关卡以及闭锁。</p>
+<h4 id="为计算结果建立高效、可伸缩的高速缓存"><a href="#为计算结果建立高效、可伸缩的高速缓存" class="headerlink" title="为计算结果建立高效、可伸缩的高速缓存"></a>为计算结果建立高效、可伸缩的高速缓存</h4><p>使用HashMap会带来可伸缩性的问题，因为为了保证线程安全，我们对于HashMap的操作会加锁，从而导致只有一个线程在执行，其他线程可能会阻塞很久。<br>使用ConcurrentHashMap，因为它是线程安全的，所以访问底层map时不需要对它进行同步，这将会有更好的并发性。但是可能导致两个线程同时调用一个方法，导致计算相同的值。高速缓存的目标是避免重复计算相同的数据，所以这个事需要避免的。同时一个缓存对象只能够被初始化一次。所以在计算前，检查是否有其他线程已经开始计算相同的数据。<br>目前还存在一个缺陷，两个线程可能同时计算相同的值。可使用ConcurrentMap的原子化putIfAbsent方法来消除这种并发隐患。<br>如果另外一个计算过程失败，需要对其缓存移除，否则后续对这个值计算都会失败。  </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/18/2018071104/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018071103" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/12/2018071103/">敏捷开发</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/12/2018071103/" class="archive-article-date">
+  	<time datetime="2018-07-12T12:11:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>为什么需要使用敏捷开发，是因为传统的瀑布模型的开发流程不能达到快速响应业务需求（尤其是高优先级）的目标。</p>
+<h3 id="前期阶段"><a href="#前期阶段" class="headerlink" title="前期阶段"></a>前期阶段</h3><p>软件开发过程中第一步就是：需求传递<br>此前传统的做法是召开需求传导会，由产品经理将需求给开发测试人员。<br>目前根据敏捷开发的做法，将需求传递从宣讲改为“需求澄清”。在需求澄清过程中，产品经理讲自己和业务人员沟通需求的过程进行复盘，在需求澄清过程中，角色互换。产品经理扮演业务人员，测试和开发人员扮演产品经理，从业务人员最初的需求出发，双方互动，将需求设计在互动中明确下来。这样做的好处是，参与人员会从“要这样做”转为“为什么要这样做”。从而减少需求传递过程中产生歧义或者疏漏。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目管理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/12/2018071103/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018071102" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/12/2018071102/">项目管理自我总结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/12/2018071102/" class="archive-article-date">
+  	<time datetime="2018-07-12T10:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一个好的项目管理者应该具备五方面的能力：<br>1:项目管理知识体系<br>2:人际关系技能<br>3:常规管理知识技能<br>4:理解项目环境能力<br>5:应用领域知识。<br>PMP知识领域：<br>每个领域分为五个阶段：<br>启动阶段，计划阶段，执行阶段，监控阶段，收尾阶段。<br>知识领域：<br>1:项目整体管理<br>2:项目范围管理<br>3:项目进度管理<br>4:项目成本管理<br>5:项目质量管理<br>6:项目人力资源管理<br>7:项目沟通管理<br>8:项目风险管理<br>9:项目采购管理</p>
+<p>项目三要素：范围，进度，成本－－－－－》质量</p>
+<p>目前我所在企业使用弱矩阵项目组织结构：<br>项目经理权利有限，资源可利用性有限，职能经理控制项目预算，项目经理为全职。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目管理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/12/2018071102/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018071101" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/11/2018071101/">并发编程学习三</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/11/2018071101/" class="archive-article-date">
+  	<time datetime="2018-07-11T08:02:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="组合对象"><a href="#组合对象" class="headerlink" title="组合对象"></a>组合对象</h3><h4 id="1-设计线程安全的类"><a href="#1-设计线程安全的类" class="headerlink" title="1 设计线程安全的类"></a>1 设计线程安全的类</h4><p>设计线程安全类的过程应该包括下面三个基本要素<br>1）：确定对象状态是由哪些变量构成的。<br>2）：确定限制状态变量的不变约束。<br>3）：指定一个管理并发访问对象状态的策略。</p>
+<h4 id="2-实例限制"><a href="#2-实例限制" class="headerlink" title="2 实例限制"></a>2 实例限制</h4><p>将数据封装在对象内部，把对数据的访问限制在对象的方法上，更容易确保线程在访问数据时总能获得正确的锁。</p>
+<h4 id="3-JAVA监视器模式"><a href="#3-JAVA监视器模式" class="headerlink" title="3 JAVA监视器模式"></a>3 JAVA监视器模式</h4><p>定义：遵循Java监视器模式的对象封装了所有的可变状态，并由对象自己的内部锁保护。<br>举例：Vector和Hashtable这样的核心类库都使用了Java监视器模式。</p>
+<h4 id="4-向已有的线程安全类添加功能"><a href="#4-向已有的线程安全类添加功能" class="headerlink" title="4 向已有的线程安全类添加功能"></a>4 向已有的线程安全类添加功能</h4><p>Java类库中包含了很多有用的构建块类，重用这些已有的类要好于创建一个新的，重新能够降低开发到难度、风险和维护成本，因为这些组件已经经过测试。<br>向一个已有的类添加原子操作：1，修改原始的类；2扩展这个类；3扩展功能，而不是类本身；4组合。</p>
+<h4 id="5-同步策略的文档化"><a href="#5-同步策略的文档化" class="headerlink" title="5 同步策略的文档化"></a>5 同步策略的文档化</h4><p>1）：设计的时候是编写设计决策文档的最佳时间。<br>2）：起草一个同步策略需要作出一系列的决策：哪些变量声明为volatile类型，哪些变量被锁保护，哪些锁保护哪些变量，哪些变量是不可变的或者被限制在线程中，哪些操作必须是原子的。使用@GuardedBy标签（Annotation）告知维护者。java.text.SimpleDateFormat并不是线程安全的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/11/2018071101/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018062901" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -715,401 +1063,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018040502" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/05/2018040502/">项目总结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/05/2018040502/" class="archive-article-date">
-  	<time datetime="2018-04-05T09:25:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近做了一个交易所前置项目，我作为开发经理带领团队完成了相应的开发。</p>
-<p>1:项目背景是总行交易员需要和同业客户在交易所完成同业借款和存款业务。因而需要一个前置完成和交易所的对接。我们项目团队就是需要完成开发一个前置，实现行内业务系统和交易所系统的报文交互。<br>2:技术架构方面，主要用Spring boot＋dubbo框架进行搭建这个前置服务；同时使用了交易所的fix协议完成和交易所的报文交互。<br>为什么使用这两个框架，一方面公司内部拥抱变化，鼓励采用一些开源框架来进行开发，Spring框架是现在最流行的开源框架之一，而Spring boot继承了Spring框架的优点，并新增了特性，可让编码更简单快速，因而选择了它。<br>而使用dubbo框架是因为公司内部使用它来进行服务化设计，用于不同系统间接口交互。<br>3:功能列表<br>dubbo服务化接口相关功能。<br>交易所API接口实现相关功能。<br>报文处理相关功能。<br>路由功能。<br>限流功能。<br>日志功能。<br>报文重发功能。<br>4:功能实现和设计思路<br>因为是新搭前置，同时为了考虑以后的扩展性，在报文交互的层面使用了模板模式进行设计，设计了一个基类，定义了报文处理类，在基类中定义主要报文处理的先后步骤，比如第一步报文检验步骤，第二步报文生成步骤，第三步报文发送步骤。而这些步骤的实现延迟到子类中实现，这方便后续业务报文扩展。<br>同时我们这个保护处理是分三层结构，第一层是基类，第二层是外联前置类，在这层的类中实现了报文发送步骤，第三层中实现具体业务报文处理。<br>为了支持后续外联前置的扩展，我们增加了路由功能。路由其实就是映射关系，外联前置将会注册到路由的map中，而内部应用接口也会注册到路由的map中，而映射关系配置在文件中，内部报文过来，根据报文头的相关字段，从map取到外联前置，并发送报文。外部报文过来，通过sessionid，取到需要转发到内部的接口类，并发送报文。<br>限流功能则使用了行内的底层限流构件，并做了一层封装，增加了限流开关，同时使用了工厂模式获得限流类，实现了不同接口使用不同限流类的需求。<br>5：开发中遇到问题<br>开发过程中也遇到了一些问题，框架刚搭建完成，遇到了日志打印不出来的问题。查阅了一些资料，发现因为是各个框架都使用了不同日志框架导致的，有logback，log4j的。但幸好这些框架在日志方面都设计了不错，都使用了slf4j这个门面接口，我在桥接器和日志框架中做了删除，只留下一种，日志便顺利可以打印了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/05/2018040502/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040501" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/05/2018040501/">Spring注解学习第二课</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/05/2018040501/" class="archive-article-date">
-  	<time datetime="2018-04-05T08:34:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1:@EnableWebMvc<br>启用Spring MVC支持</p>
-<p>2:@Controller<br>这是一个构造型（stereotype）的注解，基于@Component<br>注解在类上，声明该类是controller类型的bean；可被组件扫描。  </p>
-<p>3:@RequestMapping<br>可以使用@RequestMapping来映射URL到控制器类，或者是到Controller控制器的处理方法上。当@RequestMapping标记在Controller类上的时候，里面使用@RequestMapping标记的方法的请求地址都是相对于类上的@RequestMapping而言的；当Controller类上没有标记@RequestMapping注解时，方法上的@RequestMapping都是绝对路径。这种绝对路径和相对路径所组合成的最终路径都是相对于根路径“/”而言的。</p>
-<p>4：@Repository<br>@Repository只能标注在 DAO 类上呢？这是因为该注解的作用不只是将类识别为Bean，同时它还能将所标注的类中抛出的数据访问异常封装为 Spring 的数据访问异常类型。 Spring本身提供了一个丰富的并且是与具体的数据访问技术无关的数据访问异常结构，用于封装不同的持久层框架抛出的异常，使得异常独立于底层的框架。</p>
-<p>Spring 2.5 在 @Repository的基础上增加了功能类似的额外三个注解：@Component、@Service、@Constroller，它们分别用于软件系统的不同层次：</p>
-<p>@Component 是一个泛化的概念，仅仅表示一个组件 (Bean) ，可以作用在任何层次。<br>@Service 通常作用在业务层，但是目前该功能与 @Component 相同。<br>@Constroller 通常作用在控制层，但是目前该功能与 @Component 相同。</p>
-<p>5:@Scope<br>Spring容器最初提供了两种bean的scope类型：singleton和 prototype，但发布2.0之后，又引入了另外三种scope类型，即request，session和global session类型。不过这三种类型有所限制，只能在web应用中使用<br>singleton类型的bean定义，在一个容器中只存在一个实例，所有对该类型bean的依赖都引用这一单一实例；<br>scope为prototype的bean，容器在接受到该类型的对象的请求的时候，会每次都重新 生成一个新的对象给请求方，虽然这种类型的对象的实例化以及属性设置等工作都是由容器负责的，但是只要准备完毕，并且对象实例返回给请求方之后，容器就不 在拥有当前对象的引用，请求方需要自己负责当前对象后继生命周期的管理工作，包括该对象的销毁。也就是说，容器每次返回请求方该对象的一个新的实例之后， 就由这个对象“自生自灭”了；</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/05/2018040501/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040302" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/03/2018040302/">Spring注解学习第一课</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/03/2018040302/" class="archive-article-date">
-  	<time datetime="2018-04-03T13:15:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1:@SpringBootApplication<br>从源代码中得知 @SpringBootApplication 被 @Configuration、@EnableAutoConfiguration、@ComponentScan 注解所修饰，换言之 Springboot 提供了统一的注解来替代以上三个注解，简化程序的配置</p>
-<p>2:@Configuration<br>@Configuration的注解类标识这个类可以使用Spring IoC容器作为bean定义的来源.表示这个是一个配置类</p>
-<p>3:@EnableAutoConfiguration<br>@EnableAutoConfiguration：能够自动配置spring的上下文，试图猜测和配置你想要的bean类，通常会自动根据你的类路径和你的bean定义自动配置</p>
-<p>4:@ComponentScan<br>@ComponentScan：会自动扫描指定包下的全部标有@Component的类，并注册成bean，当然包括@Component下的子注解@Service,@Repository,@Controller</p>
-<p>5:@ImportResource<br>@ImportResource：导入Spring的配置文件，让配置文件里面的内容生效</p>
-<p>6:@Bean(initMethod=“start”)<br>@Bean是一个方法级别上的注解，主要用在@Configuration注解的类里，也可以用在@Component注解的类里。添加的bean的id为方法名</p>
-<p>7：@Service<br>@service一般标注在service层的bean上</p>
-<p>8:@Autowired<br> @Autowired 注释，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/03/2018040302/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018040301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/03/2018040301/">Log4j日志配置文件说明</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/03/2018040301/" class="archive-article-date">
-  	<time datetime="2018-04-03T11:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>转自：<a href="http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_5ed94d710101go3u.html</a></p>
-<p>①配置根Logger，其语法为： </p>
-<p>log4j.rootLogger = [level],appenderName,appenderName2,…<br>level是日志记录的优先级，分为OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALL<br>Log4j建议只使用四个级别，优先级从低到高分别是DEBUG,INFO,WARN,ERROR<br>通过在这里定义的级别，您可以控制到应用程序中相应级别的日志信息的开关<br>比如在这里定义了INFO级别，则应用程序中所有DEBUG级别的日志信息将不被打印出来<br>appenderName就是指定日志信息输出到哪个地方。可同时指定多个输出目的 </p>
-<p>②配置日志信息输出目的地Appender，其语法为： </p>
-<p>log4j.appender.appenderName = fully.qualified.name.of.appender.class<br>log4j.appender.appenderName.optionN = valueN </p>
-<p>Log4j提供的appender有以下几种：<br>1)org.apache.log4j.ConsoleAppender(输出到控制台)<br>2)org.apache.log4j.FileAppender(输出到文件)<br>3)org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件)<br>4)org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件)<br>5)org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方) </p>
-<p>1)ConsoleAppender选项属性<br> -Threshold = DEBUG:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -Target = System.err:默认值System.out,输出到控制台(err为红色,out为黑色) </p>
-<p>2)FileAppender选项属性<br> -Threshold = INFO:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:\log4j.log:指定消息输出到C:\log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
-<p>3)DailyRollingFileAppender选项属性<br> -Threshold = WARN:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:\log4j.log:指定消息输出到C:\log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -DatePattern=’.’yyyy-ww:每周滚动一次文件,即每周产生一个新的文件。还可以按用以下参数:<br>              ‘.’yyyy-MM:每月<br>              ‘.’yyyy-ww:每周<br>              ‘.’yyyy-MM-dd:每天<br>              ‘.’yyyy-MM-dd-a:每天两次<br>              ‘.’yyyy-MM-dd-HH:每小时<br>              ‘.’yyyy-MM-dd-HH-mm:每分钟<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
-<p>4)RollingFileAppender选项属性<br> -Threshold = ERROR:指定日志消息的输出最低层次<br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出<br> -File = C:/log4j.log:指定消息输出到C:/log4j.log文件<br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容<br> -MaxFileSize = 100KB:后缀可以是KB,MB,GB.在日志文件到达该大小时,将会自动滚动.如:log4j.log.1<br> -MaxBackupIndex = 2:指定可以产生的滚动文件的最大数<br> -Encoding = UTF-8:可以指定文件编码格式 </p>
-<p>③配置日志信息的格式(布局)，其语法为： </p>
-<p>log4j.appender.appenderName.layout = fully.qualified.name.of.layout.class<br>log4j.appender.appenderName.layout.optionN = valueN </p>
-<p>Log4j提供的layout有以下几种：<br>5)org.apache.log4j.HTMLLayout(以HTML表格形式布局)<br>6)org.apache.log4j.PatternLayout(可以灵活地指定布局模式)<br>7)org.apache.log4j.SimpleLayout(包含日志信息的级别和信息字符串)<br>8)org.apache.log4j.TTCCLayout(包含日志产生的时间、线程、类别等等信息)<br>9)org.apache.log4j.xml.XMLLayout(以XML形式布局) </p>
-<p>5)HTMLLayout选项属性<br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号<br> -Title=Struts Log Message:默认值 Log4J Log Messages </p>
-<p>6)PatternLayout选项属性<br> -ConversionPattern = %m%n:格式化指定的消息(参数意思下面有) </p>
-<p>9)XMLLayout选项属性<br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号 </p>
-<p>Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，打印参数如下：<br> %m 输出代码中指定的消息<br> %p 输出优先级，即DEBUG,INFO,WARN,ERROR,FATAL<br> %r 输出自应用启动到输出该log信息耗费的毫秒数<br> %c 输出所属的类目,通常就是所在类的全名<br> %t 输出产生该日志事件的线程名<br> %n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n”<br> %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式<br>    如：%d{yyyy年MM月dd日 HH:mm:ss,SSS}，输出类似：2012年01月05日 22:10:28,921<br> %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数<br>    如：Testlog.main(TestLog.java:10)<br> %F 输出日志消息产生时所在的文件名称<br> %L 输出代码中的行号<br> %x 输出和当前线程相关联的NDC(嵌套诊断环境),像java servlets多客户多线程的应用中<br> %% 输出一个”%”字符 </p>
-<p> 可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：<br>  %5c: 输出category名称，最小宽度是5，category<5，默认的情况下右对齐 %-5c:输出category名称，最小宽度是5，category<5，"-"号指定左对齐,会有空格="" %.5c:输出category名称，最大宽度是5，category="">5，就会将左边多出的字符截掉，<5不会有空格 %20.30c:category名称<20补空格，并且右对齐，="">30字符，就从左边交远销出的字符截掉 </5不会有空格></5，默认的情况下右对齐></p>
-<p>④指定特定包的输出特定的级别<br>log4j.logger.org.springframework=DEBUG </p>
-<p>OFF,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB,ALL<br>log4j.rootLogger =ALL,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB </p>
-<p>输出到控制台<br>log4j.appender.systemOut = org.apache.log4j.ConsoleAppender<br>log4j.appender.systemOut.layout = org.apache.log4j.PatternLayout<br>log4j.appender.systemOut.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.systemOut.Threshold = DEBUG<br>log4j.appender.systemOut.ImmediateFlush = TRUE<br>log4j.appender.systemOut.Target = System.out </p>
-<p>输出到文件<br>log4j.appender.logFile = org.apache.log4j.FileAppender<br>log4j.appender.logFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logFile.Threshold = DEBUG<br>log4j.appender.logFile.ImmediateFlush = TRUE<br>log4j.appender.logFile.Append = TRUE<br>log4j.appender.logFile.File = ../Struts2/WebRoot/log/File/log4j_Struts.log<br>log4j.appender.logFile.Encoding = UTF-8 </p>
-<p>按DatePattern输出到文件<br>log4j.appender.logDailyFile = org.apache.log4j.DailyRollingFileAppender<br>log4j.appender.logDailyFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logDailyFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logDailyFile.Threshold = DEBUG<br>log4j.appender.logDailyFile.ImmediateFlush = TRUE<br>log4j.appender.logDailyFile.Append = TRUE<br>log4j.appender.logDailyFile.File = ../Struts2/WebRoot/log/DailyFile/log4j_Struts<br>log4j.appender.logDailyFile.DatePattern = ‘.’yyyy-MM-dd-HH-mm’.log’<br>log4j.appender.logDailyFile.Encoding = UTF-8 </p>
-<p>设定文件大小输出到文件<br>log4j.appender.logRollingFile = org.apache.log4j.RollingFileAppender<br>log4j.appender.logRollingFile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logRollingFile.layout.ConversionPattern = [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n<br>log4j.appender.logRollingFile.Threshold = DEBUG<br>log4j.appender.logRollingFile.ImmediateFlush = TRUE<br>log4j.appender.logRollingFile.Append = TRUE<br>log4j.appender.logRollingFile.File = ../Struts2/WebRoot/log/RollingFile/log4j_Struts.log<br>log4j.appender.logRollingFile.MaxFileSize = 1MB<br>log4j.appender.logRollingFile.MaxBackupIndex = 10<br>log4j.appender.logRollingFile.Encoding = UTF-8 </p>
-<p>用Email发送日志<br>log4j.appender.logMail = org.apache.log4j.net.SMTPAppender<br>log4j.appender.logMail.layout = org.apache.log4j.HTMLLayout<br>log4j.appender.logMail.layout.LocationInfo = TRUE<br>log4j.appender.logMail.layout.Title = Struts2 Mail LogFile<br>log4j.appender.logMail.Threshold = DEBUG<br>log4j.appender.logMail.SMTPDebug = FALSE<br>log4j.appender.logMail.SMTPHost = SMTP.163.com<br>log4j.appender.logMail.From = xly3000@163.com<br>log4j.appender.logMail.To = xly3000@gmail.com<br>log4j.appender.logMail.Cc = xly3000@gmail.com<br>log4j.appender.logMail.Bcc = xly3000@gmail.com<br>log4j.appender.logMail.SMTPUsername = xly3000<br>log4j.appender.logMail.SMTPPassword = 1234567<br>log4j.appender.logMail.Subject = Log4j Log Messages<br>log4j.appender.logMail.BufferSize = 1024<br>log4j.appender.logMail.SMTPAuth = TRUE </p>
-<p>将日志登录到MySQL数据库<br>log4j.appender.logDB = org.apache.log4j.jdbc.JDBCAppender<br>log4j.appender.logDB.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logDB.Driver = com.mysql.jdbc.Driver<br>log4j.appender.logDB.URL = jdbc:mysql://127.0.0.1:3306/xly<br>log4j.appender.logDB.User = root<br>log4j.appender.logDB.Password = 123456<br>log4j.appender.logDB.Sql = INSERT INTOT_log4j(project_name,create_date,level,category,file_name,thread_name,line,all_category,message)values(‘Struts2’,’%d{yyyy-MM-ddHH:mm:ss}’,’%p’,’%c’,’%F’,’%t’,’%L’,’%l’,’%m’)</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/03/2018040301/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1225,11 +1178,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1241,11 +1194,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
