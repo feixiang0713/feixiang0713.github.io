@@ -159,6 +159,93 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018072301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/23/2018072301/">JAVA并发学习五 —- 任务执行</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/23/2018072301/" class="archive-article-date">
+  	<time datetime="2018-07-23T13:09:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="任务执行类型"><a href="#任务执行类型" class="headerlink" title="任务执行类型"></a>任务执行类型</h3><p>1:顺序执行，I／O操作时，CPU闲置，资源利用率低。无法提供良好的吞吐量和快速的响应性。<br>只适用于单个用户场景。<br>2:每任务每线程，可以带来更快的响应性和更大的吞吐量。<br>存在以下缺点：线程生命周期的开销，线程创建需要时间，消耗大量计算资源；占用大量内存；<br>所以应该将线程数量限定在一定数目内。</p>
+<h3 id="Executor框架"><a href="#Executor框架" class="headerlink" title="Executor框架"></a>Executor框架</h3><p>在程序中实现一个生产者－消费者的设计，使用Executor通常是最简便的方式。<br>请考虑使用Executor代替Thread。</p>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p>newFixedThreadPool，创建定长的线程池。每当提交一个任务的时候就创建一个线程，直到达到最大的长度，这个时候线程池就不会再变化。<br>newCachedThreadPool，创建一个可缓存的线程池。如果当前线程池长度超过了处理的需要时，可以回收空闲的线程，需求增加时，它可以灵活的添加新的线程，并不会对池的长度作任何限制。<br>newSingleThreadExecutor创建一个单线程话的executor。<br>newScheduleThreadPool创建一个定长的线程池，并且支持定时的周期性的任务。</p>
+<h3 id="Executor的生命周期"><a href="#Executor的生命周期" class="headerlink" title="Executor的生命周期"></a>Executor的生命周期</h3><p>ExecutorService接口扩展了Executor，并添加了生命周期管理的方法，生命周期有三种状态：运行，关闭，终止。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/23/2018072301/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018071104" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -166,7 +253,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/18/2018071104/">java并发学习四</a>
+      <a class="article-title" href="/2018/07/18/2018071104/">java并发学习四－－并发容器</a>
     </h1>
   
 
@@ -353,7 +440,8 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一个好的项目管理者应该具备五方面的能力：<br>1:项目管理知识体系<br>2:人际关系技能<br>3:常规管理知识技能<br>4:理解项目环境能力<br>5:应用领域知识。<br>PMP知识领域：<br>每个领域分为五个阶段：<br>启动阶段，计划阶段，执行阶段，监控阶段，收尾阶段。<br>知识领域：<br>1:项目整体管理<br>2:项目范围管理<br>3:项目进度管理<br>4:项目成本管理<br>5:项目质量管理<br>6:项目人力资源管理<br>7:项目沟通管理<br>8:项目风险管理<br>9:项目采购管理</p>
+        <p>一个好的项目管理者应该具备五方面的能力：<br>1:项目管理知识体系<br>2:人际关系技能<br>3:常规管理知识技能<br>4:理解项目环境能力<br>5:应用领域知识。<br>PMP知识领域：<br>每个领域分为五个阶段：<br>启动阶段，计划阶段，执行阶段，监控阶段，收尾阶段。</p>
+<p>知识领域：<br>1:项目整体管理<br>2:项目范围管理<br>3:项目进度管理<br>4:项目成本管理<br>5:项目质量管理<br>6:项目人力资源管理<br>7:项目沟通管理<br>8:项目风险管理<br>9:项目采购管理</p>
 <p>项目三要素：范围，进度，成本－－－－－》质量</p>
 <p>目前我所在企业使用弱矩阵项目组织结构：<br>项目经理权利有限，资源可利用性有限，职能经理控制项目预算，项目经理为全职。</p>
 
@@ -974,95 +1062,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018041201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/12/2018041201/">Spring Security学习（1）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/12/2018041201/" class="archive-article-date">
-  	<time datetime="2018-04-12T13:47:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Spring Security是基于Spring AOP和Servlet规范中的Filter实现的安全框架。<br>它为基于Spring的应用程序提供声明式安全保护的安全性框架。<br>它提供了完整的安全性解决方案，能够在Web请求级别和方法调用级别处理身份认证和授权。</p>
-<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>1，ACL：支持通过访问控制列表为域对象提供安全性。<br>2，切面：一个很小的模块，当使用Spring Security注解时，会使用基于AspectJ的切面，而不是使用标准的Spring AOP。<br>3，CAS客户端：提供于Jasig的中心认证服务（Central Authentication Service，CAS）进行集成的功能。<br>4，配置（Configuration）：包含通过XML和Java配置Spring Security的功能支持。<br>5，核心（Core）：提供Spring Security基本库。<br>6，加密（Cryptography）：提供了加密和密码编码的功能。<br>7，LDAP：支持基于LDAP进行认证。<br>8，OpenID：支持使用OpenID进行集中式认证。<br>9，Remoting：提供了对Spring Remoting的支持。<br>10，标签库（Tag Library），Spring Security的JSP标签库。<br>11，Web：提供了Spring Security基于Filter的Web安全性支持。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/12/2018041201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1178,11 +1177,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,11 +1193,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">

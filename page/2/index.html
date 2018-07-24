@@ -159,6 +159,95 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018041201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/2018041201/">Spring Security学习（1）</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/12/2018041201/" class="archive-article-date">
+  	<time datetime="2018-04-12T13:47:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Spring Security是基于Spring AOP和Servlet规范中的Filter实现的安全框架。<br>它为基于Spring的应用程序提供声明式安全保护的安全性框架。<br>它提供了完整的安全性解决方案，能够在Web请求级别和方法调用级别处理身份认证和授权。</p>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>1，ACL：支持通过访问控制列表为域对象提供安全性。<br>2，切面：一个很小的模块，当使用Spring Security注解时，会使用基于AspectJ的切面，而不是使用标准的Spring AOP。<br>3，CAS客户端：提供于Jasig的中心认证服务（Central Authentication Service，CAS）进行集成的功能。<br>4，配置（Configuration）：包含通过XML和Java配置Spring Security的功能支持。<br>5，核心（Core）：提供Spring Security基本库。<br>6，加密（Cryptography）：提供了加密和密码编码的功能。<br>7，LDAP：支持基于LDAP进行认证。<br>8，OpenID：支持使用OpenID进行集中式认证。<br>9，Remoting：提供了对Spring Remoting的支持。<br>10，标签库（Tag Library），Spring Security的JSP标签库。<br>11，Web：提供了Spring Security基于Filter的Web安全性支持。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/12/2018041201/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018040502" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1013,118 +1102,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018030802" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/2018030802/">Spring配置</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/08/2018030802/" class="archive-article-date">
-  	<time datetime="2018-03-08T04:10:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Spring配置的可选方案："><a href="#Spring配置的可选方案：" class="headerlink" title="Spring配置的可选方案："></a>Spring配置的可选方案：</h3><ul>
-<li>1:在xml中进行显式配置</li>
-<li>2：在java中进行显式配置</li>
-<li>3：隐式的bean发现机制和自动装配－－－－－－建议使用这个，显式配置越少越好</li>
-</ul>
-<h3 id="自动化装配"><a href="#自动化装配" class="headerlink" title="自动化装配"></a>自动化装配</h3><p>Spring从两个角度实现自动化装配</p>
-<ul>
-<li>1:组件扫描（component scanning）：Spring能够自动发现应用上下文所创建的bean</li>
-<li>2:自动装配（auto wiring）：Spring能够自动满足bean之间的依赖</li>
-</ul>
-<h5 id="带有-Component注解，告知Spring，为这个类创建Bean"><a href="#带有-Component注解，告知Spring，为这个类创建Bean" class="headerlink" title="带有@Component注解，告知Spring，为这个类创建Bean"></a>带有@Component注解，告知Spring，为这个类创建Bean</h5><p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">@Component</div><div class="line">public class SgtPeppers implements CompactDisc&#123;</div><div class="line">	private String title=&quot;tianmimi&quot;;</div><div class="line">	private String artist=&quot;denglijun&quot;;</div><div class="line">	public void play() &#123;</div><div class="line">		System.out.println(artist+&quot; sing &quot;+title);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h5 id="ComponentScan注解启用组件扫描"><a href="#ComponentScan注解启用组件扫描" class="headerlink" title="@ComponentScan注解启用组件扫描"></a>@ComponentScan注解启用组件扫描</h5><ul>
-<li>1.组件扫描默认不启用，所以需要在这里配置声明启用，@ComponentScan会扫描这个包以及这个包下的所有子包，查找所* 有带有@Component注解的类。</li>
-<li>2.@Configuration标注在类上，相当于把该类作为spring的xml配置文件中的<beans>，作用为：配置spring容器(应用上下文)</beans></li>
-<li>3.可通过@Component（“sgt”）为bean命名，也可使用@Named（“sgt”）进行命名，推荐使用@Component（“sgt”）这种方式</li>
-<li>4.@ComponentScan（“sound system”），可通过这种方式设置基础包，或者通过@ComponentScan（basePackages＝“sound system”），可以更加清晰表达声明，基础包也可以有多个，通过如下设置@ComponentScan（basePackages＝｛“sound system”，“video”｝），如果担心重构，修改配置的包名，则可以通过如下方式设置@ComponentScan（basePackages＝｛CDPlayer.class，DVDPlay.class｝）<br>代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import org.springframework.context.annotation.ComponentScan;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line"></div><div class="line">@Configuration</div><div class="line">@ComponentScan</div><div class="line">public class CDPlayConfig &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>测试代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import static org.junit.Assert.assertNotNull;</div><div class="line"></div><div class="line">import org.junit.Test;</div><div class="line">import org.junit.runner.RunWith;</div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.test.context.ContextConfiguration;</div><div class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(classes=CDPlayConfig.class)</div><div class="line">public class CDPlayerTest &#123;</div><div class="line">	@Autowired</div><div class="line">	private CompactDisc cd;</div><div class="line">	@Test</div><div class="line">	public void cdShouldNotBeNull() &#123;</div><div class="line">		assertNotNull(cd);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>使用@RunWith(SpringJUnit4ClassRunner.class)，测试开始时自动创建应用上下文<br>@ContextConfiguration(classes=CDPlayConfig.class)，告诉通过CDPlayConfig.class进行加载配置<br>@Autowired为cd自动装配<br>如果spring启动成功了，则cd应该可以自动装配，取得实例，我们通过验证cd是否为null进行判断。</p>
-<h5 id="自动装配-Autowired"><a href="#自动装配-Autowired" class="headerlink" title="自动装配@Autowired"></a>自动装配@Autowired</h5><p>1，@Autowired可以用在构造函数上<br>2，@Autowired可以用在Setter方法上活着其他方法上<br>如果@Autowired发现没有匹配的bean，会抛异常，如果有多个匹配的，也会抛异常</p>
-<h3 id="在java中进行显式配置"><a href="#在java中进行显式配置" class="headerlink" title="在java中进行显式配置"></a>在java中进行显式配置</h3><p>具体代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">public interface CompactDisc &#123;</div><div class="line">	void play();</div><div class="line">&#125;</div><div class="line">public class SgtPeppers implements CompactDisc&#123;</div><div class="line">	private String title=&quot;tianmimi&quot;;</div><div class="line">	private String artist=&quot;denglijun&quot;;</div><div class="line">	public void play() &#123;</div><div class="line">		System.out.println(artist+&quot; sing &quot;+title);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public interface MediaPlayer &#123;</div><div class="line">	public void play();</div><div class="line">&#125;</div><div class="line">public class CDPlayer implements MediaPlayer &#123;</div><div class="line">	private CompactDisc cd;</div><div class="line">	</div><div class="line">	public CDPlayer(CompactDisc cd) &#123;</div><div class="line">		this.cd=cd;</div><div class="line">	&#125;</div><div class="line">	public void play() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		cd.play();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//配置java类</div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line">@Configuration</div><div class="line"></div><div class="line">public class CDPlayConfig2 &#123;</div><div class="line">@Bean</div><div class="line">public CompactDisc sgtPeppers() &#123;</div><div class="line">	return new SgtPeppers();</div><div class="line">&#125;</div><div class="line">@Bean</div><div class="line">public CDPlayer cdPlayer() &#123;</div><div class="line">	return new CDPlayer(sgtPeppers());</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">//测试代码</div><div class="line">import static org.junit.Assert.assertEquals;</div><div class="line">import static org.junit.Assert.assertNotNull;</div><div class="line"></div><div class="line">import org.junit.Rule;</div><div class="line">import org.junit.Test;</div><div class="line">import org.junit.contrib.java.lang.system.StandardOutputStreamLog;</div><div class="line">import org.junit.runner.RunWith;</div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.test.context.ContextConfiguration;</div><div class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(classes=CDPlayConfig2.class)</div><div class="line">public class CDPlayerTest2 &#123;</div><div class="line">	@Rule</div><div class="line">	public final StandardOutputStreamLog log=new StandardOutputStreamLog();</div><div class="line">	@Autowired</div><div class="line">	private MediaPlayer player;</div><div class="line">	@Autowired</div><div class="line">	private CompactDisc cd;</div><div class="line">	@Test</div><div class="line">	public void cdShouldNotNull() &#123;</div><div class="line">		assertNotNull(cd);</div><div class="line">	&#125;</div><div class="line">	@Test</div><div class="line">	public void play() &#123;</div><div class="line">		player.play();</div><div class="line">		assertEquals(&quot;denglijun sing tianmimi\n&quot;,log.getLog());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>注意要点如下：<br>1:默认情况下，bean的id和带有@Bean注解的方法名一样的<br>2:也可通过如下方法设置Bean的id<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Bean(name=“sgt”)</div><div class="line">public CompactDisc sgtPeppers() &#123;</div><div class="line">	return new SgtPeppers();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>3:默认情况下，Spring的bean都是单例的。</p>
-<h3 id="XML装配Bean"><a href="#XML装配Bean" class="headerlink" title="XML装配Bean"></a>XML装配Bean</h3><p>1:学习xml只是用来维护已有的xml配置，在完成新的Spring工作时，希望你会使用自动化配置和JavaConfig<br>2:xml配置的缺点，Javaconfig创建实例的方法更强大，而xml有固定方式；Bean的类型是以字符串对形式设置在class属性中，谁能保证设置在class属性的值是真正的类呢》Spring的xml配置并不能编译期的类型检查中受益。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public interface CompactDisc &#123;</div><div class="line">	void play();</div><div class="line">&#125;</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public class DVD implements CompactDisc &#123;</div><div class="line"></div><div class="line">	private String title;</div><div class="line">	private String artist;</div><div class="line">	public DVD(String title,String artist) &#123;</div><div class="line">		this.title=title;</div><div class="line">		this.artist=artist;</div><div class="line">	&#125;</div><div class="line">	public String getTitle() &#123;</div><div class="line">		return title;</div><div class="line">	&#125;</div><div class="line">	public void setTitle(String title) &#123;</div><div class="line">		this.title = title;</div><div class="line">	&#125;</div><div class="line">	public String getArtist() &#123;</div><div class="line">		return artist;</div><div class="line">	&#125;</div><div class="line">	public void setArtist(String artist) &#123;</div><div class="line">		this.artist = artist;</div><div class="line">	&#125;</div><div class="line">	public void play() &#123;</div><div class="line">		System.out.println(artist+&quot; sing &quot;+title);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public interface MediaPlayer &#123;</div><div class="line">	public void play();</div><div class="line">&#125;</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">public class DVDPlayer implements MediaPlayer &#123;</div><div class="line">	private CompactDisc dvd;</div><div class="line">	public DVDPlayer(CompactDisc dvd) &#123;</div><div class="line">		this.dvd=dvd;</div><div class="line">	&#125;</div><div class="line">	public void play() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		dvd.play();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//混合配置java配置和xml配置</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.context.annotation.Configuration;</div><div class="line">import org.springframework.context.annotation.ImportResource;</div><div class="line">@Configuration</div><div class="line">@ImportResource(&quot;classpath:com/study/javaproject/soundsystem/dvd-config.xml&quot;)</div><div class="line">public class CDPlayConfig2 &#123;</div><div class="line">@Bean</div><div class="line">public CompactDisc sgtPeppers() &#123;</div><div class="line">	return new SgtPeppers();</div><div class="line">&#125;</div><div class="line">@Bean</div><div class="line">public CDPlayer cdPlayer() &#123;</div><div class="line">	return new CDPlayer(sgtPeppers());</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//xml配置文件</div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:jdbc=&quot;http://www.springframework.org/schema/jdbc&quot;  </div><div class="line">    xmlns:jee=&quot;http://www.springframework.org/schema/jee&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</div><div class="line">    xmlns:util=&quot;http://www.springframework.org/schema/util&quot; xmlns:task=&quot;http://www.springframework.org/schema/task&quot; xsi:schemaLocation=&quot;</div><div class="line">        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd&quot; default-lazy-init=&quot;false&quot;&gt;</div><div class="line"></div><div class="line">&lt;bean id=&quot;dvd&quot; class=&quot;com.study.javaproject.soundsystem.DVD&quot;&gt;</div><div class="line">	&lt;constructor-arg value=&quot;shuangjiegun&quot; /&gt;</div><div class="line">	&lt;constructor-arg value=&quot;denglijun&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line">&lt;bean id=&quot;dvdplayer&quot; class=&quot;com.study.javaproject.soundsystem.DVDPlayer&quot;&gt;</div><div class="line">	&lt;constructor-arg ref=&quot;dvd&quot; /&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div><div class="line">//测试代码</div><div class="line">package com.study.javaproject.soundsystem;</div><div class="line"></div><div class="line">import static org.junit.Assert.assertEquals;</div><div class="line">import static org.junit.Assert.assertNotNull;</div><div class="line"></div><div class="line">import org.junit.Rule;</div><div class="line">import org.junit.Test;</div><div class="line">import org.junit.contrib.java.lang.system.StandardOutputStreamLog;</div><div class="line">import org.junit.runner.RunWith;</div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.test.context.ContextConfiguration;</div><div class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(classes=CDPlayConfig2.class)</div><div class="line">public class CDPlayerTest2 &#123;</div><div class="line">	@Rule</div><div class="line">	public final StandardOutputStreamLog log=new StandardOutputStreamLog();</div><div class="line">	@Autowired</div><div class="line">	private DVDPlayer player;</div><div class="line">	@Autowired</div><div class="line">	private DVD dvd;</div><div class="line">	@Test</div><div class="line">	public void cdShouldNotNull() &#123;</div><div class="line">		assertNotNull(dvd);</div><div class="line">	&#125;</div><div class="line">	@Test</div><div class="line">	public void play() &#123;</div><div class="line">		player.play();</div><div class="line">		assertEquals(&quot;denglijun sing shuangjiegun\n&quot;,log.getLog());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/08/2018030802/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1240,11 +1217,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1256,11 +1233,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
               </li>
              
               <li class="article-tag-list-item">
