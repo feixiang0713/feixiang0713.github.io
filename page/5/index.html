@@ -159,6 +159,361 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018022101" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/21/2018022101/">单例模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/21/2018022101/" class="archive-article-date">
+  	<time datetime="2018-02-21T07:17:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>保证一个类只有一个实例，并提供一个访问他的全局访问点。</p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><h4 id="1-饿汉式单例，类加载的时候就初始化。类一加载就初始化，提前占用系统资源，不用考虑多线程访问的安全性问题。"><a href="#1-饿汉式单例，类加载的时候就初始化。类一加载就初始化，提前占用系统资源，不用考虑多线程访问的安全性问题。" class="headerlink" title="1:饿汉式单例，类加载的时候就初始化。类一加载就初始化，提前占用系统资源，不用考虑多线程访问的安全性问题。"></a>1:饿汉式单例，类加载的时候就初始化。类一加载就初始化，提前占用系统资源，不用考虑多线程访问的安全性问题。</h4><h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//懒汉</div><div class="line">public class SingletonTest &#123;</div><div class="line">	private static SingletonTest instance=null;</div><div class="line">	private SingletonTest() &#123;</div><div class="line">		</div><div class="line">	&#125;;</div><div class="line">	//考虑线程安全，加锁</div><div class="line">	private synchronized void InitInstance() &#123;</div><div class="line">		if(instance==null) &#123;</div><div class="line">			instance=new SingletonTest();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	public SingletonTest getInstance() &#123;</div><div class="line">		if(instance==null) &#123;</div><div class="line">			InitInstance();</div><div class="line">		&#125;</div><div class="line">		return instance;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-懒汉式单例，第一次引用时，才初始化。需要考虑多线程访问问题。"><a href="#2-懒汉式单例，第一次引用时，才初始化。需要考虑多线程访问问题。" class="headerlink" title="2:懒汉式单例，第一次引用时，才初始化。需要考虑多线程访问问题。"></a>2:懒汉式单例，第一次引用时，才初始化。需要考虑多线程访问问题。</h4><h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class SingletonTest2 &#123;</div><div class="line">	private static SingletonTest2 instance=new SingletonTest2();//类加载就初始化</div><div class="line">	private SingletonTest2() &#123;</div><div class="line">		</div><div class="line">	&#125;;</div><div class="line">	public SingletonTest2 getInstance() &#123;</div><div class="line">		return instance;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/21/2018022101/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018021801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/18/2018021801/">组合模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/18/2018021801/" class="archive-article-date">
+  	<time datetime="2018-02-18T06:09:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>定义<br>将对象组合成树形结构以“部分－整体”的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。</p>
+<p>适用性<br>当你发现需求时体现部分与整体层次的结构时，以及希望用户可以忽略组合对象与单个对象的不同时，统一使用组合机构中的所有对象时，可以使用组合模式。</p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div></pre></td><td class="code"><pre><div class="line">public abstract class Company &#123;</div><div class="line">	protected String name;</div><div class="line">	public Company(String name) &#123;</div><div class="line">		this.name=name;</div><div class="line">	&#125;</div><div class="line">	abstract void add(Company c);</div><div class="line">	abstract void remove(Company c);</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		StringBuilder s=new StringBuilder();</div><div class="line">		for(int i=0;i&lt;depth;i++) &#123;</div><div class="line">			s.append(&apos;-&apos;);</div><div class="line">		&#125;</div><div class="line">		System.out.println(s+name);	</div><div class="line">	&#125;</div><div class="line">	abstract void duty();</div><div class="line">&#125;</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class ConcreteCompany extends Company &#123;</div><div class="line">	</div><div class="line">	private List&lt;Company&gt; children=new ArrayList&lt;Company&gt;();</div><div class="line">	</div><div class="line">	public ConcreteCompany(String name) &#123;</div><div class="line">		super(name);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void add(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.children.add(c);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void remove(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		this.children.remove(c);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.display(depth);</div><div class="line">		for(Company c:this.children) &#123;</div><div class="line">			c.display(depth+2);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void duty() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		for(Company c:this.children) &#123;</div><div class="line">			c.duty();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class FinanceDepartment extends Company&#123;</div><div class="line"></div><div class="line">	public FinanceDepartment(String name) &#123;</div><div class="line">		super(name);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void add(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void remove(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.display(depth);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void duty() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(name+&quot; 财务管理&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class HRDepartment extends Company&#123;</div><div class="line"></div><div class="line">	public HRDepartment(String name) &#123;</div><div class="line">		super(name);</div><div class="line">		// TODO Auto-generated constructor stub</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void add(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void remove(Company c) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void display(int depth) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.display(depth);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	void duty() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(name+&quot; 员工招聘管理&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试代码</div><div class="line">public class TestComponet &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		ConcreteCompany root=new ConcreteCompany(&quot;杭州总公司&quot;);</div><div class="line">		root.add(new HRDepartment(&quot;总公司人力资源部&quot;));</div><div class="line">		root.add(new FinanceDepartment(&quot;总公司财务部&quot;));</div><div class="line">		ConcreteCompany comp1=new ConcreteCompany(&quot;富阳分公司&quot;);</div><div class="line">		comp1.add(new  HRDepartment(&quot;富阳分公司人力资源部&quot;));</div><div class="line">		comp1.add(new  FinanceDepartment(&quot;富阳分公司财务部&quot;));</div><div class="line">		root.add(comp1);</div><div class="line">		root.display(1);</div><div class="line">		root.duty();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/18/2018021801/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018021403" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/14/2018021403/">备忘录模式</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/14/2018021403/" class="archive-article-date">
+  	<time datetime="2018-02-14T11:14:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>在不破坏封装性的前提下，捕获一个对象的内部状态，并将它保存在对象之外。等到需要恢复的时候，再获取。</p>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:发起人，负责创建备忘录，用以纪录当前时刻状态，并可使用备忘录恢复此前状态。<br>2：备忘录，负责存储发起人对象的状态。<br>3:管理者，负责保存好备忘录，不可操作或者检查。</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>适用于功能比较复杂，但需要维护或记录属性历史的类，或者需要保存的属性是众多属性中的一小部分。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div></pre></td><td class="code"><pre><div class="line">//备忘录</div><div class="line">public class HeroStateMemento &#123;</div><div class="line">	private int bloodValue;</div><div class="line">	private int attackValue;</div><div class="line">	private int defenceValue;</div><div class="line">	public HeroStateMemento(int blood,int attack,int defence) &#123;</div><div class="line">		this.bloodValue=blood;</div><div class="line">		this.attackValue=attack;</div><div class="line">		this.defenceValue=defence;</div><div class="line">	&#125;</div><div class="line">	public int getBloodValue() &#123;</div><div class="line">		return bloodValue;</div><div class="line">	&#125;</div><div class="line">	public void setBloodValue(int bloodValue) &#123;</div><div class="line">		this.bloodValue = bloodValue;</div><div class="line">	&#125;</div><div class="line">	public int getAttackValue() &#123;</div><div class="line">		return attackValue;</div><div class="line">	&#125;</div><div class="line">	public void setAttackValue(int attackValue) &#123;</div><div class="line">		this.attackValue = attackValue;</div><div class="line">	&#125;</div><div class="line">	public int getDefenceValue() &#123;</div><div class="line">		return defenceValue;</div><div class="line">	&#125;</div><div class="line">	public void setDefenceValue(int defenceValue) &#123;</div><div class="line">		this.defenceValue = defenceValue;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//发起者</div><div class="line">public class Hero &#123;</div><div class="line">	private String name;</div><div class="line">	private int bloodValue;</div><div class="line">	private int attackValue;</div><div class="line">	private int defenceValue;</div><div class="line">	public Hero(String name) &#123;</div><div class="line">		this.name=name;</div><div class="line">	&#125;</div><div class="line">	public void InitValue() &#123;</div><div class="line">		this.bloodValue=100;</div><div class="line">		this.attackValue=10;</div><div class="line">		this.defenceValue=10;</div><div class="line">	&#125;</div><div class="line">	public void Fight() &#123;</div><div class="line">		this.bloodValue=10;</div><div class="line">		this.attackValue=1;</div><div class="line">		this.defenceValue=1;</div><div class="line">	&#125;</div><div class="line">	//保存备份</div><div class="line">	public HeroStateMemento SaveState() &#123;</div><div class="line">		return new HeroStateMemento(this.bloodValue,this.attackValue,this.defenceValue);</div><div class="line">	&#125;</div><div class="line">	//恢复备份</div><div class="line">	public void RestoreState(HeroStateMemento memento) &#123;</div><div class="line">		this.bloodValue=memento.getBloodValue();</div><div class="line">		this.attackValue=memento.getAttackValue();</div><div class="line">		this.defenceValue=memento.getDefenceValue();</div><div class="line">	&#125;</div><div class="line">	//显示属性</div><div class="line">	public void show() &#123;</div><div class="line">		System.out.println(&quot;name:&quot;+name);</div><div class="line">		System.out.println(&quot;bloodValue:&quot;+bloodValue);</div><div class="line">		System.out.println(&quot;attackValue:&quot;+attackValue);</div><div class="line">		System.out.println(&quot;defenceValue:&quot;+defenceValue);</div><div class="line">		System.out.println(&quot;*************************&quot;);</div><div class="line">	&#125;</div><div class="line">	public String getName() &#123;</div><div class="line">		return name;</div><div class="line">	&#125;</div><div class="line">	public void setName(String name) &#123;</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line">	public int getBloodValue() &#123;</div><div class="line">		return bloodValue;</div><div class="line">	&#125;</div><div class="line">	public void setBloodValue(int bloodValue) &#123;</div><div class="line">		this.bloodValue = bloodValue;</div><div class="line">	&#125;</div><div class="line">	public int getAttackValue() &#123;</div><div class="line">		return attackValue;</div><div class="line">	&#125;</div><div class="line">	public void setAttackValue(int attackValue) &#123;</div><div class="line">		this.attackValue = attackValue;</div><div class="line">	&#125;</div><div class="line">	public int getDefenceValue() &#123;</div><div class="line">		return defenceValue;</div><div class="line">	&#125;</div><div class="line">	public void setDefenceValue(int defenceValue) &#123;</div><div class="line">		this.defenceValue = defenceValue;</div><div class="line">	&#125;	</div><div class="line">&#125;</div><div class="line">//管理者</div><div class="line">public class HeroStateManager &#123;</div><div class="line">	private HeroStateMemento memento;</div><div class="line"></div><div class="line">	public HeroStateMemento getMemento() &#123;</div><div class="line">		return memento;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setMemento(HeroStateMemento memento) &#123;</div><div class="line">		this.memento = memento;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//测试代码</div><div class="line">public class TestMemento &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Hero timo=new Hero(&quot;timo&quot;);</div><div class="line">		timo.InitValue();</div><div class="line">		timo.show();</div><div class="line">		HeroStateManager manager=new HeroStateManager();</div><div class="line">		manager.setMemento(timo.SaveState());</div><div class="line">		timo.Fight();</div><div class="line">		timo.show();</div><div class="line">		timo.RestoreState(manager.getMemento());</div><div class="line">		timo.show();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/14/2018021403/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018021402" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/14/2018021402/">适配器</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/14/2018021402/" class="archive-article-date">
+  	<time datetime="2018-02-14T01:28:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>将一个类的接口转为客户希望的另外一个接口。Adapter模式使得原本不兼容的不能一起工作的类可以一起工作了。</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:适用于开发后期，两边接口都不太容易修改接口的时候，可以使用适配器模式适配。<br>2:适用于外部接口，适合成统一的内部接口。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">package designmode.adapter;</div><div class="line">// 系统内部使用的接口方式</div><div class="line">public class Target &#123;</div><div class="line">	public  void Request() &#123;</div><div class="line">		System.out.println(&quot;这时一个普通请求&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//外部系统的接口方式</div><div class="line">public class Adaptee &#123;</div><div class="line">	public void SpecificRequest() &#123;</div><div class="line">		System.out.println(&quot;这是一个特殊请求&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//适配器继承希望使用的类，并适配外部的接口</div><div class="line">public class Adapter extends Target&#123;</div><div class="line">	Adaptee a=new Adaptee();</div><div class="line">	@Override</div><div class="line">	public  void Request() &#123;</div><div class="line">		a.SpecificRequest();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//验证</div><div class="line">public class TestAdapter &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Target target=new Adapter();</div><div class="line">		target.Request();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/14/2018021402/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018021401" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -688,339 +1043,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018020602" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/2018020602/">原型模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/2018020602/" class="archive-article-date">
-  	<time datetime="2018-02-06T13:09:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>原型模式其实就是从一个对象再创建另外一个可定制多对象，而且不需要知道任何创建的细节。</p>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1:有一个继承Cloneable的类</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">public class WorkExperience implements Cloneable &#123;</div><div class="line">	</div><div class="line">	private String timeRange;</div><div class="line">	private String company;</div><div class="line">	public WorkExperience(String timeRange, String company) &#123;</div><div class="line">		this.timeRange = timeRange;</div><div class="line">		this.company = company;</div><div class="line">	&#125;</div><div class="line">	public void disploy() &#123;</div><div class="line">		System.out.println(&quot;WorkExperience:&quot;+timeRange+&quot;,&quot;+company);</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	protected Object clone() throws CloneNotSupportedException &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return super.clone();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class Resume implements Cloneable &#123;</div><div class="line">	</div><div class="line">	private String name=null;</div><div class="line">	private int age;</div><div class="line">	private WorkExperience workExperience;</div><div class="line"></div><div class="line">	public int getAge() &#123;</div><div class="line">		return age;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setAge(int age) &#123;</div><div class="line">		this.age = age;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public WorkExperience getWorkExperience() &#123;</div><div class="line">		return workExperience;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setWorkExperience(WorkExperience workExperience) &#123;</div><div class="line">		this.workExperience = workExperience;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Resume(String name) &#123;</div><div class="line">		super();</div><div class="line">		this.name = name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected Object clone() throws CloneNotSupportedException &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return super.clone();</div><div class="line">	&#125;</div><div class="line">	public void disploy() &#123;</div><div class="line">		System.out.println(&quot;name:&quot;+name);</div><div class="line">		System.out.println(&quot;age:&quot;+age);</div><div class="line">		this.workExperience.disploy();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class TestPrototype &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Resume a=new Resume(&quot;xxb&quot;);</div><div class="line">		a.setAge(28);</div><div class="line">		WorkExperience work=new WorkExperience(&quot;2010-2018&quot;,&quot;ICBC&quot;);</div><div class="line">		a.setWorkExperience(work);</div><div class="line">		Resume b=null;</div><div class="line">		try &#123;</div><div class="line">			b=(Resume) a.clone();</div><div class="line">			System.out.println(&quot;a.hashCode()&quot;+a.hashCode());</div><div class="line">			System.out.println(&quot;b.hashCode()&quot;+b.hashCode());</div><div class="line">			 System.out.println(&quot;a.WorkExperience.hashCode()&quot;+a.getWorkExperience().hashCode());</div><div class="line">			System.out.println(&quot;b.WorkExperience.hashCode()&quot;+b.getWorkExperience().hashCode());</div><div class="line">			b.setAge(29);</div><div class="line">			WorkExperience work1=new WorkExperience(&quot;2010-2018&quot;,&quot;alibaba&quot;);</div><div class="line">			a.setWorkExperience(work1);</div><div class="line">System.out.println(&quot;a.WorkExperience.hashCode()&quot;+a.getWorkExperience().hashCode());</div><div class="line">System.out.println(&quot;b.WorkExperience.hashCode()&quot;+b.getWorkExperience().hashCode());</div><div class="line">		&#125; catch (CloneNotSupportedException e) &#123;</div><div class="line">			// TODO Auto-generated catch block</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		a.disploy();</div><div class="line">		b.disploy();//明明是浅复制，为啥会互不影响呢？</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="思考1："><a href="#思考1：" class="headerlink" title="思考1："></a>思考1：</h4><p>我这里明明是浅复制，为啥会互不影响呢？其实应该是我在a.setWorkExperience(work1)给了a.workExperience新的引用。</p>
-<h4 id="思考2："><a href="#思考2：" class="headerlink" title="思考2："></a>思考2：</h4><p>如何深复制，其实就是改写Resume.clone()即可。</p>
-<h4 id="改写代码"><a href="#改写代码" class="headerlink" title="改写代码"></a>改写代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">	protected Object clone() throws CloneNotSupportedException &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		//return super.clone();</div><div class="line">		Resume obj=(Resume) super.clone();</div><div class="line">		obj.workExperience=(WorkExperience) this.workExperience.clone();</div><div class="line">		return obj;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/2018020602/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018020601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/2018020601/">工厂方法模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/2018020601/" class="archive-article-date">
-  	<time datetime="2018-02-06T11:43:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><h4 id="组成："><a href="#组成：" class="headerlink" title="组成："></a>组成：</h4><p>1.抽象类<br>2.实现子类<br>3.简单工厂</p>
-<h4 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">//抽象类</div><div class="line">public abstract class Animal &#123;</div><div class="line">	public abstract void desc();</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Bird extends Animal&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a bird&quot;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Cat extends Animal &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a cat&quot;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Dog extends Animal &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a dog&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//静态工厂</div><div class="line">public class AnimalFactory &#123;</div><div class="line">   public static final int paramCat=1;</div><div class="line">   public static final int paramDog=2;</div><div class="line">   public static final int paramBird=3;</div><div class="line">   public static Animal CreateAnimal(int param) &#123;</div><div class="line">	   switch(param) &#123;</div><div class="line">		   case 1:</div><div class="line">			   return new Cat();</div><div class="line">		   case 2:</div><div class="line">			   return new Dog();</div><div class="line">		  default:</div><div class="line">			  return new Bird();</div><div class="line">	   &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">//测试方法</div><div class="line">public class TestAniaml &#123;</div><div class="line">      public static void main(String[] args) &#123;</div><div class="line">    	   		Animal cat=AnimalFactory.CreateAnimal(AnimalFactory.paramCat);</div><div class="line">    	   		cat.desc();</div><div class="line">    	   		Animal bird=MutiAnimalFactory.newBird();</div><div class="line">    	   		bird.desc();</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>定义了一个用于创建对象的接口，让子类决定实例化哪个类，工厂方法使一个类的实例化延迟到其子类。<br>组成<br>1:抽象类<br>2:实现子类<br>3:抽象工厂<br>4:具体实现工厂</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">//抽象类</div><div class="line">public interface Animal &#123;</div><div class="line">	public void desc();</div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Bird implements Animal&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a bird.&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//实现子类</div><div class="line">public class Fish implements Animal&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is a fish&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//抽象工厂</div><div class="line">public interface AnimalFactory &#123;</div><div class="line">	public Animal create();</div><div class="line">&#125;</div><div class="line">//具体工厂</div><div class="line">public class BirdFactory implements AnimalFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Animal create() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new Bird();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//具体工厂</div><div class="line">public class FishFactory implements AnimalFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Animal create() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new Fish();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试方法</div><div class="line">public class TestAbstractFactory &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		AnimalFactory f=new BirdFactory();</div><div class="line">		Animal bird=f.create();</div><div class="line">		bird.desc();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="比较："><a href="#比较：" class="headerlink" title="比较："></a>比较：</h3><p>简单工厂：当需要扩展的时候，比如新增一个鸡类，除了扩展鸡这个类，同时需要修改简单工厂类，这违背了开闭原则。<br>工厂方法：如果需要扩展，可以新增一个鸡类，除了扩展鸡这个具体类，还需要新增一个具体实现的工厂，虽然多了一个开发工作量，多写一个工厂类，但遵循了开闭原则。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/2018020601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018020502" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/05/2018020502/">代理模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/05/2018020502/" class="archive-article-date">
-  	<time datetime="2018-02-05T12:42:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>为其他对象提供一种代理一控制对这个对象的访问。</p>
-<h3 id="组成："><a href="#组成：" class="headerlink" title="组成："></a>组成：</h3><p>1:抽象接口类，定义了真实处理类和代理共用接口。<br>2:真实类，实现1中的抽象接口类，实现真实业务逻辑，供代理类调用。<br>3:代理类，实现抽象接口类，通过真实类实现抽象方法，并可以附加自己的操作。</p>
-<h3 id="适用场景："><a href="#适用场景：" class="headerlink" title="适用场景："></a>适用场景：</h3><p>1:远程代理，为一个对象在不同的地址空间提供局部代表，这样可以隐藏对象于不同地址空间的事实－－－－－还需要理解<br>2:虚拟代理，根据需要创建开销很大的对象，通过它来存放实例化需要很长时间的真实对象。－－－－－还需要理解<br>3:安全代理，用来控制真实对象访问时不同的权限。<br>4:智能指引，是指调用真实的对象时，代理处理另外一些事情。</p>
-<h3 id="比较："><a href="#比较：" class="headerlink" title="比较："></a>比较：</h3><p>与此前学习的装饰类比较：<br>1:装饰模式可以动态增加特色功能，可以有不同组合增加，而代理模式或在真实类之前或者之后增加特色功能是固定的<br>2:装饰模式时在运行时确定具体功能的，代理模式在编译时就确定了<br>3:装饰模式可以直接访问到原始对象，而代理模式隐藏对象的具体信息。</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public abstract class Subject &#123;</div><div class="line">	public abstract void request();</div><div class="line">&#125;</div><div class="line">public class RealSubject extends Subject&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void request() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;the real request&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class Proxy extends Subject&#123;</div><div class="line">	private RealSubject realSubject=new RealSubject();</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void request() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		realSubject.request();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public class TestPorxy &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Proxy proxy=new Proxy();</div><div class="line">		proxy.request();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/05/2018020502/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018020501" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/05/2018020501/">设计模式－－装饰模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/05/2018020501/" class="archive-article-date">
-  	<time datetime="2018-02-05T12:10:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>动态的给一个对象添加一些额外的新功能。</p>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p>1.Component这样的一个抽象类<br>2.ConcreteComponent继承Component的子类，实现基本功能<br>3.Decorator基础继承Component的抽象子类，作为装饰抽象类<br>4.ConcreteDecoratorA，ConcreteDecoratorB这些继承Decorator的装饰对象，为Component添加特色功能</p>
-<h3 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h3><ol>
-<li>需要扩展一个类的功能，或给一个类添加附加职责。</li>
-<li>需要动态的给一个对象添加功能，这些功能可以再动态的撤销。</li>
-<li>需要增加由一些基本功能的排列组合而产生的非常大量的功能，从而使继承关系变的不现实。</li>
-<li>当不能采用生成子类的方法进行扩充时。一种情况是，可能有大量独立的扩展，为支持每一种组合将产生大量的子类，使得子类数目呈爆炸性增长。另一种情况可能是因为类定义被隐藏，或类定义不能用于生成子类。</li>
-</ol>
-<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><p>把类中的装饰功能从类中搬移去除，可以简化原有的核心类</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">public abstract class Component &#123;</div><div class="line">	public abstract void Operation();</div><div class="line">&#125;</div><div class="line">public class ConcreteComponent extends Component&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void Operation() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;Base function&quot;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public abstract class Decorator extends Component&#123;</div><div class="line">	protected Component component;</div><div class="line">	public void setComponenet(Component component) &#123;</div><div class="line">		this.component=component;</div><div class="line">	&#125;</div><div class="line">	@Override</div><div class="line">	public  void Operation() &#123;</div><div class="line">		if(component!=null) &#123;</div><div class="line">			component.Operation();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">public class ConcreteDecoratorA extends Decorator&#123;</div><div class="line">	private String addStateA=&quot;add a function&quot;;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void Operation() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.Operation();</div><div class="line">		System.out.println(addStateA);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public class ConcreteDecoratorB extends Decorator&#123;</div><div class="line">	private String addState=&quot;add B.&quot;;</div><div class="line">	@Override</div><div class="line">	public void Operation() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		super.Operation();</div><div class="line">		System.out.println(addState);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestDecorator &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Component a=new ConcreteComponent();</div><div class="line">		Decorator d1=new ConcreteDecoratorA();</div><div class="line">		Decorator d2=new ConcreteDecoratorB();</div><div class="line">		d1.setComponenet(a);</div><div class="line">		d2.setComponenet(d1);</div><div class="line">		d2.Operation();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/05/2018020501/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1120,11 +1142,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
+                <a href="javascript:void(0)" class="js-tag color3">IT</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">IT</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1136,11 +1158,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1157,6 +1179,18 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">信息安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">

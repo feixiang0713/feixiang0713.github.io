@@ -159,6 +159,376 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018032601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/26/2018032601/">log4j和slf4j关系</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/26/2018032601/" class="archive-article-date">
+  	<time datetime="2018-03-26T06:53:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在做系统搭建的过程中遇到日志jar包冲突的问题，在查询资料的时候发现下文说的很清晰，记录下，作为备忘。<br>原文地址如下：<br><a href="https://blog.csdn.net/kxcfzyk/article/details/38613861" target="_blank" rel="external">https://blog.csdn.net/kxcfzyk/article/details/38613861</a></p>
+<p>摘录了一些内容<br>Java日志体系大体可以分为三个部分：日志门面接口、桥接器、日志框架具体实现。<br>Java日志框架有很多种，最简单的是Java自带的java.util.logging，而最经典的是log4j，后来又出现了一个比log4j性能更好的logback，其他的日志框架就不怎么常用了。</p>
+<p>最早的日志门面接口是commons-logging，但目前最受欢迎的是slf4j。</p>
+<p>日志门面接口本身通常并没有实际的日志输出能力，它底层还是需要去调用具体的日志框架API的，也就是实际上它需要跟具体的日志框架结合使用。由于具体日志框架比较多，而且互相也大都不兼容，日志门面接口要想实现与任意日志框架结合可能需要对应的桥接器，就好像JDBC与各种不同的数据库之间的结合需要对应的JDBC驱动一样。</p>
+<p>说白了，所谓“桥接器”，不过就是对某套API的伪实现。这种实现并不是直接去完成API所声明的功能，而是去调用有类似功能的别的API。这样就完成了从“某套API”到“别的API”的转调。如果同时存在A-to-B.jar和B-to-A.jar这两个桥接器，那么可以想象当应用程序开始调用A或者B的API时，会发生什么事。这就是最开始引出的那个stack overflow异常的基本原理。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/26/2018032601/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018032201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/2018032201/">AOP</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/22/2018032201/" class="archive-article-date">
+  	<time datetime="2018-03-22T05:00:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是面向切面编程"><a href="#什么是面向切面编程" class="headerlink" title="什么是面向切面编程"></a>什么是面向切面编程</h3><p>比如安全，日志，事务和缓存这些功能，会在各业务场景中出现，如果需要重用这些功能的话，常用的方式是继承或者委托，继承会导致一个脆弱类，而委托导致委托对象的复杂调用。切面提供了另外一种选择。<br>面向切面编程时，我们可以在一个地方定义通用功能，但可以通过声明的方式定义功能在何处以何种方式使用，而不需要修改受影响的类。横切关注点可被模块化为特殊的类，这些类被称为切面（aspect）。<br>好处：<br>1:关注点都集中于一个地方，而不是分散到多个地方，方便维护<br>2:服务模块更简洁，只需要关心核心功能，次要关注点呗转移到切面中。</p>
+<h3 id="AOP术语"><a href="#AOP术语" class="headerlink" title="AOP术语"></a>AOP术语</h3><p>＊ 通知advice：通知定义了切面是什么以及何时调用。<br>通知类型：前置通知（Before）（执行前调用），后置通知（After）（执行后调用），返回通知（After－returning）（成功返回后调用），异常通知（After－throwing）（抛出异常后调用），环绕通知（Around）（调用前和后执行）<br>＊ 连接点（Join point）：在应用执行过程中能够插入到切面的一个点，这个点可以是调用方法，抛出异常，或者修改一个字段。切面代码可利用这些点插入到应用正常流程中，添加新的行为。Spring只支持方法级别的连接点。如果需要使用其他连接点，可使用Aspect来补充。<br>＊ 切点（Pointcut）：明确执行范围<br>＊ 切面（Aspect），是通知和切点的结合，明确是什么，在何时何地执行。<br>＊ 引入（Introduction）允许我们向现有类添加新方法和属性。<br>＊ 织入（Weaving），织入是把切面应用到目标对象并创建新的代理对象的过程。<br>＊ 织入方式：<br>编译期：切面在目标类被编译的时候织入。AspectJ就是这种方式。<br>类加载期：切面在目标类加载到JVM时被织入。<br>运行期：切面在运行的某个时期被织入。AOP为目标对象动态创建一个代理对象，Spring AOP以这种方式织入切面。</p>
+<h3 id="编写切点"><a href="#编写切点" class="headerlink" title="编写切点"></a>编写切点</h3><p>定义一个接口，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">public interface Performance &#123;</div><div class="line">	public void perform();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>定义切面：<br>// execution(<em> concert.Performance.perform(..))&amp;&amp; within(concert.</em>)<br>//其中execution表示方法concert.Performance.perform执行时触发，＊表示不关心返回值，..表示任意入参都可以。within限制制定包。<br>//execution(<em> concert.Performance.perform(..))and bean(‘woodstock’)<br>//限定切点只匹配bean的ID为woodstock的方法<br>//execution(</em> concert.Performance.perform(..))and bean(‘woodstock’)<br>//限定切点只匹配bean的ID不为woodstock的方法<br>具体示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.AfterThrowing;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">//表示切面</div><div class="line">@Aspect</div><div class="line">public class Audience &#123;</div><div class="line">	//执行前</div><div class="line">	@Before(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void silenceCellPhone() &#123;</div><div class="line">		System.out.println(&quot;silencing Cell Phones&quot;);</div><div class="line">	&#125;</div><div class="line">	//执行前</div><div class="line">	@Before(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void takeSeats() &#123;</div><div class="line">		System.out.println(&quot;Taking seats&quot;);</div><div class="line">	&#125;</div><div class="line">	//返回成功后</div><div class="line">	@AfterReturning(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void applause() &#123;</div><div class="line">		System.out.println(&quot;ha ha ha&quot;);</div><div class="line">	&#125;</div><div class="line">	//返回异常后</div><div class="line">	@AfterThrowing(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void demandRefund() &#123;</div><div class="line">		System.out.println(&quot;Demanding refund&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另外两种：@After，返回或抛出异常调用；@Around，将目标方法包装起来。<br>@PointCut定义可重用的切点,和上面比简化表达式重复书写。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.AfterThrowing;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line">@Aspect</div><div class="line">public class Audience &#123;</div><div class="line">	@Pointcut(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void performance()&#123;&#125;</div><div class="line"></div><div class="line">	@Before(&quot;performance()&quot;)</div><div class="line">	public void silenceCellPhone() &#123;</div><div class="line">		System.out.println(&quot;silencing Cell Phones&quot;);</div><div class="line">	&#125;</div><div class="line">	@Before(&quot;performance()&quot;)</div><div class="line">	public void takeSeats() &#123;</div><div class="line">		System.out.println(&quot;Taking seats&quot;);</div><div class="line">	&#125;</div><div class="line">	@AfterReturning(&quot;performance()&quot;)</div><div class="line">	public void applause() &#123;</div><div class="line">		System.out.println(&quot;ha ha ha&quot;);</div><div class="line">	&#125;</div><div class="line">	@AfterThrowing(&quot;performance()&quot;)</div><div class="line">	public void demandRefund() &#123;</div><div class="line">		System.out.println(&quot;Demanding refund&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="XML中配置举例"><a href="#XML中配置举例" class="headerlink" title="XML中配置举例"></a>XML中配置举例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd&quot;&gt;</div><div class="line">    &lt;!-- 目标对象 --&gt;</div><div class="line">    &lt;bean id=&quot;knight&quot; class=&quot;com.cjh.aop2.BraveKnight&quot;/&gt;</div><div class="line">    &lt;!-- 切面bean --&gt;</div><div class="line">    &lt;bean id=&quot;mistrel&quot; class=&quot;com.cjh.aop2.Minstrel&quot;/&gt;</div><div class="line">    &lt;!-- 面向切面编程 --&gt;</div><div class="line">    &lt;aop:config&gt;</div><div class="line">        &lt;aop:aspect ref=&quot;mistrel&quot;&gt;</div><div class="line">            &lt;!-- 定义切点 --&gt;</div><div class="line">            &lt;aop:pointcut expression=&quot;execution(* *.saying(..))&quot; id=&quot;embark&quot;/&gt;</div><div class="line">            &lt;!-- 声明前置通知 (在切点方法被执行前调用)--&gt;</div><div class="line">            &lt;aop:before method=&quot;beforSay&quot; pointcut-ref=&quot;embark&quot;/&gt;</div><div class="line">            &lt;!-- 声明后置通知 (在切点方法被执行后调用)--&gt;</div><div class="line">            &lt;aop:after method=&quot;afterSay&quot; pointcut-ref=&quot;embark&quot;/&gt;</div><div class="line">        &lt;/aop:aspect&gt;</div><div class="line">    &lt;/aop:config&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/22/2018032201/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018032101" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/21/2018032101/">类图</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/21/2018032101/" class="archive-article-date">
+  	<time datetime="2018-03-21T13:46:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近公司强调程序设计，回顾下大学时的东西，方便今后工作开展，今天先学习类图设计。</p>
+<h3 id="类图的作用和目的"><a href="#类图的作用和目的" class="headerlink" title="类图的作用和目的"></a>类图的作用和目的</h3><p>类图一般在详细设计过程中出现，主要用来描述系统中各个模块中类之间的关系，包括类或者类与接口的继承关系，类之间的依赖、聚合等关系。它还描述每一个类的详细信息，包括变量，和方法。<br>通过类图，就能实际的把系统中的各个类，即对象描述清楚，下一步就是按照这个详细的设计编码了。</p>
+<h3 id="如何画图"><a href="#如何画图" class="headerlink" title="如何画图"></a>如何画图</h3><h5 id="类和接口"><a href="#类和接口" class="headerlink" title="类和接口"></a>类和接口</h5><p><img src="http://img.blog.csdn.net/20160317160653320" alt="Image text"><br>首先，看动物矩形框，它代表一个类。<br>类图分三层：<br>1:第一层表示类的名称，如果是抽象类，则用斜体<br>2:第二层表示类的特性，通常是字段和属性<br>3:第三层表示类的操作，通常是方法和行为。<br>＋表示public<br>－表示private<br>＃表示protected</p>
+<p>接口（图中是飞翔）分两层<br>第一行是接口名称，第二行表示接口方法</p>
+<h5 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h5><p>1:继承关系，鸟基础动物，用空心三角形＋实线来表示<br>2:接口实现关系，大雁实现飞翔接口，用空心三角形＋虚线表示<br>3:聚合关系（Aggregation）大雁和雁群，用空心的菱形（雁群）＋实线箭头（大雁）来表示，弱拥有关系<br>4:组合（Composition）关系一种强的拥有关系，体现了严格的部分和整体的关系，部分和整体的生命周期一样。在这里鸟和其翅膀就是组合关系，因为它们是部分和整体的关系，并且翅膀和鸟的生命周期是相同的。组合关系用实习的菱形（鸟） + 实线箭头（翅膀）来表示<br>5:依赖关系，动物的几大特征，比如有新陈代谢，能繁殖。而动物要有生命力，需要氧气、水以及食物等。也就是说，动物依赖于氧气和水。他们之间是依赖关系（Dependency），用虚线箭头来表示</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">UML</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/21/2018032101/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018030801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/2018030801/">ORACLE开发－－字段定义问题</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/08/2018030801/" class="archive-article-date">
+  	<time datetime="2018-03-08T04:11:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="ORACLE开发问题"><a href="#ORACLE开发问题" class="headerlink" title="ORACLE开发问题"></a>ORACLE开发问题</h3><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>存过开发过程中，声明临时变量时，用了Varchar（20）来定义，而表中定义对应字段大小为Varchar（30），以及该字段来源表中大小为Varchar（30），导致临时变量字段对于超过20长度数据无法存放，从而导致报错。</p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>建议临时变量使用（表名.字段％type）的形式来声明类型，这样在后续表结构字段大小改动的时候，也不需要再改动程序中的临时变量的定义。从而减少出错的概率。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/08/2018030801/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018030802" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -733,372 +1103,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018022601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/26/2018022601/">IoC容器的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/26/2018022601/" class="archive-article-date">
-  	<time datetime="2018-02-26T12:33:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h3><p>BeanFactory接口定义了IoC容器最基本的形式，并且提供了IoC容器应该遵循的最基本的服务契约，这应当是我们IoC容器所遵守的最底层和最基本的编程规范。BeanFactory是一个接口类，没有给出具体实现。<br>1:<br>Object getBean(String name) throws BeansException;<br>－－－－通过name获得指定的Bean<br>2:</p>
-<p><t> T getBean(String name, @Nullable Class<t> requiredType) throws BeansException;<br>－－－－通过name获得Bean，如果不是指定类型requiredType，则抛出异常BeanNotOfRequiredTypeException<br>3:<br>Object getBean(String name, Object… args) throws BeansException;<br>－－－－通过指定参数来构造指定的Bean<br>4:<br>boolean containsBean(String name);<br>－－－－通过该接口方法让用户能够判断容器中是否含有指定名字的Bean<br>5:<br>boolean isSingleton(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法来查询指定名字的Bean是否是Singleton类型的Bean，对于Singleton属性，用户可以在BeanDifinition中指定。<br>6:<br>boolean isPrototype(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法来查询指定名字的Bean是否是prototype类型的，于Singleton属性一样，这个属性可以由用户在BeanDifinition中指定<br>7:<br>boolean isTypeMatch(String name, ResolvableType typeToMatch) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口可以查询指定名字的Bean的class类型是否是特定的class类型。<br>8:<br>Class&lt;?&gt; getType(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口方法查询指定名字的Bean的class类型。<br>9:<br>Class&lt;?&gt; getType(String name) throws NoSuchBeanDefinitionException;<br>－－－－通过该接口查询指定了名字的Bean的所有别名，这些别名是用户在BeanDifinition中定义的。</t></t></p>
-<h3 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h3><p>ApplicationContext是一个高级形态意义的IOC容器，在BeanFactory的基础上添加了附加功能：<br>1:支持不同的消息源，ApplicationContext扩展了MessageSource接口，支持国际化的实现，为开发多语言版本的应用提供服务。<br>2:访问资源，ApplicationContext扩展了ResourcePatternResolver（继承自ResourceLoader）接口，方便用户程序可以灵活地定义Bean定义信息。<br>3:支持应用事件，ApplicationContext扩展了ApplicationEventPublisher接口，在上下文中引入了事件机制，这些事件和Bean的生命周期的结合为Bean的管理提供了便利。</p>
-<h5 id="ApplicationContext容器的设计原理"><a href="#ApplicationContext容器的设计原理" class="headerlink" title="ApplicationContext容器的设计原理"></a>ApplicationContext容器的设计原理</h5><p>以FileSystemXmlApplicationContext为例说明ApplicationContext的设计原理：<br>1:一个功能是实例化这个应用上下文，同时启动IOC容器的refresh()过程，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public FileSystemXmlApplicationContext(</div><div class="line">			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)</div><div class="line">			throws BeansException &#123;</div><div class="line"></div><div class="line">		super(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		if (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>2:提供一个方法，通过文件系统路径获得加载XML的Bean定义资源位置，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">protected Resource getResourceByPath(String path) &#123;</div><div class="line">		if (path.startsWith(&quot;/&quot;)) &#123;</div><div class="line">			path = path.substring(1);</div><div class="line">		&#125;</div><div class="line">		return new FileSystemResource(path);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="IoC容器的初始化过程"><a href="#IoC容器的初始化过程" class="headerlink" title="IoC容器的初始化过程"></a>IoC容器的初始化过程</h3><p>分成以下三步：<br>1:Resource定位过程，这个Resource定位指的是对BeanDefinition的资源定位，它由ResourceLoader通过统一的Resource接口来完成，这个Resource对各种形式的BeanDefinition的使用都提供了统一的接口。如文件系统中的Bean定义信息可以通过FileSystemResource来进行抽象，如在类路径下的Bean定义信息可以使用ClassPathResource来定位。2:BeanDifinition的载入，这个过程就是把用户定义好的Bean表示成Io容器内部的数据结构（BeanDifinition）。<br>3:向IoC容器注册这些BeanDifinition，这个过程通过调用BeanDifinitionRegistry接口实现完成的。BeanDifinition实际上注入到一个HashMap中，Ioc容器通过这个HashMap持有这些BeanDefinition数据。</p>
-<h3 id="IoC容器的依赖注入"><a href="#IoC容器的依赖注入" class="headerlink" title="IoC容器的依赖注入"></a>IoC容器的依赖注入</h3><p>依赖诸如的过程是用户第一次向IoC容器索要Bean时触发的，例外情况时，在BeanDifinition信息中通过控制lazy－init属性来让容器完成对Bean的预实例化。<br>我们调用getBean后获得已经是完成依赖关系注入的完整Bean对象，所以完成依赖注入的奥秘就发生在getBean当中，要分析我们便从getBean这个入口开始吧。<br>getBean是依赖注入的起点，之后会调用createBean，Spring当中提供了两种实例化方案： BeanUtils 和 Cglib 方式。BeanUtils实现机制是通过Java的反射机制，Cglib是一个第三方类库采用的是一种字节码加强方式机制。 Spring中采用的默认实例化策略是Cglib。<br>我们要分析依赖关系是怎样注入到Bean对象当中，就需要回到 populateBean() 方法，这个方法实现是在 AbstractAutowireCapableBeanFactory中。</p>
-<h3 id="源码导入eclipse"><a href="#源码导入eclipse" class="headerlink" title="源码导入eclipse"></a>源码导入eclipse</h3><p>可以参考以下链接<a href="http://blog.csdn.net/guaoran/article/details/78563573" target="_blank" rel="external">http://blog.csdn.net/guaoran/article/details/78563573</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/26/2018022601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022401" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/24/2018022401/">Spring的设计理念和整体框架</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/24/2018022401/" class="archive-article-date">
-  	<time datetime="2018-02-24T08:49:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前正在学习Spring框架，做点笔记提高学习效率。</p>
-<h3 id="Spring的设计目的"><a href="#Spring的设计目的" class="headerlink" title="Spring的设计目的"></a>Spring的设计目的</h3><p>Spring为开发者提供一个一站式的轻量级应用开发框架，抽象我们在开发过程中遇到的共性问题，以便简化整个开发流程。</p>
-<h3 id="Spring的设计理念"><a href="#Spring的设计理念" class="headerlink" title="Spring的设计理念"></a>Spring的设计理念</h3><p>在JAVA EE的应用开发中，支持POJO和使用javaBean的开发方式，也就是面向接口开发，充分支持OO（面向对象）的设计方法。<br>Spring的设计理念采用了相对EJB而言的轻量级开发思想，也就是采用POJO的开发方式，只需要使用简单的java对象或者JavaBean就能实现Java EE的开发。</p>
-<h3 id="Spring的层次"><a href="#Spring的层次" class="headerlink" title="Spring的层次"></a>Spring的层次</h3><p>1:Spring的核心，IOC容器和AOP模块，最为基础的底层抽象，同时也是其他模块的基础。<br>2:即开即用服务，Spring MVC，Spring JDBC／Spring ORM，Spring事务处理，Spring远端调用。<br>3:Spring应用，也就是Spring子项目。</p>
-<h3 id="Spring应用场景"><a href="#Spring应用场景" class="headerlink" title="Spring应用场景"></a>Spring应用场景</h3><p>SSH架构开发web应用，Struts作为Web UI层，Spring作为中间件平台，Hibernate作为数据持久化工具，Apache Tomcate，MySQL数据库和Linux环境，完全开源的软件组合来搭建企业应用。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/24/2018022401/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022303" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/2018022303/">抽象工厂模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/23/2018022303/" class="archive-article-date">
-  	<time datetime="2018-02-23T10:13:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>为创建一组相关或者依赖的对象提供一个接口，而不需要知道具体的对象。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:系统不依赖于产品类实例如何被创建，组合和表达的细节。<br>2.系统的产品有多于一个的产品族，而系统只消费其中某一族的产品（抽象工厂模式的原始用意Unix&amp;Windows）<br>Button—&gt;UnixButton/WinButton<br>Text—–&gt;UnixText/WinText<br>Unix产品族和Windows产品族，不会同时使用。<br>Factory—&gt;UnixFactory/WinFactory<br>3.同属于同一个产品族是在一起使用的。这一约束必须在系统的设计中体现出来。<br>4.系统提供一个产品类的库，所有产品以同样的接口出现，从而使客户端不依赖于实现</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">public abstract class AbstractButton &#123;</div><div class="line">	public abstract void desc();</div><div class="line">&#125;</div><div class="line">public abstract class AbstractText &#123;</div><div class="line">	public abstract void desc();</div><div class="line">&#125;</div><div class="line">public abstract class AbstractFactory &#123;</div><div class="line">	public abstract AbstractButton createButton();</div><div class="line">	public abstract AbstractText createText();</div><div class="line">&#125;</div><div class="line">public class UnixButton extends AbstractButton&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is unixButtion.&quot;);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public class UnixText extends AbstractText&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is UnixText&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class UnixFactory extends AbstractFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractButton createButton() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new UnixButton();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractText createText() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new UnixText();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class WindowsButton extends AbstractButton&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is WindowsButton&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class WindowsText extends AbstractText&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void desc() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;this is WindowsText&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class WindowsFactory extends AbstractFactory&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractButton createButton() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new WindowsButton();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public AbstractText createText() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		return new WindowsText();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class TestAbstractFactory &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		AbstractFactory f=new WindowsFactory();</div><div class="line">		AbstractButton b=f.createButton();</div><div class="line">		b.desc();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/23/2018022303/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018022302" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/2018022302/">解释器模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/23/2018022302/" class="archive-article-date">
-  	<time datetime="2018-02-23T03:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>1:Context类，包含解释器之外的全局信息<br>2:抽象表达式，声明一个抽象的解释操作，这个接口为抽象语法树中所有节点所共享。<br>3:终结符表达式，实现文法中与终结符相关的解释操作。<br>4:非终结符表示式，实现文法中与非终结符相关的解释操作。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>1:如果一个特定类型的问题发生频率足够高，那么可能就值得将改问题的各个实例表述为一个简单语言中的句子，这样可以构建一个解释器，该解释器通过解释这些句子来解决问题。<br>2:当有一个语言需要解释执行，并且可将该语言中的句子表示为一个抽象语法树，可使用解释器模式。<br>3:解释器需要为每一个规则至少定义一个类，因此当文法非常复杂时，使用其他的技术如语法分析程序或者编译器生成器来解决问题。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">//Context类</div><div class="line">public class Context &#123;</div><div class="line">	private String input;</div><div class="line">	private String output;</div><div class="line">	public String getInput() &#123;</div><div class="line">		return input;</div><div class="line">	&#125;</div><div class="line">	public void setInput(String input) &#123;</div><div class="line">		this.input = input;</div><div class="line">	&#125;</div><div class="line">	public String getOutput() &#123;</div><div class="line">		return output;</div><div class="line">	&#125;</div><div class="line">	public void setOutput(String output) &#123;</div><div class="line">		this.output = output;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">//抽象表达式</div><div class="line">public abstract class AbstractExpression &#123;</div><div class="line">	public abstract void interpret(Context context);</div><div class="line">&#125;</div><div class="line">//终结符表达式</div><div class="line">public class TerminalExpression extends AbstractExpression&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void interpret(Context context) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;Terminal Expression.&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//非终结符表示式</div><div class="line">public class NonterminalExpression extends AbstractExpression&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void interpret(Context context) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;NonterminalExpression&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//测试</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">public class TestInterpreter &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		Context context=new Context();</div><div class="line">		List&lt;AbstractExpression&gt; list=new ArrayList&lt;AbstractExpression&gt;();</div><div class="line">		list.add(new TerminalExpression());</div><div class="line">		list.add(new NonterminalExpression());</div><div class="line">		list.add(new TerminalExpression());</div><div class="line">		list.add(new TerminalExpression());</div><div class="line">		for(AbstractExpression e:list) &#123;</div><div class="line">			e.interpret(context);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/23/2018022302/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1198,11 +1202,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
+                <a href="javascript:void(0)" class="js-tag color3">IT</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">IT</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1214,11 +1218,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,6 +1239,18 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">信息安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">

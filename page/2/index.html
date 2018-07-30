@@ -159,6 +159,373 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-20180626" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/26/20180626/">并发编程学习一</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/26/20180626/" class="archive-article-date">
+  	<time datetime="2018-06-26T11:00:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="为什么要并发编程"><a href="#为什么要并发编程" class="headerlink" title="为什么要并发编程"></a>为什么要并发编程</h3><p>1:资源利用，在程序等待外部操作的时候，可以执行其他的程序，促进程序的高效。<br>2:公平，用户各程序可以以平等的优先级共享资源。<br>3:清晰，不同任务通过单独任务执行，更易理解。</p>
+<h3 id="并发的优势-amp-劣势"><a href="#并发的优势-amp-劣势" class="headerlink" title="并发的优势&amp;劣势"></a>并发的优势&amp;劣势</h3><p>线程间可以共享数据，但是一个线程修改其他线程正在使用的数据，会导致糟糕的结果。</p>
+<h3 id="多线程的优点"><a href="#多线程的优点" class="headerlink" title="多线程的优点"></a>多线程的优点</h3><p>1:当I/O堵塞时，多线程可以更高效地利用CPU资源。<br>2:各种任务单独作为一个线程开发，逻辑清晰简单，更容易维护。</p>
+<h3 id="并发管理"><a href="#并发管理" class="headerlink" title="并发管理"></a>并发管理</h3><p>无论何时，只要有多于一个的线程访问给定的状态变量，而且其中某个线程会写入该变量，此时必须使用同步来协调线程对该变量的访问。</p>
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>当多个线程访问同一个类时，如果不用考虑这些线程在运行时环境下的调度和交替执行，并且不需要额外的同步以及在调用方代码不必作其他的协调，这个类点行为仍然是正确的。那就称为线程安全的。</p>
+<p>1:无状态对象永远都是线程安全的。</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>1:＋＋count 非原子操作，是读改写三个离散操作。<br>2:原子操作，要么都执行，要么都不执行。</p>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p>Java 提供了强制原子性的内置锁机制：synchronized块。内部锁扮演了互斥锁的角色。<br>synchronized块的同步机制简化了代码逻辑，但是增加了性能问题。</p>
+<h3 id="重进入"><a href="#重进入" class="headerlink" title="重进入"></a>重进入</h3><p>当一个线程请求其他线程已经占有的锁事，请求线程将被阻塞，然而内部锁事可以重进入的。线程在试图获得它自己占有的锁时，请求会成功。重进入意味着请求是基于per－thread，不是基于per－invocation。重进入的实现是通过为每个锁关联一个请求计数和一个占有它的线程，当计数为0时，认为锁未被占有。线程请求一个未被占有的锁时，JVM将纪录锁的占有者，并将请求计数置为1.如果同一线程再次请求这个锁时，计数将递增。每次占用线程退出同步块，计数器值将递减。直到计数器达到0时。锁被释放。</p>
+<h3 id="用锁保护状态"><a href="#用锁保护状态" class="headerlink" title="用锁保护状态"></a>用锁保护状态</h3><p>复核操作在完整运行期间需要占有锁，以确保其行为为原子的。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>谨慎控制synchronized块的大小，可通过缩小快的大小，提高性能，但是同时需要确保原子操作在同一个synchronized块中。有些耗时的计算或操作，比如网络或控制台I/O，难以快速完成，执行这些操作期间不要占有锁。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/26/20180626/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018041801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/18/2018041801/">Oracle性能问题</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/18/2018041801/" class="archive-article-date">
+  	<time datetime="2018-04-18T11:49:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h3><p>前台查询某机构的当日成交明细，查询时效达到20多秒。查询交易记录表A有九万多条数据，交易日切B表里有40多条记录，现在是根据A表里的机构代码查询B表的当日日期，并查询出A表里的交易日期等于B表当日日期。</p>
+<pre><code>select * from A where 
+A.tradeDate=(select B.workDate from B where B.branchid=A.branchid )
+and A.branchid= is_branchid;
+</code></pre><h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>根据以上代码分析，在数据量大时，子查询的性能会受到比较大的影响，其实会执行9万多次的查询A机构的当日日期。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>其实这个功能是查询某个机构点当日成交明细，在写查询语句之前，先查询该机构的当日日期，然后在去交易表里面查询当日的交易记录。修改如下：</p>
+<pre><code>select B.workDate into v_workDate from B where B.branchid= is_branchid;
+select * from A where 
+A.tradeDate= v_workDate 
+and A.branchid= is_branchid;
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ORACLE</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/18/2018041801/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018041601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/16/2018041601/">注解学习</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/16/2018041601/" class="archive-article-date">
+  	<time datetime="2018-04-16T11:15:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="注解定义"><a href="#注解定义" class="headerlink" title="注解定义"></a>注解定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">modifiers @interface AnnotationName&#123;</div><div class="line">    	element declaration1</div><div class="line">	element declaration2</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>举例来说：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public @interface BugReport</div><div class="line">&#123;</div><div class="line">	String assignedTo() default “[none]”;</div><div class="line">	int severity=0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以按以下格式使用注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@BugReport（assignedTo＝“Harry”，severity＝10）</div></pre></td></tr></table></figure></p>
+<p>如果元素名字是value，只能按照下面形式书写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public @interface JasonFiled&#123;</div><div class="line">	String value();</div><div class="line">&#125;</div><div class="line"></div><div class="line">@JasonFiled(“Name”)</div></pre></td></tr></table></figure></p>
+<p>所有注解接口隐式扩展java.lang.annotation.Annotation接口</p>
+<h3 id="标准注解"><a href="#标准注解" class="headerlink" title="标准注解"></a>标准注解</h3><p>@Deprecated注解，可以添加到任何不再鼓励使用的项上；如果使用了一个过时的项，编译器会报警。<br>@SuppressWarnings注解会告知编译器阻止特殊类型的警告信息。例如@SuppressWarning（”unchecked”）.<br>@Override 这种注解只能应用到方法上，编译器会阻止具有这种注解的方法来覆盖一个超类的方法。<br>@PostConstruct标记了这些注解的方法，在构建之后被调用<br>@PreDestroy表姐了这个注解点方法，在移除之前被调用。<br>@Resource注解用于资源注入。<br>@Target，元注解，用于一个注解，限制该注解可以用到哪些项上。<br>@Retention，元注解，用于指定一个注解应该保留多长时间，默认值为RetentionPolicy.CLASS（类文件中的注解，但是虚拟机不需要将它们载入）。其他如RetentionPolicy.SOURCE（不包括在类文件中的注解），RetentionPolicy.RUNTIME（类文件中的注解，由虚拟机载入，通过反射API可获得它们。）<br>@Documented，元注解，为像Javadoc这样的文档工具提供了一些提示。<br>@Inherited 允许子类继承父类中的注解。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/16/2018041601/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018041302" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/2018041302/">如何考察一个人java技术功底</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/13/2018041302/" class="archive-article-date">
+  	<time datetime="2018-04-13T11:38:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近单位组织面试外援，百度些内容，作为如何面试的参考</p>
+<h3 id="先让其自我介绍"><a href="#先让其自我介绍" class="headerlink" title="先让其自我介绍"></a>先让其自我介绍</h3><p>关注其表达能力，能否将项目内容讲解清楚，将使用的技术框架讲解清楚，以及个人工作内容责讲解清楚</p>
+<h3 id="关注工作经验的契合度"><a href="#关注工作经验的契合度" class="headerlink" title="关注工作经验的契合度"></a>关注工作经验的契合度</h3><h3 id="关注解决问题的能力"><a href="#关注解决问题的能力" class="headerlink" title="关注解决问题的能力"></a>关注解决问题的能力</h3><p>抛出一个问题，咨询他如何解决。</p>
+<h3 id="一些简单技术（JAVA）问题"><a href="#一些简单技术（JAVA）问题" class="headerlink" title="一些简单技术（JAVA）问题"></a>一些简单技术（JAVA）问题</h3><p>（1）：“==”和equals()之间的区别。<br>值类型（int,char,long,boolean等）都是用==判断相等性。对象引用的话，==判断引用所指的对象是否是同一个。equals是Object的成员函数，有些类会覆盖（override）这个方法，用于判断对象的等价性。例如String类，两个引用所指向的String都是”abc”，但可能出现他们实际对应的对象并不是同一个（和jvm实现方式有关），因此用==判断他们可能不相等，但用equals判断一定是相等的<br>（2）equals()和hashCode()方法被隐式调用时的约定？<br>equals()方法与hashCode()方法的隐式调用时的约定是:<br>1.如果两个对象相等(equals),那么他们必须拥有相同的哈希吗(hashCode)<br>2.即使两个对象拥有相同的hashCode，他们也不一定相等.<br>（3）面向对象的特征<br>封装<br>最常见的是把属性私有化封装在一个类里面，只能通过方法去访问<br>继承<br>子类继承父类，从而继承了父类的方法和属性<br>抽象<br>比如一个英雄类，抽象出了name,hp这些属性，使得开发过程中更加易于理解<br>多态<br>多态分操作符的多态和类的多态。 类的多态指父类引用指向子类对象，并且有继承，有重写。<br>（4）面相对象的设计目标<br>可扩展性Extensibility：有了新的需求，新的性能可以容易添加到系统中，不影响现有的性能，也不会带来新的缺陷。<br>可修改性Flexibility：系统一部分的代码要修改时不会破坏系统的现有结构，也不会影响到其它的部分。<br>可替换性Pluggability：可以将系统中的某些代码替换为相同接口的其它类，不会影响到系统。<br>（5）设计原则<br>单一职责原则<br>开放封闭原则<br>依赖倒置原则－－－－面向接口编程<br>里氏代换原则－－－－子类可替换父类<br>接口隔离原则<br>迪米特法则－－－－－不直接访问的类，不要直接发生相互作用，降低成员到访问权限<br>合成／聚合服用原则－－－尽量使用合成／聚合，尽量不要使用继承。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/13/2018041302/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018041201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -732,376 +1099,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018032601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/26/2018032601/">log4j和slf4j关系</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/26/2018032601/" class="archive-article-date">
-  	<time datetime="2018-03-26T06:53:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做系统搭建的过程中遇到日志jar包冲突的问题，在查询资料的时候发现下文说的很清晰，记录下，作为备忘。<br>原文地址如下：<br><a href="https://blog.csdn.net/kxcfzyk/article/details/38613861" target="_blank" rel="external">https://blog.csdn.net/kxcfzyk/article/details/38613861</a></p>
-<p>摘录了一些内容<br>Java日志体系大体可以分为三个部分：日志门面接口、桥接器、日志框架具体实现。<br>Java日志框架有很多种，最简单的是Java自带的java.util.logging，而最经典的是log4j，后来又出现了一个比log4j性能更好的logback，其他的日志框架就不怎么常用了。</p>
-<p>最早的日志门面接口是commons-logging，但目前最受欢迎的是slf4j。</p>
-<p>日志门面接口本身通常并没有实际的日志输出能力，它底层还是需要去调用具体的日志框架API的，也就是实际上它需要跟具体的日志框架结合使用。由于具体日志框架比较多，而且互相也大都不兼容，日志门面接口要想实现与任意日志框架结合可能需要对应的桥接器，就好像JDBC与各种不同的数据库之间的结合需要对应的JDBC驱动一样。</p>
-<p>说白了，所谓“桥接器”，不过就是对某套API的伪实现。这种实现并不是直接去完成API所声明的功能，而是去调用有类似功能的别的API。这样就完成了从“某套API”到“别的API”的转调。如果同时存在A-to-B.jar和B-to-A.jar这两个桥接器，那么可以想象当应用程序开始调用A或者B的API时，会发生什么事。这就是最开始引出的那个stack overflow异常的基本原理。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/26/2018032601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018032201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/22/2018032201/">AOP</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/22/2018032201/" class="archive-article-date">
-  	<time datetime="2018-03-22T05:00:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="什么是面向切面编程"><a href="#什么是面向切面编程" class="headerlink" title="什么是面向切面编程"></a>什么是面向切面编程</h3><p>比如安全，日志，事务和缓存这些功能，会在各业务场景中出现，如果需要重用这些功能的话，常用的方式是继承或者委托，继承会导致一个脆弱类，而委托导致委托对象的复杂调用。切面提供了另外一种选择。<br>面向切面编程时，我们可以在一个地方定义通用功能，但可以通过声明的方式定义功能在何处以何种方式使用，而不需要修改受影响的类。横切关注点可被模块化为特殊的类，这些类被称为切面（aspect）。<br>好处：<br>1:关注点都集中于一个地方，而不是分散到多个地方，方便维护<br>2:服务模块更简洁，只需要关心核心功能，次要关注点呗转移到切面中。</p>
-<h3 id="AOP术语"><a href="#AOP术语" class="headerlink" title="AOP术语"></a>AOP术语</h3><p>＊ 通知advice：通知定义了切面是什么以及何时调用。<br>通知类型：前置通知（Before）（执行前调用），后置通知（After）（执行后调用），返回通知（After－returning）（成功返回后调用），异常通知（After－throwing）（抛出异常后调用），环绕通知（Around）（调用前和后执行）<br>＊ 连接点（Join point）：在应用执行过程中能够插入到切面的一个点，这个点可以是调用方法，抛出异常，或者修改一个字段。切面代码可利用这些点插入到应用正常流程中，添加新的行为。Spring只支持方法级别的连接点。如果需要使用其他连接点，可使用Aspect来补充。<br>＊ 切点（Pointcut）：明确执行范围<br>＊ 切面（Aspect），是通知和切点的结合，明确是什么，在何时何地执行。<br>＊ 引入（Introduction）允许我们向现有类添加新方法和属性。<br>＊ 织入（Weaving），织入是把切面应用到目标对象并创建新的代理对象的过程。<br>＊ 织入方式：<br>编译期：切面在目标类被编译的时候织入。AspectJ就是这种方式。<br>类加载期：切面在目标类加载到JVM时被织入。<br>运行期：切面在运行的某个时期被织入。AOP为目标对象动态创建一个代理对象，Spring AOP以这种方式织入切面。</p>
-<h3 id="编写切点"><a href="#编写切点" class="headerlink" title="编写切点"></a>编写切点</h3><p>定义一个接口，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">public interface Performance &#123;</div><div class="line">	public void perform();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>定义切面：<br>// execution(<em> concert.Performance.perform(..))&amp;&amp; within(concert.</em>)<br>//其中execution表示方法concert.Performance.perform执行时触发，＊表示不关心返回值，..表示任意入参都可以。within限制制定包。<br>//execution(<em> concert.Performance.perform(..))and bean(‘woodstock’)<br>//限定切点只匹配bean的ID为woodstock的方法<br>//execution(</em> concert.Performance.perform(..))and bean(‘woodstock’)<br>//限定切点只匹配bean的ID不为woodstock的方法<br>具体示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.AfterThrowing;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">//表示切面</div><div class="line">@Aspect</div><div class="line">public class Audience &#123;</div><div class="line">	//执行前</div><div class="line">	@Before(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void silenceCellPhone() &#123;</div><div class="line">		System.out.println(&quot;silencing Cell Phones&quot;);</div><div class="line">	&#125;</div><div class="line">	//执行前</div><div class="line">	@Before(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void takeSeats() &#123;</div><div class="line">		System.out.println(&quot;Taking seats&quot;);</div><div class="line">	&#125;</div><div class="line">	//返回成功后</div><div class="line">	@AfterReturning(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void applause() &#123;</div><div class="line">		System.out.println(&quot;ha ha ha&quot;);</div><div class="line">	&#125;</div><div class="line">	//返回异常后</div><div class="line">	@AfterThrowing(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void demandRefund() &#123;</div><div class="line">		System.out.println(&quot;Demanding refund&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>另外两种：@After，返回或抛出异常调用；@Around，将目标方法包装起来。<br>@PointCut定义可重用的切点,和上面比简化表达式重复书写。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">package concert;</div><div class="line"></div><div class="line">import org.aspectj.lang.annotation.AfterReturning;</div><div class="line">import org.aspectj.lang.annotation.AfterThrowing;</div><div class="line">import org.aspectj.lang.annotation.Aspect;</div><div class="line">import org.aspectj.lang.annotation.Before;</div><div class="line">import org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line">@Aspect</div><div class="line">public class Audience &#123;</div><div class="line">	@Pointcut(&quot;execution(* concert.Performance.perform(..))&amp;&amp; within(concert.*)&quot;)</div><div class="line">	public void performance()&#123;&#125;</div><div class="line"></div><div class="line">	@Before(&quot;performance()&quot;)</div><div class="line">	public void silenceCellPhone() &#123;</div><div class="line">		System.out.println(&quot;silencing Cell Phones&quot;);</div><div class="line">	&#125;</div><div class="line">	@Before(&quot;performance()&quot;)</div><div class="line">	public void takeSeats() &#123;</div><div class="line">		System.out.println(&quot;Taking seats&quot;);</div><div class="line">	&#125;</div><div class="line">	@AfterReturning(&quot;performance()&quot;)</div><div class="line">	public void applause() &#123;</div><div class="line">		System.out.println(&quot;ha ha ha&quot;);</div><div class="line">	&#125;</div><div class="line">	@AfterThrowing(&quot;performance()&quot;)</div><div class="line">	public void demandRefund() &#123;</div><div class="line">		System.out.println(&quot;Demanding refund&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="XML中配置举例"><a href="#XML中配置举例" class="headerlink" title="XML中配置举例"></a>XML中配置举例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd&quot;&gt;</div><div class="line">    &lt;!-- 目标对象 --&gt;</div><div class="line">    &lt;bean id=&quot;knight&quot; class=&quot;com.cjh.aop2.BraveKnight&quot;/&gt;</div><div class="line">    &lt;!-- 切面bean --&gt;</div><div class="line">    &lt;bean id=&quot;mistrel&quot; class=&quot;com.cjh.aop2.Minstrel&quot;/&gt;</div><div class="line">    &lt;!-- 面向切面编程 --&gt;</div><div class="line">    &lt;aop:config&gt;</div><div class="line">        &lt;aop:aspect ref=&quot;mistrel&quot;&gt;</div><div class="line">            &lt;!-- 定义切点 --&gt;</div><div class="line">            &lt;aop:pointcut expression=&quot;execution(* *.saying(..))&quot; id=&quot;embark&quot;/&gt;</div><div class="line">            &lt;!-- 声明前置通知 (在切点方法被执行前调用)--&gt;</div><div class="line">            &lt;aop:before method=&quot;beforSay&quot; pointcut-ref=&quot;embark&quot;/&gt;</div><div class="line">            &lt;!-- 声明后置通知 (在切点方法被执行后调用)--&gt;</div><div class="line">            &lt;aop:after method=&quot;afterSay&quot; pointcut-ref=&quot;embark&quot;/&gt;</div><div class="line">        &lt;/aop:aspect&gt;</div><div class="line">    &lt;/aop:config&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/22/2018032201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018032101" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/21/2018032101/">类图</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/21/2018032101/" class="archive-article-date">
-  	<time datetime="2018-03-21T13:46:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近公司强调程序设计，回顾下大学时的东西，方便今后工作开展，今天先学习类图设计。</p>
-<h3 id="类图的作用和目的"><a href="#类图的作用和目的" class="headerlink" title="类图的作用和目的"></a>类图的作用和目的</h3><p>类图一般在详细设计过程中出现，主要用来描述系统中各个模块中类之间的关系，包括类或者类与接口的继承关系，类之间的依赖、聚合等关系。它还描述每一个类的详细信息，包括变量，和方法。<br>通过类图，就能实际的把系统中的各个类，即对象描述清楚，下一步就是按照这个详细的设计编码了。</p>
-<h3 id="如何画图"><a href="#如何画图" class="headerlink" title="如何画图"></a>如何画图</h3><h5 id="类和接口"><a href="#类和接口" class="headerlink" title="类和接口"></a>类和接口</h5><p><img src="http://img.blog.csdn.net/20160317160653320" alt="Image text"><br>首先，看动物矩形框，它代表一个类。<br>类图分三层：<br>1:第一层表示类的名称，如果是抽象类，则用斜体<br>2:第二层表示类的特性，通常是字段和属性<br>3:第三层表示类的操作，通常是方法和行为。<br>＋表示public<br>－表示private<br>＃表示protected</p>
-<p>接口（图中是飞翔）分两层<br>第一行是接口名称，第二行表示接口方法</p>
-<h5 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h5><p>1:继承关系，鸟基础动物，用空心三角形＋实线来表示<br>2:接口实现关系，大雁实现飞翔接口，用空心三角形＋虚线表示<br>3:聚合关系（Aggregation）大雁和雁群，用空心的菱形（雁群）＋实线箭头（大雁）来表示，弱拥有关系<br>4:组合（Composition）关系一种强的拥有关系，体现了严格的部分和整体的关系，部分和整体的生命周期一样。在这里鸟和其翅膀就是组合关系，因为它们是部分和整体的关系，并且翅膀和鸟的生命周期是相同的。组合关系用实习的菱形（鸟） + 实线箭头（翅膀）来表示<br>5:依赖关系，动物的几大特征，比如有新陈代谢，能繁殖。而动物要有生命力，需要氧气、水以及食物等。也就是说，动物依赖于氧气和水。他们之间是依赖关系（Dependency），用虚线箭头来表示</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">UML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/21/2018032101/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018030801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/2018030801/">ORACLE开发－－字段定义问题</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/08/2018030801/" class="archive-article-date">
-  	<time datetime="2018-03-08T04:11:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="ORACLE开发问题"><a href="#ORACLE开发问题" class="headerlink" title="ORACLE开发问题"></a>ORACLE开发问题</h3><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>存过开发过程中，声明临时变量时，用了Varchar（20）来定义，而表中定义对应字段大小为Varchar（30），以及该字段来源表中大小为Varchar（30），导致临时变量字段对于超过20长度数据无法存放，从而导致报错。</p>
-<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>建议临时变量使用（表名.字段％type）的形式来声明类型，这样在后续表结构字段大小改动的时候，也不需要再改动程序中的临时变量的定义。从而减少出错的概率。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目问题</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/08/2018030801/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1201,11 +1198,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
+                <a href="javascript:void(0)" class="js-tag color3">IT</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">IT</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,11 +1214,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1238,6 +1235,18 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">信息安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -159,6 +159,390 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018072901" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/29/2018072901/">源码学习-Vector</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/29/2018072901/" class="archive-article-date">
+  	<time datetime="2018-07-29T14:25:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="类说明"><a href="#类说明" class="headerlink" title="类说明"></a>类说明</h3><p>Vector类实现了一个可扩展的数组。与数组一样，它包含可以使用整数索引进行访问的组件。然后，Vector创建后，其大小可以可以根据增加（移除）操作来增长（收缩）。<br>每个Vector试图最优化管理存储空间和空间增加。Vector的空间至少和Vector一样大，它通常会变大，当组件被加到Vector中。在插入大量组件前，程序可以增加Vector容量空间。它可以减少重新分配的增量。<br>Vector的iterator和listIterator方法返回的iterators是fail－fast：在创建迭代器之后，除非通过迭代器自身的remove或add方法从结构上对列表进行修改，否则在任何时间以任何方式对列表进行修改，迭代器都会抛出ConcurrentModificationException。因此，面对并发的修改，迭代器很快就会完全失败，而不是冒着在将来某个不确定时间发生任意不确定行为的风险。<br>通过elements方法返回的Enumerations并不是fail－fast的：在enumeration创建后，如果Vector经过<br>结构性修改，枚举的结果将是未定义的。<br>迭代器的快速失败行为无法得到保证，因为一般来说，不可能对是否出现不同步并发修改做出任何硬性保证。快速失败迭代器会尽最大努力抛出ConcurrentModificationException。因此，为提高这类迭代器的正确性而编写一个依赖于此异常的程序是错误的做法：迭代器的快速失败行为应该仅用于检测bug。<br>该类是Java集合框架的成员。Vector是线程安全的，如果不需要线程安全，推荐使用ArrayList。</p>
+<h3 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h3><p>Vector的定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public class Vector&lt;E&gt;</div><div class="line">    extends AbstractList&lt;E&gt;</div><div class="line">    implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable</div></pre></td></tr></table></figure></p>
+<p>上述定义表明：<br>1.Vector支持范型；<br>2.继承了AbstractList类，该类提供了List接口中核心方法的实现；<br>3.实现了List、RandomAccess、 Cloneable和java.io.Serializable接口，表明其支持快速（通常是固定时间）随机访问，可以调用clone()方法来返回实例的field-for-field拷贝，有序列化功能。</p>
+<h4 id="成员变量："><a href="#成员变量：" class="headerlink" title="成员变量："></a>成员变量：</h4><p>Object[] elementData list底层实现的数据结构；<br>int elementCount有效元素的个数；<br>int capacityIncrement定义增长量</p>
+<h4 id="构造函数："><a href="#构造函数：" class="headerlink" title="构造函数："></a>构造函数：</h4><p>public Vector(int initialCapacity, int capacityIncrement) ：构造一个空的Vector，数组大小以及下次容量增长量由入参指定。<br> public Vector(int initialCapacity)构造一个空的Vector，数组大小入参指定，下次增长量为0；<br>public Vector()构造一个空的Vector，数组大小为10，下次增长量为0；<br> public Vector(Collection&lt;? extends E&gt; c) 通过一个传入的collection构造一个Vector</p>
+<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><p>Vector基本每个方法都增加了Synchronized进行修饰；<br>如int size()；<br>boolean isEmpty()；<br>void addElement(E obj)；<br>boolean removeElement(Object obj) ；</p>
+<h3 id="和ArrayList的区别"><a href="#和ArrayList的区别" class="headerlink" title="和ArrayList的区别"></a>和ArrayList的区别</h3><p>（1）：Vector是线程安全的，源码中有很多的synchronized可以看出，而ArrayList不是。导致Vector效率无法和ArrayList相比；<br>（2）：ArrayList和Vector都采用线性连续存储空间，当存储空间不足的时候，ArrayList默认增加为原来的50%，Vector默认增加为原来的一倍；<br>ArrayList增长逻辑如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">private int newCapacity(int minCapacity) &#123;</div><div class="line">       // overflow-conscious code</div><div class="line">       int oldCapacity = elementData.length;//oldCapacity设置为现在数组大小</div><div class="line">       int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);//newCapacity设置为现在数组大小1.5倍</div><div class="line">       if (newCapacity - minCapacity &lt;= 0) &#123;//当newCapacity小于要求的最小容量空间，返回要求大小</div><div class="line">           if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA)//当数组为初始化状态</div><div class="line">               return Math.max(DEFAULT_CAPACITY, minCapacity);//新数组大小取（10，要求大小）两者大值</div><div class="line">           if (minCapacity &lt; 0) // overflow//当要求大小&lt;0则抛异常OutOfMemoryError</div><div class="line">               throw new OutOfMemoryError();</div><div class="line">           return minCapacity;</div><div class="line">       &#125;</div><div class="line">       return (newCapacity - MAX_ARRAY_SIZE &lt;= 0)//当newCapacity大于等于要求的最小容量空间，则和MAX_ARRAY_SIZE比较</div><div class="line">           ? newCapacity        //如果newCapacity小，则返回newCapacity</div><div class="line">           : hugeCapacity(minCapacity);//如果newCapacity大，则返回Integer.MAX_VALUE</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   private static int hugeCapacity(int minCapacity) &#123;</div><div class="line">       if (minCapacity &lt; 0) // overflow</div><div class="line">           throw new OutOfMemoryError();</div><div class="line">       return (minCapacity &gt; MAX_ARRAY_SIZE)</div><div class="line">           ? Integer.MAX_VALUE</div><div class="line">           : MAX_ARRAY_SIZE;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>ArrayList增长逻辑如下：主要区别在int newCapacity = oldCapacity + ((capacityIncrement &gt; 0) ?capacityIncrement : oldCapacity);如果未指定每次增长大小，则每次扩容1倍。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">private int newCapacity(int minCapacity) &#123;</div><div class="line">       // overflow-conscious code</div><div class="line">       int oldCapacity = elementData.length;</div><div class="line">       int newCapacity = oldCapacity + ((capacityIncrement &gt; 0) ?</div><div class="line">                                        capacityIncrement : oldCapacity);</div><div class="line">       if (newCapacity - minCapacity &lt;= 0) &#123;</div><div class="line">           if (minCapacity &lt; 0) // overflow</div><div class="line">               throw new OutOfMemoryError();</div><div class="line">           return minCapacity;</div><div class="line">       &#125;</div><div class="line">       return (newCapacity - MAX_ARRAY_SIZE &lt;= 0)</div><div class="line">           ? newCapacity</div><div class="line">           : hugeCapacity(minCapacity);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   private static int hugeCapacity(int minCapacity) &#123;</div><div class="line">       if (minCapacity &lt; 0) // overflow</div><div class="line">           throw new OutOfMemoryError();</div><div class="line">       return (minCapacity &gt; MAX_ARRAY_SIZE) ?</div><div class="line">           Integer.MAX_VALUE :</div><div class="line">           MAX_ARRAY_SIZE;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>（3）：Vector可以设置capacityIncrement，而ArrayList不可以，从字面理解就是capacity容量，Increment增加，容量增长的参数。    </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">源码学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/29/2018072901/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018072801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/28/2018072801/">源码学习-LinkedList</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/28/2018072801/" class="archive-article-date">
+  	<time datetime="2018-07-28T07:17:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="类说明"><a href="#类说明" class="headerlink" title="类说明"></a>类说明</h3><p>双向链表实现了“List”和“Deque”接口，实现了所有“List”操作，允许存储所有元素（包括null）。<br>对于双向链表，所有预期操作都可以执行。索引到列表中的操作可以从开始点或者结束点方向列表，以更接近指定的索引。<br>注意，这个实现不是同步的。如果多线程同时访问这个链表，并且至少有一个线程在结构上修改列表，则它必须在外部保持同步。结构性修改是指增加或者删除一个或者多个元素的任何操作；仅仅设置元素并不是结构修改。<br>List list = Collections.synchronizedList(new LinkedList(…));可以通过这种方法来保持同步，但是最好在创建初期完成，以防止意外的非同步访问列表。<br>这个类的“iterator”和“listIterator”方法返回的迭代器时fail－fast：在创建迭代器之后，除非通过迭代器自身的remove或add方法从结构上对列表进行修改，否则在任何时间以任何方式对列表进行修改，迭代器都会抛出ConcurrentModificationException。因此，面对并发的修改，迭代器很快就会完全失败，而不是冒着在将来某个不确定时间发生任意不确定行为的风险。<br>迭代器的快速失败行为无法得到保证，因为一般来说，不可能对是否出现不同步并发修改做出任何硬性保证。快速失败迭代器会尽最大努力抛出ConcurrentModificationException。因此，为提高这类迭代器的正确性而编写一个依赖于此异常的程序是错误的做法：迭代器的快速失败行为应该仅用于检测bug。<br>该类是Java集合框架的成员。</p>
+<h3 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h3><p>LinkedList的定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public class LinkedList&lt;E&gt;</div><div class="line">    extends AbstractSequentialList&lt;E&gt;</div><div class="line">    implements List&lt;E&gt;, Deque&lt;E&gt;, Cloneable, java.io.Serializable</div></pre></td></tr></table></figure></p>
+<p>上述定义表明：</p>
+<ol>
+<li>LinkedList支持范型；<br>2.继承了AbstractSequentialList类，该类提供了List接口中核心方法的实现；<br>3.实现了List、RandomAccess、 Cloneable和java.io.Serializable接口，表明其支持快速（通常是固定时间）随机访问，可以调用clone()方法来返回实例的field-for-field拷贝，有序列化功能。<h4 id="成员变量："><a href="#成员变量：" class="headerlink" title="成员变量："></a>成员变量：</h4>int size，list的大小；<br>Node<e> first指向第一个节点到指针；<br>Node<e> last指向最后一个节点到指针；<h4 id="构造函数："><a href="#构造函数：" class="headerlink" title="构造函数："></a>构造函数：</h4>public LinkedList() 构造一个空列表<br>public LinkedList(Collection&lt;? extends E&gt; c)通过一个collection构造一个LinkedList<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4>因为是双向队列，所以有以下方法：<br>E getFirst() 获得第一个节点；<br>E getLast()获得最后一个节点<br>E removeFirst()移除第一个节点<br>E removeLast()移除最后一个节点<br>void push(E e)增加一个元素到第一个节点</e></e></li>
+</ol>
+<h4 id="和ArrayList相同点"><a href="#和ArrayList相同点" class="headerlink" title="和ArrayList相同点"></a>和ArrayList相同点</h4><p>1:允许相同元素<br>2:允许存储null<br>3:都是非线程安全<br>4:实现了List接口</p>
+<h4 id="和ArrayList不同点"><a href="#和ArrayList不同点" class="headerlink" title="和ArrayList不同点"></a>和ArrayList不同点</h4><p>1:测试在末尾➕数据：当50w条数据时，ArrayList（20ms）比LinkedList（156ms）快<br>当5w条数据时，ArrayList（6ms）比LinkedList（5ms）快<br>a:只要ArrayList的当前容量足够大，add()操作的效率非常高的。只有当ArrayList对容量的需求超出当前数组大小时，才需要进行扩容。扩容的过程中，会进行大量的数组复制操作。而数组复制时，最终将调用System.arraycopy()方法，因此add()操作的效率还是相当高的。<br>b:LinkedList由于使用了链表的结构，因此不需要维护容量的大小。从这点上说，它比ArrayList有一定的性能优势，然而，每次的元素增加都需要新建一个Entry对象，并进行更多的赋值操作。在频繁的系统调用中，对性能会产生一定的影响。<br>2:contains遍历查询的时候<br>当500w条数据时，ArrayList（25ms）比LinkedList（34ms）快<br>3:当插入第一个位置数据时，<br>当5w条数据时，ArrayList（204ms）比LinkedList（7ms）慢很多<br>4:当队列前端加入数据时，在第三个位置加入数据：<br>当5w条数据时，ArrayList（199ms）比LinkedList（11ms）慢很多<br>5:当队列尾部加入数据时，在倒数第三个位置加入数据：<br>当5w条数据时，ArrayList（12ms）比LinkedList（10ms）慢很多<br>当50w条数据时，ArrayList（45ms）比LinkedList（205ms）快很多<br>综上所述：<br>ArrayList遍历速度更快，但是当在前端进行数据增加或者移除时，速度较慢。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">源码学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/28/2018072801/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018072701" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/27/2018072701/">信息安全</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/27/2018072701/" class="archive-article-date">
+  	<time datetime="2018-07-27T00:54:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在信息化系统建设过程中，除了满足业务系统要求，信息安全方面的工作也是十分重要的。<br>信息安全涉及以下方面：<br>密码技术<br>身份鉴别<br>访问控制<br>安全审计<br>数据安全性<br>交易安全性<br>移动客户端安全<br>资源控制</p>
+<h3 id="密码技术"><a href="#密码技术" class="headerlink" title="密码技术"></a>密码技术</h3><p>密码算法－－－》用于加密和解密的数学函数。常用的密码算法包括：对称密码算法，非对称密码算法，散列算法。主要用于保证信息的安全，提供身份鉴别、保密性、完整性、抗抵赖等服务。</p>
+<h4 id="对称密码算法"><a href="#对称密码算法" class="headerlink" title="对称密码算法"></a>对称密码算法</h4><p>加密和解密采用相同的密钥。<br>国密局公布的SM1、SM4算法（128位以上）；<br>3DES（128位，192位（建议使用））<br>AES（128位）</p>
+<h4 id="非对称密码算法"><a href="#非对称密码算法" class="headerlink" title="非对称密码算法"></a>非对称密码算法</h4><p>又称公开密钥密码算法，加密和解密相对独立，加密和解密采用不同的密钥。在实现数据加密功能时，加密密钥可以公开，称为公开密钥（公钥），解密密钥必须保密，称为私钥。<br>国密局公布SM2算法，128位<br>RSA，1024位，新增的建议在2048位<br>ECC，256位</p>
+<h4 id="散列算法"><a href="#散列算法" class="headerlink" title="散列算法"></a>散列算法</h4><p>也称单向散列函数、杂凑函数，哈希函数，HASH算法或者消息摘要算法，它通过单向函数应用于数据，将任何长度的一块数据转为一个定长的、不可逆转的数据。<br>国密局公布的SM算法，不涉及密钥<br>SHA－1，SHA224，SHA－256，SHA－384，SHA－512，建议使用SHA256含以上。</p>
+<p>加密技术－－－－－使用算法类型－－－－－－－－－－－－－－－功能说明<br>HTTPS／SSL－－－对称密码算法，非对称密码算法，散列算法－－建立端到端的安全通道，保证数据的机密性和完整性<br>数字签名－－－－－非对称密码算法，散列算法－－－－－－－－－保证信息传输的完整性、发送者的身份鉴别，防止交易中的抵赖发生。<br>消息鉴别码MAC－－对称密码算法，散列算法－－－－－－－－－－保证数据完整性<br>数字信封－－－－－对称密码算法，非对称密码算法，散列算法－－保证数据的机密性和完整性</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">信息安全</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/27/2018072701/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+    <article id="post-2018072501" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/25/2018072501/">源码学习-ArrayList</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/25/2018072501/" class="archive-article-date">
+  	<time datetime="2018-07-25T04:41:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="类说明"><a href="#类说明" class="headerlink" title="类说明"></a>类说明</h3><p>ArrayList是可变数组，实现了“List”接口，实现了“List”所有可选操作，允许保存所有元素，包括null。另外实现了“List”接口，这个类提供方法来操作数组（内部涌来存储数据）大小。这个类和“Vector”类似，但是它时不是线程安全的。<br>以下{@code size}, {@code isEmpty}, {@code get}, {@code set}, {@code iterator}, and {@code listIterator}时间复杂度为O（1）。{@code add} 时间复杂度为O（n）；比{@code LinkedList}的实现更快。<br>每个ArrayList的实例有一个容量空间。这个容量空间上数组的大小，用来存储list的元素。至少和list一样大。随着元素被加入到ArrayList，容量空间被自动增加。增长细节未指定但是不是简单的O（N）时间复杂度。<br>在增加大量数据之前，一个程序可以使用{@code ensureCapacity}增加{@code ArrayList}实例的容量空间。这个操作可以减少重新分配次数。<br>注意到这个实现是非同步的。如果有多线程同时访问{@code ArrayList}，至少其中一个线程修改了list的结构，那么必须在外部保持同步才能保证正确性。一个结构性修改指的是任何增加或者删除一个或者多个元素，明确地修改了底层数据结构；修改一个元素的值不是结构性修改。这一般通过对自然封装该列表的对象进行同步操作来完成。<br>如果不存在这样的对象，则应该使用Collections.synchronizedList方法将该列表“包装”起来。这最好在创建时完成，以防止意外对列表进行不同步的访问：<br>List list = Collections.synchronizedList(new ArrayList(…));<br>通过{@link #iterator() iterator}以及{@link #listIterator(int) listIterator}方法返回的iterators是fail－test机制的。在创建迭代器之后，除非通过迭代器自身的remove或add方法从结构上对列表进行修改，否则在任何时间以任何方式对列表进行修改，迭代器都会抛出ConcurrentModificationException。因此，面对并发的修改，迭代器很快就会完全失败，而不是冒着在将来某个不确定时间发生任意不确定行为的风险。<br>迭代器的快速失败行为无法得到保证，因为一般来说，不可能对是否出现不同步并发修改做出任何硬性保证。快速失败迭代器会尽最大努力抛出ConcurrentModificationException。因此，为提高这类迭代器的正确性而编写一个依赖于此异常的程序是错误的做法：迭代器的快速失败行为应该仅用于检测bug。<br>该类是Java集合框架的成员。</p>
+<h3 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h3><p>ArrayList定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;</div><div class="line">        implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable</div></pre></td></tr></table></figure></p>
+<p>上述定义表明：</p>
+<ol>
+<li>ArrayList支持范型；<br>2.继承了AbstractList类，该类提供了List接口中核心方法的实现；<br>3.实现了List、RandomAccess、 Cloneable和java.io.Serializable接口，表明其支持快速（通常是固定时间）随机访问，可以调用clone()方法来返回实例的field-for-field拷贝，有序列化功能。</li>
+</ol>
+<p>成员变量：<br>DEFAULT_CAPACITY缺省初始化容量大小<br>EMPTY_ELEMENTDATA空数组实例<br>DEFAULTCAPACITY_EMPTY_ELEMENTDATA缺省容量大小的空数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">transient Object[] elementData;</div></pre></td></tr></table></figure></p>
+<p>elementData底层数组结构，用transient修饰，<br>size数据大小<br>构造函数：<br>1:指定数组大小构造public ArrayList(int initialCapacity)｛｝<br>2:缺省构造 public ArrayList()｛｝<br>3:通过指定其他集合初始化public ArrayList(Collection&lt;? extends E&gt; c)｛｝<br>选取其中几个方法：<br>1:返回迭代器，其中Itr内部私有类，其实现了Iterator接口,具有hasNext(),next(),remove(),checkForComodification()等方法，checkForComodification是检查ArrayList是否发生结构性变化的方法，如果变化则抛异常，而next（），remove（）方法中都用到了这个方法，因此具备了fail－test机制。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public Iterator&lt;E&gt; iterator() &#123;</div><div class="line">        return new Itr();</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>2:ensureCapacity(int minCapacity)，该方法用来增加ArrayList实例的容量空间。保证容量空间至少大于等于入参minCapacity。<br>如果（minCapacity大于目前数组大小&amp;&amp;!(数组为初始化缺省大小且minCapacity小于10）<br>则修改标识值加一，并增加数组大小（一般为数组原始大小的1.5倍或者指定的入参大小）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public void ensureCapacity(int minCapacity) &#123;</div><div class="line">        if (minCapacity &gt; elementData.length</div><div class="line">            &amp;&amp; !(elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA</div><div class="line">                 &amp;&amp; minCapacity &lt;= DEFAULT_CAPACITY)) &#123;</div><div class="line">            modCount++;</div><div class="line">            grow(minCapacity);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>3: indexOf()方法比较简单，就是返回第一个等于入参的数组坐标，这里主要提到是因为，这段代码提醒我们，一定要注意入参到各种可能情况（判断是否等于null，因为null不能使用equals函数），保证我们的方法到鲁棒性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public int indexOf(Object o) &#123;</div><div class="line">        if (o == null) &#123;</div><div class="line">            for (int i = 0; i &lt; size; i++)</div><div class="line">                if (elementData[i]==null)</div><div class="line">                    return i;</div><div class="line">        &#125; else &#123;</div><div class="line">            for (int i = 0; i &lt; size; i++)</div><div class="line">                if (o.equals(elementData[i]))</div><div class="line">                    return i;</div><div class="line">        &#125;</div><div class="line">        return -1;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>4:public Object clone() 是个浅拷贝；<br>当对象中含有可变的引用类型属性时，在复制得到的新对象对该引用类型属性内容进行修改，原始对象响应的属性内容也会发生变化，这就是”浅拷贝”的现象。</p>
+<p>tip 1:<br>“快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">源码学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/25/2018072501/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018072301" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -695,373 +1079,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-20180626" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/26/20180626/">并发编程学习一</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/26/20180626/" class="archive-article-date">
-  	<time datetime="2018-06-26T11:00:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="为什么要并发编程"><a href="#为什么要并发编程" class="headerlink" title="为什么要并发编程"></a>为什么要并发编程</h3><p>1:资源利用，在程序等待外部操作的时候，可以执行其他的程序，促进程序的高效。<br>2:公平，用户各程序可以以平等的优先级共享资源。<br>3:清晰，不同任务通过单独任务执行，更易理解。</p>
-<h3 id="并发的优势-amp-劣势"><a href="#并发的优势-amp-劣势" class="headerlink" title="并发的优势&amp;劣势"></a>并发的优势&amp;劣势</h3><p>线程间可以共享数据，但是一个线程修改其他线程正在使用的数据，会导致糟糕的结果。</p>
-<h3 id="多线程的优点"><a href="#多线程的优点" class="headerlink" title="多线程的优点"></a>多线程的优点</h3><p>1:当I/O堵塞时，多线程可以更高效地利用CPU资源。<br>2:各种任务单独作为一个线程开发，逻辑清晰简单，更容易维护。</p>
-<h3 id="并发管理"><a href="#并发管理" class="headerlink" title="并发管理"></a>并发管理</h3><p>无论何时，只要有多于一个的线程访问给定的状态变量，而且其中某个线程会写入该变量，此时必须使用同步来协调线程对该变量的访问。</p>
-<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>当多个线程访问同一个类时，如果不用考虑这些线程在运行时环境下的调度和交替执行，并且不需要额外的同步以及在调用方代码不必作其他的协调，这个类点行为仍然是正确的。那就称为线程安全的。</p>
-<p>1:无状态对象永远都是线程安全的。</p>
-<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>1:＋＋count 非原子操作，是读改写三个离散操作。<br>2:原子操作，要么都执行，要么都不执行。</p>
-<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p>Java 提供了强制原子性的内置锁机制：synchronized块。内部锁扮演了互斥锁的角色。<br>synchronized块的同步机制简化了代码逻辑，但是增加了性能问题。</p>
-<h3 id="重进入"><a href="#重进入" class="headerlink" title="重进入"></a>重进入</h3><p>当一个线程请求其他线程已经占有的锁事，请求线程将被阻塞，然而内部锁事可以重进入的。线程在试图获得它自己占有的锁时，请求会成功。重进入意味着请求是基于per－thread，不是基于per－invocation。重进入的实现是通过为每个锁关联一个请求计数和一个占有它的线程，当计数为0时，认为锁未被占有。线程请求一个未被占有的锁时，JVM将纪录锁的占有者，并将请求计数置为1.如果同一线程再次请求这个锁时，计数将递增。每次占用线程退出同步块，计数器值将递减。直到计数器达到0时。锁被释放。</p>
-<h3 id="用锁保护状态"><a href="#用锁保护状态" class="headerlink" title="用锁保护状态"></a>用锁保护状态</h3><p>复核操作在完整运行期间需要占有锁，以确保其行为为原子的。</p>
-<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>谨慎控制synchronized块的大小，可通过缩小快的大小，提高性能，但是同时需要确保原子操作在同一个synchronized块中。有些耗时的计算或操作，比如网络或控制台I/O，难以快速完成，执行这些操作期间不要占有锁。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/26/20180626/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018041801" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/18/2018041801/">Oracle性能问题</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/18/2018041801/" class="archive-article-date">
-  	<time datetime="2018-04-18T11:49:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h3><p>前台查询某机构的当日成交明细，查询时效达到20多秒。查询交易记录表A有九万多条数据，交易日切B表里有40多条记录，现在是根据A表里的机构代码查询B表的当日日期，并查询出A表里的交易日期等于B表当日日期。</p>
-<pre><code>select * from A where 
-A.tradeDate=(select B.workDate from B where B.branchid=A.branchid )
-and A.branchid= is_branchid;
-</code></pre><h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>根据以上代码分析，在数据量大时，子查询的性能会受到比较大的影响，其实会执行9万多次的查询A机构的当日日期。</p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>其实这个功能是查询某个机构点当日成交明细，在写查询语句之前，先查询该机构的当日日期，然后在去交易表里面查询当日的交易记录。修改如下：</p>
-<pre><code>select B.workDate into v_workDate from B where B.branchid= is_branchid;
-select * from A where 
-A.tradeDate= v_workDate 
-and A.branchid= is_branchid;
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ORACLE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/18/2018041801/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018041601" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/16/2018041601/">注解学习</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/16/2018041601/" class="archive-article-date">
-  	<time datetime="2018-04-16T11:15:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="注解定义"><a href="#注解定义" class="headerlink" title="注解定义"></a>注解定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">modifiers @interface AnnotationName&#123;</div><div class="line">    	element declaration1</div><div class="line">	element declaration2</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>举例来说：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public @interface BugReport</div><div class="line">&#123;</div><div class="line">	String assignedTo() default “[none]”;</div><div class="line">	int severity=0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>可以按以下格式使用注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@BugReport（assignedTo＝“Harry”，severity＝10）</div></pre></td></tr></table></figure></p>
-<p>如果元素名字是value，只能按照下面形式书写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public @interface JasonFiled&#123;</div><div class="line">	String value();</div><div class="line">&#125;</div><div class="line"></div><div class="line">@JasonFiled(“Name”)</div></pre></td></tr></table></figure></p>
-<p>所有注解接口隐式扩展java.lang.annotation.Annotation接口</p>
-<h3 id="标准注解"><a href="#标准注解" class="headerlink" title="标准注解"></a>标准注解</h3><p>@Deprecated注解，可以添加到任何不再鼓励使用的项上；如果使用了一个过时的项，编译器会报警。<br>@SuppressWarnings注解会告知编译器阻止特殊类型的警告信息。例如@SuppressWarning（”unchecked”）.<br>@Override 这种注解只能应用到方法上，编译器会阻止具有这种注解的方法来覆盖一个超类的方法。<br>@PostConstruct标记了这些注解的方法，在构建之后被调用<br>@PreDestroy表姐了这个注解点方法，在移除之前被调用。<br>@Resource注解用于资源注入。<br>@Target，元注解，用于一个注解，限制该注解可以用到哪些项上。<br>@Retention，元注解，用于指定一个注解应该保留多长时间，默认值为RetentionPolicy.CLASS（类文件中的注解，但是虚拟机不需要将它们载入）。其他如RetentionPolicy.SOURCE（不包括在类文件中的注解），RetentionPolicy.RUNTIME（类文件中的注解，由虚拟机载入，通过反射API可获得它们。）<br>@Documented，元注解，为像Javadoc这样的文档工具提供了一些提示。<br>@Inherited 允许子类继承父类中的注解。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/16/2018041601/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
-    <article id="post-2018041302" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/13/2018041302/">如何考察一个人java技术功底</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/13/2018041302/" class="archive-article-date">
-  	<time datetime="2018-04-13T11:38:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近单位组织面试外援，百度些内容，作为如何面试的参考</p>
-<h3 id="先让其自我介绍"><a href="#先让其自我介绍" class="headerlink" title="先让其自我介绍"></a>先让其自我介绍</h3><p>关注其表达能力，能否将项目内容讲解清楚，将使用的技术框架讲解清楚，以及个人工作内容责讲解清楚</p>
-<h3 id="关注工作经验的契合度"><a href="#关注工作经验的契合度" class="headerlink" title="关注工作经验的契合度"></a>关注工作经验的契合度</h3><h3 id="关注解决问题的能力"><a href="#关注解决问题的能力" class="headerlink" title="关注解决问题的能力"></a>关注解决问题的能力</h3><p>抛出一个问题，咨询他如何解决。</p>
-<h3 id="一些简单技术（JAVA）问题"><a href="#一些简单技术（JAVA）问题" class="headerlink" title="一些简单技术（JAVA）问题"></a>一些简单技术（JAVA）问题</h3><p>（1）：“==”和equals()之间的区别。<br>值类型（int,char,long,boolean等）都是用==判断相等性。对象引用的话，==判断引用所指的对象是否是同一个。equals是Object的成员函数，有些类会覆盖（override）这个方法，用于判断对象的等价性。例如String类，两个引用所指向的String都是”abc”，但可能出现他们实际对应的对象并不是同一个（和jvm实现方式有关），因此用==判断他们可能不相等，但用equals判断一定是相等的<br>（2）equals()和hashCode()方法被隐式调用时的约定？<br>equals()方法与hashCode()方法的隐式调用时的约定是:<br>1.如果两个对象相等(equals),那么他们必须拥有相同的哈希吗(hashCode)<br>2.即使两个对象拥有相同的hashCode，他们也不一定相等.<br>（3）面向对象的特征<br>封装<br>最常见的是把属性私有化封装在一个类里面，只能通过方法去访问<br>继承<br>子类继承父类，从而继承了父类的方法和属性<br>抽象<br>比如一个英雄类，抽象出了name,hp这些属性，使得开发过程中更加易于理解<br>多态<br>多态分操作符的多态和类的多态。 类的多态指父类引用指向子类对象，并且有继承，有重写。<br>（4）面相对象的设计目标<br>可扩展性Extensibility：有了新的需求，新的性能可以容易添加到系统中，不影响现有的性能，也不会带来新的缺陷。<br>可修改性Flexibility：系统一部分的代码要修改时不会破坏系统的现有结构，也不会影响到其它的部分。<br>可替换性Pluggability：可以将系统中的某些代码替换为相同接口的其它类，不会影响到系统。<br>（5）设计原则<br>单一职责原则<br>开放封闭原则<br>依赖倒置原则－－－－面向接口编程<br>里氏代换原则－－－－子类可替换父类<br>接口隔离原则<br>迪米特法则－－－－－不直接访问的类，不要直接发生相互作用，降低成员到访问权限<br>合成／聚合服用原则－－－尽量使用合成／聚合，尽量不要使用继承。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/13/2018041302/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1161,11 +1178,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
+                <a href="javascript:void(0)" class="js-tag color3">IT</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">IT</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1177,11 +1194,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1198,6 +1215,18 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">信息安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">
