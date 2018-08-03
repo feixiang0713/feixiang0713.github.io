@@ -159,6 +159,106 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018062901" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/29/2018062901/">并发编程学习二</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/29/2018062901/" class="archive-article-date">
+  	<time datetime="2018-06-29T04:44:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="共享对象"><a href="#共享对象" class="headerlink" title="共享对象"></a>共享对象</h3><h4 id="1-可见性"><a href="#1-可见性" class="headerlink" title="1:可见性"></a>1:可见性</h4><p>当存在数据被多线程共享时，进行恰当的同步，可以避免错误结果。</p>
+<h5 id="1-1-过期数据"><a href="#1-1-过期数据" class="headerlink" title="1.1:过期数据"></a>1.1:过期数据</h5><p>通过同步化getter和setter使对应类成为线程安全，如果只是同步setter是不够的，调用get的线程仍然能够看见过期值。</p>
+<h5 id="1-1-2-非原子的64位操作"><a href="#1-1-2-非原子的64位操作" class="headerlink" title="1.1.2 非原子的64位操作"></a>1.1.2 非原子的64位操作</h5><p>当一个线程没有同步的情况下读取变量，它可能得到一个过期值，但是至少是一个真实数据，而不是一个凭空而来的值。这样的安全保证叫做：最低限的安全性（out－of－thin－air safety）<br>最低限的安全性应用于所有的变量，除了一个例外：没有申明为volatile的64位数据变量（double和long）</p>
+<h5 id="1-1-3-锁和可见性"><a href="#1-1-3-锁和可见性" class="headerlink" title="1.1.3 锁和可见性"></a>1.1.3 锁和可见性</h5><p>锁不仅仅是关于同步与互斥的，也是关于内存可见的。为了保证所有线程都能够看到共享的，可变变量的最新值，读取和写入线程必须使用公共的锁进行同步。</p>
+<h5 id="1-1-4-Volatile变量"><a href="#1-1-4-Volatile变量" class="headerlink" title="1.1.4 Volatile变量"></a>1.1.4 Volatile变量</h5><p>同步弱形式：Volatile变量。当一个域声明为Volatile类型后，编译器与运行时回监视这个变量：它是共享的，并且对它的操作不会与其他的内存操作一起被重排序。<br>正确使用volatile变量的方式包括：用于确保它们所引用的对象状态的可见性，或者用于标识重要的生命周期事件（比如初始化或关闭）的发生。<br>满足下面标准可使用volatile变量：<br>1）写入变量不依赖当前变量值，或者只有一个线程修改变量的值。<br>2）变量不需要和其他的状态变量共同参与不变约束。<br>3）访问变量时，没有其他的原因需要加锁。</p>
+<h4 id="2-发布和逸出"><a href="#2-发布和逸出" class="headerlink" title="2:发布和逸出"></a>2:发布和逸出</h4><p>发布：发布一个对象的意思是使它能够被当前范围之外的代码所使用。<br>逸出：一个对象在尚未准备好的情况下就发布了，这种情况叫做逸出。</p>
+<h5 id="2-1-安全构建的实践"><a href="#2-1-安全构建的实践" class="headerlink" title="2.1 安全构建的实践"></a>2.1 安全构建的实践</h5><p>不要让this引用在构造期间逸出<br>如果想要在构造函数中注册监听器或启动线程，你可以用一个私有的构造函数和一个公共的工厂方法。</p>
+<h4 id="3-线程封闭"><a href="#3-线程封闭" class="headerlink" title="3:线程封闭"></a>3:线程封闭</h4><p>线程封闭（Thread confinement）技术是实现线程安全的最简单的方式之一。<br>Swing发展了线程封闭技术。Swing的可视化组件和数据模型对象并不是线程安全的，它们是通过讲它们限制到Swing的事件分发线程中，实现线程安全的。<br>另一个常见的使用线程限制的应用程序是应用池化的JDBC Connection对象。线程总是从池中获得一个Connection对象，并且用它处理一个单一的请求后，就把它归还了。</p>
+<h5 id="3-1-Ad－hoc线程封闭"><a href="#3-1-Ad－hoc线程封闭" class="headerlink" title="3.1 Ad－hoc线程封闭"></a>3.1 Ad－hoc线程封闭</h5><p>Ad－hoc线程封闭是指维护线程限制性的任务全部落在实现上的这种情况。线程限制的一种特例就是将它用于volatile变量。鉴于ad－hoc线程限制固有的易损性，因此应该有节制地使用它，如果可能的话，用一种线程限制的强形式（栈限制或者Thread Local）取代它。</p>
+<h5 id="3-2栈限制"><a href="#3-2栈限制" class="headerlink" title="3.2栈限制"></a>3.2栈限制</h5><p>栈限制是线程限制的一种特例，在栈限制中，只能通过本地变量才可以触及对象。本地变量本身就被限制在执行线程中：它们存在于执行线程栈，其他线程无法访问这个栈。</p>
+<h5 id="3-3-ThreadLocal"><a href="#3-3-ThreadLocal" class="headerlink" title="3.3 ThreadLocal"></a>3.3 ThreadLocal</h5><p>ThreadLocal是一种维护线程限制更加规范的方式，它允许将每个线程与持有数值的对象关联在一起。ThreadLocal提供了get和set访问器，为每个使用它的线程维护一份单独的拷贝。<br>所以get总是返回由当前执行线程通过set设置的最新值。<br>ThreadLocal变量通常用于防止在基于可变的单体（Singleton）或全局变量的设计中，出现共享。比如说，一个单线程化的应用程序可能会维护一个全局的数据库连接，这个Connection<br>在启动时就已经被初始化了。这样就可以避免为每个方法都传递一个Connection。因为JDBC规范并未要求Connection自身一定是线程安全的，因此，如果没有额外的协调时，使用全局变量<br>的多线程应用程序同样不是线程安全的。通过利用ThreadLocal存储JDBC链接，每个线程都会拥有属于自己的Connection。</p>
+<h4 id="4不可变性"><a href="#4不可变性" class="headerlink" title="4不可变性"></a>4不可变性</h4><p>不可变对象天生线程安全。<br>只有满足以下状态，一个对象才是不可变的：<br>1:它的状态不能在创建后再被修改<br>2：所有域都是final类型，<br>3:它被正确创建（创建期间没有this引用的逸出）</p>
+<h5 id="4-1-final域"><a href="#4-1-final域" class="headerlink" title="4.1 final域"></a>4.1 final域</h5><p>将所有对域声明为final型，除非它们是可变的，也是一条良好的实践。</p>
+<h5 id="4-2-volatile发布不可变对象"><a href="#4-2-volatile发布不可变对象" class="headerlink" title="4.2 volatile发布不可变对象"></a>4.2 volatile发布不可变对象</h5><p>通过final和volatile组合一个线程安全，没有看懂，后续有空来研究？？？？？</p>
+<h4 id="5安全发布"><a href="#5安全发布" class="headerlink" title="5安全发布"></a>5安全发布</h4><p>为了安全地发布对象，对象的引用以及对象的状态必须同时对其他线程可见，一个正确创建的对象可以通过下列条件安全地发布：<br>1：通过静态初始化器初始化对象的引用。<br>2:将它的引用存储到volatile域或者AtomicReference<br>3：将它的引用存储到正确创建的对象的final域中。<br>4:将它对引用存储到由锁正确保护的域中。</p>
+<p>线程安全库中的容器提供了如下的线程安全保证：<br>1：置入Hashtable，synchronizedMap，ConcurrentMap中的主键以及键值，会安全地发布到可以从Map获得他们的任意线程中，无论是直接获得还是通过迭代器（iterator）获得<br>2:置入Vector，CopyOnWriteArrayList，CopyOnWriteArraySet，SynchronizedList，synchronizedSet中的元素，会安全地发布到可以从容器中获得它的任意线程中。<br>3:置入BlockingQueue或者ConcurrentLinkedQueue的元素，会安全地发布到可以从队列中获得它的任意线程中。</p>
+<p>在并发程序中，使用和共享对象的一些最有效的策略如下：<br>线程限制：一个线程限制的对象，通过限制在线程中，而被线程独占，且只能被占有它的线程修改。<br>共享只读：一个共享的只读对象，在没有额外同步的情况下，可以被多个线程并发地访问，但是任何线程都不能修改它，共享只读对象包括可变对象与高效不可变对象。<br>共享线程安全：一个线程安全的对象在内部进行同步，所以其他线程无需额外不同，就可以通过公共接口随意地访问它。<br>被守护的（Guarded）：一个被守护的对象只能通过特定的锁来访问，被守护对象包括那些线程安全对象封装的对象，和已知被特定的锁保护起来的已发布对象。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/29/2018062901/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-20180626" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1010,98 +1110,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018040201" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/2018040201/">SpringMVC请求流程说明</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/02/2018040201/" class="archive-article-date">
-  	<time datetime="2018-04-02T04:33:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>下图将展示一个请求过来时，SpringMVC是如何处理请求，内部扭转的工作流程。<br><img src="http://ox67fgze3.bkt.clouddn.com/SpringMVC.png" alt="Image text"></p>
-<p>第一步：<br>用户在浏览器上提交后，请求会带着用户所提交信息来到第一站Spring的DispatcherServlet(前端控制器)。前端控制器是常用的web应用程序模式，在这里一个单实例的Servlet将请求委托给应用程序的其他组件来执行实际的处理。DispatcherServlet的任务是将请求发送给Spring MVC控制器（controller）。<br>第二步：<br> DispatcherServlet会查询一个或多个处理器映射（handler mapping）来确定发送给哪个处理器。<br>第三步：<br>到了控制器，请求会将用户信息提交给控制器处理，并等待反馈。<br>设计良好的控制器，本身不处理工作，将业务逻辑委托给一个或者多个服务对象处理。<br>第四和第五步：<br>将模型数据打包，并且标示出用于渲染输出的视图名，并将以上信息发送给DispatcherServlet。<br>第六步：<br>DispatcherServlet会使用视图解析器（view resolver）来讲逻辑视图名匹配一个特定的视图来实现。<br>第七步：<br>视图将使用模型数据渲染输出，这个输出会通过响应对象传递给客户端。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IT</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/02/2018040201/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1198,11 +1209,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">IT</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
+                <a href="javascript:void(0)" class="js-tag color3">IT</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1214,11 +1225,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1230,11 +1241,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1243,10 +1258,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础规范</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">

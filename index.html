@@ -159,6 +159,102 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018073101" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/31/2018073101/">源码学习-HashMap</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/31/2018073101/" class="archive-article-date">
+  	<time datetime="2018-07-31T12:23:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="类说明"><a href="#类说明" class="headerlink" title="类说明"></a>类说明</h3><p>版本：Jdk1.8<br>简单总结：基于Map接口实现、允许null键/值、非同步、不保证有序(比如插入的顺序)、也不保证顺序不随时间变化。</p>
+<p>HashMap实现了Map接口。这个实现提供了所有Map的操作，key值和value值都允许存放null。HashMap类似于Hashtable，除了非线程安全和允许null值。这个类不能保证map的顺序，特别是它不能保证这个顺序随着时间推移保证常量。<br>假设hash函数将元素合理放到各个桶里面，这个实现对于基本的操作如（get和put）提供了常量时间性能。集合视图上的迭代所需时间与HashMap实例的容量（桶的数量）加上其大小（key的数量）成比例。如果迭代的性能非常重要，则不要设置HashMap的容量不能非常高（或者负载因子不能太低）。<br>HashMap的实例有两个影响性能的参数：初始容量和负载因子。容量是Hash表的桶数，初始容量是Hash表被创建时候的桶数。负载因子是用来测量Hash表是否满的参数，是否需要新增容量的参数。当Hash表中的元素数量超过负载因子和当前容量的乘积时，Hash表需要重新哈希（内部数据结构重建），使得Hahs表大概是桶的数量的两倍。一般情况下，默认的负载因子（0.75）提供了一个良好的时间和空间成本之间的权衡。更高的值减少了空间开销，但增加了查询成本（时间成本）。HashMap大部分的操作都是查询操作。在设置初始容量时，应考虑预期的元素数量和负载因子，以尽量减少重新哈希的次数。如果初始容量》最大元素数量／负载因子，则不会发生重新哈希的操作。<br>如果有许多映射需要存储在HashMap的实例中，那么创建一个足够大的容量空间来存储将会比自动重哈希更高效。注意到许多Key值具有相同的HashCode值，将会降低Hash表的性能。为了改善影响，这个类将会使用健之间的比较排序来断开关系。<br>注意，这个实现是非线程安全的。若果有多个线程同时访问这个HashMap，且至少有一个线程修改了这个Map的结构，则必须通过外部保存一致性。结构性修改指的是增加或者移除元素，但是给一个已存在的key，设置值则不是结构性修改。外部保持同步一般是通过封装该Map的对象进行同步操作来完成。<br>如果不存在这样的对象，则应该使用Collections.synchronizedList方法将该列表“包装”起来。这最好在创建时完成，以防止意外对列表进行不同步的访问：Map m = Collections.synchronizedMap(new HashMap(…));<br>通过这个类的集合查看方法返回的迭代器是快速失败的：在创建迭代器之后，除非通过迭代器自身的remove方法从结构上对列表进行修改，否则在任何时间以任何方式对map进行修改，迭代器都会抛出ConcurrentModificationException。因此，面对并发的修改，迭代器很快就会完全失败，而不是冒着在将来某个不确定时间发生任意不确定行为的风险。<br>迭代器的快速失败行为无法得到保证，因为一般来说，不可能对是否出现不同步并发修改做出任何硬性保证。快速失败迭代器会尽最大努力抛出ConcurrentModificationException。因此，为提高这类迭代器的正确性而编写一个依赖于此异常的程序是错误的做法：迭代器的快速失败行为应该仅用于检测bug。<br>该类是Java集合框架的成员。</p>
+<h3 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h3><p>HashMap定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;</div><div class="line">    implements Map&lt;K,V&gt;, Cloneable, Serializable</div></pre></td></tr></table></figure></p>
+<p>上述定义表明：</p>
+<ol>
+<li>HashMap支持范型；<br>2.继承了AbstractMap类，该类提供了Map接口中核心方法的实现；<br>3.实现了Map、 Cloneable和java.io.Serializable接口，可以调用clone()方法来返回实例的field-for-field拷贝，有序列化功能。<h4 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"> /**</div><div class="line">     * The default initial capacity - MUST be a power of two.</div><div class="line">     */</div><div class="line">    static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16默认初始变量，必须为2的幂</div><div class="line">/**</div><div class="line">     * The maximum capacity, used if a higher value is implicitly specified</div><div class="line">     * by either of the constructors with arguments.</div><div class="line">     * MUST be a power of two &lt;= 1&lt;&lt;30.</div><div class="line">     */</div><div class="line">    static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;//最大容量，2的30幂</div><div class="line"> /**</div><div class="line">     * The load factor used when none specified in constructor.</div><div class="line">     */</div><div class="line">    static final float DEFAULT_LOAD_FACTOR = 0.75f;//初始负载因子，0.75</div><div class="line">/**</div><div class="line">     * The bin count threshold for using a tree rather than list for a</div><div class="line">     * bin.  Bins are converted to trees when adding an element to a</div><div class="line">     * bin with at least this many nodes. The value must be greater</div><div class="line">     * than 2 and should be at least 8 to mesh with assumptions in</div><div class="line">     * tree removal about conversion back to plain bins upon</div><div class="line">     * shrinkage.</div><div class="line">     */</div><div class="line">    static final int TREEIFY_THRESHOLD = 8;//用tree存储而不是用list存储阀值</div><div class="line">/**</div><div class="line">     * The bin count threshold for untreeifying a (split) bin during a</div><div class="line">     * resize operation. Should be less than TREEIFY_THRESHOLD, and at</div><div class="line">     * most 6 to mesh with shrinkage detection under removal.</div><div class="line">     */</div><div class="line">    static final int UNTREEIFY_THRESHOLD = 6;//从tree转为用list存储的阀值</div><div class="line"> /**</div><div class="line">     * The smallest table capacity for which bins may be treeified.</div><div class="line">     * (Otherwise the table is resized if too many nodes in a bin.)</div><div class="line">     * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts</div><div class="line">     * between resizing and treeification thresholds.</div><div class="line">     */</div><div class="line">    static final int MIN_TREEIFY_CAPACITY = 64;//最小容量应该用tree来存储。</div><div class="line">/**</div><div class="line">     * The table, initialized on first use, and resized as</div><div class="line">     * necessary. When allocated, length is always a power of two.</div><div class="line">     * (We also tolerate length zero in some operations to allow</div><div class="line">     * bootstrapping mechanics that are currently not needed.)</div><div class="line">     */</div><div class="line">    transient Node&lt;K,V&gt;[] table;//Node数组，hash表，长度一般是2的幂</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Holds cached entrySet(). Note that AbstractMap fields are used</div><div class="line">     * for keySet() and values().</div><div class="line">     */</div><div class="line">    transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;//存放缓存的entrySet</div><div class="line"></div><div class="line">    /**</div><div class="line">     * The number of key-value mappings contained in this map.</div><div class="line">     */</div><div class="line">    transient int size;//已存元素个数</div><div class="line"></div><div class="line">    /**</div><div class="line">     * The number of times this HashMap has been structurally modified</div><div class="line">     * Structural modifications are those that change the number of mappings in</div><div class="line">     * the HashMap or otherwise modify its internal structure (e.g.,</div><div class="line">     * rehash).  This field is used to make iterators on Collection-views of</div><div class="line">     * the HashMap fail-fast.  (See ConcurrentModificationException).</div><div class="line">     */</div><div class="line">    transient int modCount;//用来计数，记录HashMap结构性修改次数</div><div class="line"></div><div class="line">    /**</div><div class="line">     * The next size value at which to resize (capacity * load factor).</div><div class="line">     *</div><div class="line">     * @serial</div><div class="line">     */</div><div class="line">    // (The javadoc description is true upon serialization.</div><div class="line">    // Additionally, if the table array has not been allocated, this</div><div class="line">    // field holds the initial array capacity, or zero signifying</div><div class="line">    // DEFAULT_INITIAL_CAPACITY.)</div><div class="line">    int threshold;//下次扩容的临界点</div><div class="line"></div><div class="line">    /**</div><div class="line">     * The load factor for the hash table.</div><div class="line">     *</div><div class="line">     * @serial</div><div class="line">     */</div><div class="line">    final float loadFactor;//HashMap的负载因子</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"> /**</div><div class="line">     * 构造一个空的 &#123;@code HashMap&#125; 使用初始的Capacity大小</div><div class="line">     * (16)和 初始负载因子 (0.75).</div><div class="line">     */</div><div class="line">    public HashMap() &#123;</div><div class="line">        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted</div><div class="line">    &#125;</div><div class="line">/**</div><div class="line">     * 构造一个空的 &#123;@code HashMap&#125; 并通过入参指定Capacity大小</div><div class="line">     * 和 负载因子.</div><div class="line">     *</div><div class="line">     * @param  initialCapacity 指定Capacity大小</div><div class="line">     * @param  loadFactor      指定负载因子</div><div class="line">     * @throws IllegalArgumentException if the initial capacity is negative</div><div class="line">     *         or the load factor is nonpositive</div><div class="line">     */</div><div class="line">    public HashMap(int initialCapacity, float loadFactor) &#123;</div><div class="line">        if (initialCapacity &lt; 0)</div><div class="line">            throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</div><div class="line">                                               initialCapacity);</div><div class="line">        if (initialCapacity &gt; MAXIMUM_CAPACITY)</div><div class="line">            initialCapacity = MAXIMUM_CAPACITY;//超过最大容量，使用最大容量</div><div class="line">        if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</div><div class="line">            throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</div><div class="line">                                               loadFactor);</div><div class="line">        this.loadFactor = loadFactor;</div><div class="line">        this.threshold = tableSizeFor(initialCapacity);//返回比比入参大的数（下一个2的幂）</div><div class="line">    &#125;</div><div class="line"> /**</div><div class="line">     * 构造一个空的 &#123;@code HashMap&#125; 并通过入参指定Capacity大小</div><div class="line">     * 负载因子为 (0.75).</div><div class="line">     *</div><div class="line">     * @param  initialCapacity the initial capacity.</div><div class="line">     * @throws IllegalArgumentException if the initial capacity is negative.</div><div class="line">     */</div><div class="line">    public HashMap(int initialCapacity) &#123;</div><div class="line">        this(initialCapacity, DEFAULT_LOAD_FACTOR);</div><div class="line">    &#125;</div><div class="line">/**</div><div class="line">     * 构造一个新的 &#123;@code HashMap&#125;使用入参m，</div><div class="line">     * 这个新的 &#123;@code HashMap&#125; 的</div><div class="line">     * 负载因子为 (0.75) 以及初始大小足以存储</div><div class="line">     * 入参 &#123;@code Map&#125;.</div><div class="line">     *</div><div class="line">     * @param   m the map whose mappings are to be placed in this map</div><div class="line">     * @throws  NullPointerException if the specified map is null</div><div class="line">     */</div><div class="line">    public HashMap(Map&lt;? extends K, ? extends V&gt; m) &#123;</div><div class="line">        this.loadFactor = DEFAULT_LOAD_FACTOR;</div><div class="line">        putMapEntries(m, false);</div><div class="line">    &#125;</div><div class="line">/**</div><div class="line">     * 实现了 Map.putAll 和 Map 构造函数</div><div class="line">     *</div><div class="line">     * 入参map类型m</div><div class="line">     * 在构造函数的时候，入参 evict 为false，其他时候为true</div><div class="line">     */</div><div class="line">    final void putMapEntries(Map&lt;? extends K, ? extends V&gt; m, boolean evict) &#123;</div><div class="line">        int s = m.size();</div><div class="line">        if (s &gt; 0) &#123;</div><div class="line">            if (table == null) &#123; //判断table是否为null，如果是null</div><div class="line">                float ft = ((float)s / loadFactor) + 1.0F;//s除以负载因子＋1</div><div class="line">                int t = ((ft &lt; (float)MAXIMUM_CAPACITY) ?</div><div class="line">                         (int)ft : MAXIMUM_CAPACITY);//t取值ft，最大不能超过MAXIMUM_CAPACITY</div><div class="line">                if (t &gt; threshold)//如果t取值大于当前扩容临界点，则调整当前扩容临界点</div><div class="line">                    threshold = tableSizeFor(t);</div><div class="line">            &#125;</div><div class="line">            else if (s &gt; threshold)//如果s大于当前临界点，则扩容</div><div class="line">                resize();</div><div class="line">            for (Map.Entry&lt;? extends K, ? extends V&gt; e : m.entrySet()) &#123;</div><div class="line">                K key = e.getKey();</div><div class="line">                V value = e.getValue();</div><div class="line">                putVal(hash(key), key, value, false, evict);//for循环将所有元素放入table</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * key的hash值高16位不变，低16位与高16位异或作为key的最终hash值。这样做很容易产生碰撞。设计者权衡了               * speed, utility, and quality，将高16位与低16位异或来减少这种影响。设计者考虑到现在的hashCode分布的已经     * 很不错了，而且当发生较大碰撞时也用树形存储降低了冲突。仅仅异或一下，既减少了系统的开销，也不会造成的因为高位没有     * 参与下标的计算(table长度比较小时)，从而引起的碰撞</div><div class="line">     */</div><div class="line">static final int hash(Object key) &#123;</div><div class="line">        int h;</div><div class="line">        return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</div><div class="line">    &#125;</div><div class="line">//根据key返回value</div><div class="line"> public V get(Object key) &#123;</div><div class="line">        Node&lt;K,V&gt; e;//通过hash值找到桶，并从桶中找到对应key值</div><div class="line">        return (e = getNode(hash(key), key)) == null ? null : e.value;</div><div class="line">    &#125;</div><div class="line">    final Node&lt;K,V&gt; getNode(int hash, Object key) &#123;</div><div class="line">        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; int n; K k;</div><div class="line">// table已经初始化，长度大于0，且根据hash寻找table中的项也不为空</div><div class="line">        if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</div><div class="line">            (first = tab[(n - 1) &amp; hash]) != null) &#123;</div><div class="line">	    // 比较桶中第一个节点</div><div class="line">            if (first.hash == hash &amp;&amp; // always check first node</div><div class="line">                ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))</div><div class="line">                return first;</div><div class="line">	   //桶中不止一个结点</div><div class="line">            if ((e = first.next) != null) &#123;</div><div class="line">		//如果为红黑树结点</div><div class="line">                if (first instanceof TreeNode)</div><div class="line">			//在红黑树中查找</div><div class="line">                    return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</div><div class="line">		//否则，在链表中查找</div><div class="line">                do &#123;</div><div class="line">                    if (e.hash == hash &amp;&amp;</div><div class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</div><div class="line">                        return e;</div><div class="line">                &#125; while ((e = e.next) != null);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">//将key和value 插入表中</div><div class="line">public V put(K key, V value) &#123;</div><div class="line">        return putVal(hash(key), key, value, false, true);</div><div class="line">    &#125;</div><div class="line">/**</div><div class="line">     *实现map的put方法和相关方法。</div><div class="line">     * @param hash是哈希key后的值</div><div class="line">     * @param key是key</div><div class="line">     * @param value是value</div><div class="line">     * @param onlyIfAbsent如果为真，不改变已存在的值</div><div class="line">     * @param evict如果为false，表示为构造函数过程</div><div class="line">     * @return 返回先前的值或者null</div><div class="line">     */</div><div class="line">    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</div><div class="line">                   boolean evict) &#123;</div><div class="line">        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</div><div class="line">// table未初始化或者长度为0，进行扩容，n为桶的个数</div><div class="line">        if ((tab = table) == null || (n = tab.length) == 0)</div><div class="line">            n = (tab = resize()).length;</div><div class="line">// (n - 1) &amp; hash 确定元素存放在哪个桶中，桶为空，新生成结点放入桶中</div><div class="line">        if ((p = tab[i = (n - 1) &amp; hash]) == null)</div><div class="line">            tab[i] = newNode(hash, key, value, null);</div><div class="line">// 桶中已经存在元素</div><div class="line">        else &#123;</div><div class="line">            Node&lt;K,V&gt; e; K k;</div><div class="line">// 比较桶中第一个元素的hash值相等，key相等</div><div class="line">            if (p.hash == hash &amp;&amp;</div><div class="line">                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</div><div class="line"> // 将第一个元素赋值给e，用e来记录</div><div class="line">                e = p;</div><div class="line">// hash值不相等或key不相等</div><div class="line">            else if (p instanceof TreeNode)//类型等于红黑树，则放入树中</div><div class="line">                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</div><div class="line">//为链表结点</div><div class="line">            else &#123;</div><div class="line">                for (int binCount = 0; ; ++binCount) &#123;</div><div class="line">// 到达链表的尾部</div><div class="line">                    if ((e = p.next) == null) &#123;</div><div class="line">// 在尾部插入新结点</div><div class="line">                        p.next = newNode(hash, key, value, null);</div><div class="line">// 结点数量达到阈值，调用treeifyBin()做进一步判断是否转为红黑树</div><div class="line">                        if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</div><div class="line">                            treeifyBin(tab, hash);</div><div class="line">// 跳出循环</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line">// 判断链表中结点的key值与插入的元素的key值是否相等</div><div class="line">                    if (e.hash == hash &amp;&amp;</div><div class="line">                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</div><div class="line">// 相等，跳出循环</div><div class="line">                        break;</div><div class="line">// 用于遍历桶中的链表，与前面的e = p.next组合，可以遍历链表</div><div class="line">                    p = e;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">// 表示在桶中找到key值、hash值与插入元素相等的结点</div><div class="line">            if (e != null) &#123; // existing mapping for key</div><div class="line">// 记录e的原来value</div><div class="line">                V oldValue = e.value;</div><div class="line">// onlyIfAbsent为false或者旧值为null</div><div class="line">                if (!onlyIfAbsent || oldValue == null)</div><div class="line">//用新值替换旧值</div><div class="line">                    e.value = value;</div><div class="line">// 访问后回调</div><div class="line">                afterNodeAccess(e);</div><div class="line">// 返回旧值</div><div class="line">                return oldValue;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">// 结构性修改</div><div class="line">        ++modCount;</div><div class="line">// 实际大小大于阈值则扩容</div><div class="line">        if (++size &gt; threshold)</div><div class="line">            resize();</div><div class="line">// 插入后回调</div><div class="line">        afterNodeInsertion(evict);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"> /**</div><div class="line">     * 初始化活着双倍表大小。如果是null，分配初始容量。否则我们用幂的2倍进行扩展。原来桶中的元素</div><div class="line">     *要么留在相同的索引上，要么是在新的表中进行a power of two offset</div><div class="line">     * @return the table</div><div class="line">     */</div><div class="line"> final Node&lt;K,V&gt;[] resize() &#123;</div><div class="line">//用oldTab保存扩容前的table</div><div class="line">        Node&lt;K,V&gt;[] oldTab = table;</div><div class="line">//oldCap保存原来桶的个数</div><div class="line">        int oldCap = (oldTab == null) ? 0 : oldTab.length;</div><div class="line">//用oldThr保存原来的扩容临界点</div><div class="line">        int oldThr = threshold;</div><div class="line">        int newCap, newThr = 0;</div><div class="line">        if (oldCap &gt; 0) &#123;</div><div class="line">// 超过最大值就不再扩充了，就只好随你碰撞去吧</div><div class="line">            if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</div><div class="line">                threshold = Integer.MAX_VALUE;</div><div class="line">                return oldTab;</div><div class="line">            &#125;</div><div class="line">// 没超过最大值，就扩充为原来的2倍</div><div class="line">            else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</div><div class="line">                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</div><div class="line">                newThr = oldThr &lt;&lt; 1; // double threshold</div><div class="line">        &#125;</div><div class="line">        else if (oldThr &gt; 0) // initial capacity was placed in threshold</div><div class="line"> // 如果原来的thredshold大于0则将容量设为原来的thredshold</div><div class="line">            // 在第一次带参数初始化时候会有这种情况</div><div class="line">            newCap = oldThr;</div><div class="line">        else &#123;               // zero initial threshold signifies using defaults</div><div class="line">// 在默认无参数初始化，使用无参数</div><div class="line">            newCap = DEFAULT_INITIAL_CAPACITY;</div><div class="line">// loadFactor 哈希加载因子 默认0.75,可在初始化时传入,16*0.75=12 可以放12个键值对</div><div class="line">            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</div><div class="line">        &#125;</div><div class="line">// 计算新的resize上限</div><div class="line">        if (newThr == 0) &#123;</div><div class="line">            float ft = (float)newCap * loadFactor;</div><div class="line">            newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?</div><div class="line">                      (int)ft : Integer.MAX_VALUE);</div><div class="line">        &#125;</div><div class="line">// 将临界值设置为新临界值</div><div class="line">        threshold = newThr;</div><div class="line">        @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</div><div class="line">            Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</div><div class="line">        table = newTab;</div><div class="line">        if (oldTab != null) &#123;</div><div class="line">// 把每个bucket都移动到新的buckets中</div><div class="line">// 根据容量进行循环整个数组，将非空元素进行复制</div><div class="line">            for (int j = 0; j &lt; oldCap; ++j) &#123;</div><div class="line">                Node&lt;K,V&gt; e;</div><div class="line">                if ((e = oldTab[j]) != null) &#123;</div><div class="line">                    oldTab[j] = null;</div><div class="line">// 如果链表只有一个，则进行直接赋值</div><div class="line">                    if (e.next == null)</div><div class="line">// e.hash &amp; (newCap - 1) 确定元素存放位置</div><div class="line">                        newTab[e.hash &amp; (newCap - 1)] = e;</div><div class="line">                    else if (e instanceof TreeNode)</div><div class="line">                        ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);</div><div class="line">                    else &#123; // preserve order</div><div class="line">			// 进行链表复制</div><div class="line">                        // 方法比较特殊： 它并没有重新计算元素在数组中的位置</div><div class="line">                        // 而是采用了 原始位置加原数组长度的方法计算得到位置</div><div class="line">                        Node&lt;K,V&gt; loHead = null, loTail = null;</div><div class="line">                        Node&lt;K,V&gt; hiHead = null, hiTail = null;</div><div class="line">                        Node&lt;K,V&gt; next;</div><div class="line">                        do &#123;</div><div class="line">                            next = e.next;</div><div class="line"> 			    // 注意：不是(e.hash &amp; (oldCap-1));而是(e.hash &amp; oldCap)</div><div class="line"></div><div class="line">                            // (e.hash &amp; oldCap) 得到的是 元素的在数组中的位置是否需要移动,示例如下</div><div class="line">                            // 示例1：</div><div class="line">                            // e.hash=10 0000 1010</div><div class="line">                            // oldCap=16 0001 0000</div><div class="line">                            //   &amp;   =0  0000 0000       比较高位的第一位 0</div><div class="line">                            //结论：元素位置在扩容后数组中的位置没有发生改变</div><div class="line"></div><div class="line">                            // 示例2：</div><div class="line">                            // e.hash=17 0001 0001</div><div class="line">                            // oldCap=16 0001 0000</div><div class="line">                            //   &amp;   =1  0001 0000      比较高位的第一位   1</div><div class="line">                            //结论：元素位置在扩容后数组中的位置发生了改变，新的下标位置是原下标位置+原数组长度</div><div class="line"></div><div class="line">                            // (e.hash &amp; (oldCap-1)) 得到的是下标位置,示例如下</div><div class="line">                            //   e.hash=10 0000 1010</div><div class="line">                            // oldCap-1=15 0000 1111</div><div class="line">                            //      &amp;  =10 0000 1010</div><div class="line"></div><div class="line">                            //   e.hash=17 0001 0001</div><div class="line">                            // oldCap-1=15 0000 1111</div><div class="line">                            //      &amp;  =1  0000 0001</div><div class="line"></div><div class="line">                            //新下标位置</div><div class="line">                            //   e.hash=17 0001 0001</div><div class="line">                            // newCap-1=31 0001 1111    newCap=32</div><div class="line">                            //      &amp;  =17 0001 0001    1+oldCap = 1+16</div><div class="line"></div><div class="line">                            //元素在重新计算hash之后，因为n变为2倍，那么n-1的mask范围在高位多1bit(红色)，因此新的index就会发生这样的变化：</div><div class="line">                            // 0000 0001-&gt;0001 0001</div><div class="line">                            if ((e.hash &amp; oldCap) == 0) &#123;</div><div class="line">// 如果原元素位置没有发生变化</div><div class="line">                                if (loTail == null)</div><div class="line">                                    loHead = e;// 确定首元素</div><div class="line">// 第一次进入时     e   -&gt; aa  ; loHead-&gt; aa</div><div class="line">                                else</div><div class="line">                                    loTail.next = e;</div><div class="line"> //第二次进入时        loTail-&gt; aa  ;    e  -&gt; bb ;  </div><div class="line">//loTail.next -&gt; bb;而loHead和loTail是指向同一块内存的，所以loHead.next 地址为 bb  </div><div class="line">//第三次进入时        loTail-&gt; bb  ; </div><div class="line">//   e  -&gt; cc ;  loTail.next 地址为 cc;loHead.next.next = cc</div><div class="line">                                loTail = e;</div><div class="line">                            &#125;</div><div class="line">                            else &#123;</div><div class="line"> //与上面同理</div><div class="line">                                if (hiTail == null)</div><div class="line">                                    hiHead = e;</div><div class="line">                                else</div><div class="line">                                    hiTail.next = e;</div><div class="line">                                hiTail = e;</div><div class="line">                            &#125;</div><div class="line">                        &#125; while ((e = next) != null);</div><div class="line">                        if (loTail != null) &#123;</div><div class="line">                            loTail.next = null;</div><div class="line">                            newTab[j] = loHead;</div><div class="line">                        &#125;</div><div class="line">                        if (hiTail != null) &#123;</div><div class="line">                            hiTail.next = null;</div><div class="line">                            newTab[j + oldCap] = hiHead;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return newTab;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">源码学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/31/2018073101/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
     <article id="post-2018072901" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -979,109 +1075,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2018062901" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/29/2018062901/">并发编程学习二</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/29/2018062901/" class="archive-article-date">
-  	<time datetime="2018-06-29T04:44:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="共享对象"><a href="#共享对象" class="headerlink" title="共享对象"></a>共享对象</h3><h4 id="1-可见性"><a href="#1-可见性" class="headerlink" title="1:可见性"></a>1:可见性</h4><p>当存在数据被多线程共享时，进行恰当的同步，可以避免错误结果。</p>
-<h5 id="1-1-过期数据"><a href="#1-1-过期数据" class="headerlink" title="1.1:过期数据"></a>1.1:过期数据</h5><p>通过同步化getter和setter使对应类成为线程安全，如果只是同步setter是不够的，调用get的线程仍然能够看见过期值。</p>
-<h5 id="1-1-2-非原子的64位操作"><a href="#1-1-2-非原子的64位操作" class="headerlink" title="1.1.2 非原子的64位操作"></a>1.1.2 非原子的64位操作</h5><p>当一个线程没有同步的情况下读取变量，它可能得到一个过期值，但是至少是一个真实数据，而不是一个凭空而来的值。这样的安全保证叫做：最低限的安全性（out－of－thin－air safety）<br>最低限的安全性应用于所有的变量，除了一个例外：没有申明为volatile的64位数据变量（double和long）</p>
-<h5 id="1-1-3-锁和可见性"><a href="#1-1-3-锁和可见性" class="headerlink" title="1.1.3 锁和可见性"></a>1.1.3 锁和可见性</h5><p>锁不仅仅是关于同步与互斥的，也是关于内存可见的。为了保证所有线程都能够看到共享的，可变变量的最新值，读取和写入线程必须使用公共的锁进行同步。</p>
-<h5 id="1-1-4-Volatile变量"><a href="#1-1-4-Volatile变量" class="headerlink" title="1.1.4 Volatile变量"></a>1.1.4 Volatile变量</h5><p>同步弱形式：Volatile变量。当一个域声明为Volatile类型后，编译器与运行时回监视这个变量：它是共享的，并且对它的操作不会与其他的内存操作一起被重排序。<br>正确使用volatile变量的方式包括：用于确保它们所引用的对象状态的可见性，或者用于标识重要的生命周期事件（比如初始化或关闭）的发生。<br>满足下面标准可使用volatile变量：<br>1）写入变量不依赖当前变量值，或者只有一个线程修改变量的值。<br>2）变量不需要和其他的状态变量共同参与不变约束。<br>3）访问变量时，没有其他的原因需要加锁。</p>
-<h4 id="2-发布和逸出"><a href="#2-发布和逸出" class="headerlink" title="2:发布和逸出"></a>2:发布和逸出</h4><p>发布：发布一个对象的意思是使它能够被当前范围之外的代码所使用。<br>逸出：一个对象在尚未准备好的情况下就发布了，这种情况叫做逸出。</p>
-<h5 id="2-1-安全构建的实践"><a href="#2-1-安全构建的实践" class="headerlink" title="2.1 安全构建的实践"></a>2.1 安全构建的实践</h5><p>不要让this引用在构造期间逸出<br>如果想要在构造函数中注册监听器或启动线程，你可以用一个私有的构造函数和一个公共的工厂方法。</p>
-<h4 id="3-线程封闭"><a href="#3-线程封闭" class="headerlink" title="3:线程封闭"></a>3:线程封闭</h4><p>线程封闭（Thread confinement）技术是实现线程安全的最简单的方式之一。<br>Swing发展了线程封闭技术。Swing的可视化组件和数据模型对象并不是线程安全的，它们是通过讲它们限制到Swing的事件分发线程中，实现线程安全的。<br>另一个常见的使用线程限制的应用程序是应用池化的JDBC Connection对象。线程总是从池中获得一个Connection对象，并且用它处理一个单一的请求后，就把它归还了。</p>
-<h5 id="3-1-Ad－hoc线程封闭"><a href="#3-1-Ad－hoc线程封闭" class="headerlink" title="3.1 Ad－hoc线程封闭"></a>3.1 Ad－hoc线程封闭</h5><p>Ad－hoc线程封闭是指维护线程限制性的任务全部落在实现上的这种情况。线程限制的一种特例就是将它用于volatile变量。鉴于ad－hoc线程限制固有的易损性，因此应该有节制地使用它，如果可能的话，用一种线程限制的强形式（栈限制或者Thread Local）取代它。</p>
-<h5 id="3-2栈限制"><a href="#3-2栈限制" class="headerlink" title="3.2栈限制"></a>3.2栈限制</h5><p>栈限制是线程限制的一种特例，在栈限制中，只能通过本地变量才可以触及对象。本地变量本身就被限制在执行线程中：它们存在于执行线程栈，其他线程无法访问这个栈。</p>
-<h5 id="3-3-ThreadLocal"><a href="#3-3-ThreadLocal" class="headerlink" title="3.3 ThreadLocal"></a>3.3 ThreadLocal</h5><p>ThreadLocal是一种维护线程限制更加规范的方式，它允许将每个线程与持有数值的对象关联在一起。ThreadLocal提供了get和set访问器，为每个使用它的线程维护一份单独的拷贝。<br>所以get总是返回由当前执行线程通过set设置的最新值。<br>ThreadLocal变量通常用于防止在基于可变的单体（Singleton）或全局变量的设计中，出现共享。比如说，一个单线程化的应用程序可能会维护一个全局的数据库连接，这个Connection<br>在启动时就已经被初始化了。这样就可以避免为每个方法都传递一个Connection。因为JDBC规范并未要求Connection自身一定是线程安全的，因此，如果没有额外的协调时，使用全局变量<br>的多线程应用程序同样不是线程安全的。通过利用ThreadLocal存储JDBC链接，每个线程都会拥有属于自己的Connection。</p>
-<h4 id="4不可变性"><a href="#4不可变性" class="headerlink" title="4不可变性"></a>4不可变性</h4><p>不可变对象天生线程安全。<br>只有满足以下状态，一个对象才是不可变的：<br>1:它的状态不能在创建后再被修改<br>2：所有域都是final类型，<br>3:它被正确创建（创建期间没有this引用的逸出）</p>
-<h5 id="4-1-final域"><a href="#4-1-final域" class="headerlink" title="4.1 final域"></a>4.1 final域</h5><p>将所有对域声明为final型，除非它们是可变的，也是一条良好的实践。</p>
-<h5 id="4-2-volatile发布不可变对象"><a href="#4-2-volatile发布不可变对象" class="headerlink" title="4.2 volatile发布不可变对象"></a>4.2 volatile发布不可变对象</h5><p>通过final和volatile组合一个线程安全，没有看懂，后续有空来研究？？？？？</p>
-<h4 id="5安全发布"><a href="#5安全发布" class="headerlink" title="5安全发布"></a>5安全发布</h4><p>为了安全地发布对象，对象的引用以及对象的状态必须同时对其他线程可见，一个正确创建的对象可以通过下列条件安全地发布：<br>1：通过静态初始化器初始化对象的引用。<br>2:将它的引用存储到volatile域或者AtomicReference<br>3：将它的引用存储到正确创建的对象的final域中。<br>4:将它对引用存储到由锁正确保护的域中。</p>
-<p>线程安全库中的容器提供了如下的线程安全保证：<br>1：置入Hashtable，synchronizedMap，ConcurrentMap中的主键以及键值，会安全地发布到可以从Map获得他们的任意线程中，无论是直接获得还是通过迭代器（iterator）获得<br>2:置入Vector，CopyOnWriteArrayList，CopyOnWriteArraySet，SynchronizedList，synchronizedSet中的元素，会安全地发布到可以从容器中获得它的任意线程中。<br>3:置入BlockingQueue或者ConcurrentLinkedQueue的元素，会安全地发布到可以从队列中获得它的任意线程中。</p>
-<p>在并发程序中，使用和共享对象的一些最有效的策略如下：<br>线程限制：一个线程限制的对象，通过限制在线程中，而被线程独占，且只能被占有它的线程修改。<br>共享只读：一个共享的只读对象，在没有额外同步的情况下，可以被多个线程并发地访问，但是任何线程都不能修改它，共享只读对象包括可变对象与高效不可变对象。<br>共享线程安全：一个线程安全的对象在内部进行同步，所以其他线程无需额外不同，就可以通过公共接口随意地访问它。<br>被守护的（Guarded）：一个被守护的对象只能通过特定的锁来访问，被守护对象包括那些线程安全对象封装的对象，和已知被特定的锁保护起来的已发布对象。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/29/2018062901/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?13d7957fa837260db0d41044437232f6";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1178,11 +1174,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">IT</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
+                <a href="javascript:void(0)" class="js-tag color3">IT</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,11 +1190,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">项目问题</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1210,11 +1206,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ORACLE</a>
+                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1223,10 +1223,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础规范</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">源码学习</a>
               </li>
              
               <li class="article-tag-list-item">
