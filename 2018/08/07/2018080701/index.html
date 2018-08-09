@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>代理模式 | 留白</title>
+  <title>信息安全-密钥 | 留白</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="定义：为其他对象提供一种代理一控制对这个对象的访问。 组成：1:抽象接口类，定义了真实处理类和代理共用接口。2:真实类，实现1中的抽象接口类，实现真实业务逻辑，供代理类调用。3:代理类，实现抽象接口类，通过真实类实现抽象方法，并可以附加自己的操作。 适用场景：1:远程代理，为一个对象在不同的地址空间提供局部代表，这样可以隐藏对象于不同地址空间的事实－－－－－还需要理解2:虚拟代理，根据需要创建开销">
+  <meta name="description" content="密钥使用原则：1:不同系统间，相同算法，使用不同加密密钥。2:相同系统，不同环境，使用不同加密密钥。3:相同系统，不同功能，使用不同加密密钥。 密钥生命周期阶段安全保障1:密钥生成阶段密钥长度满足要求密钥生成功能保证随机性密钥生成机需要物理隔离2：密钥分发网络分发时，应该加密传输。3:密钥保存应该以密文方式保存在密钥文件，配置项，数据库等方式保存。4:密钥更换密钥应定期更新，如果存有旧密钥加密的数">
+<meta name="keywords" content="信息安全,基础规范">
 <meta property="og:type" content="article">
-<meta property="og:title" content="代理模式">
-<meta property="og:url" content="http://yoursite.com/2018/02/05/2018020502/index.html">
+<meta property="og:title" content="信息安全-密钥">
+<meta property="og:url" content="http://yoursite.com/2018/08/07/2018080701/index.html">
 <meta property="og:site_name" content="留白">
-<meta property="og:description" content="定义：为其他对象提供一种代理一控制对这个对象的访问。 组成：1:抽象接口类，定义了真实处理类和代理共用接口。2:真实类，实现1中的抽象接口类，实现真实业务逻辑，供代理类调用。3:代理类，实现抽象接口类，通过真实类实现抽象方法，并可以附加自己的操作。 适用场景：1:远程代理，为一个对象在不同的地址空间提供局部代表，这样可以隐藏对象于不同地址空间的事实－－－－－还需要理解2:虚拟代理，根据需要创建开销">
+<meta property="og:description" content="密钥使用原则：1:不同系统间，相同算法，使用不同加密密钥。2:相同系统，不同环境，使用不同加密密钥。3:相同系统，不同功能，使用不同加密密钥。 密钥生命周期阶段安全保障1:密钥生成阶段密钥长度满足要求密钥生成功能保证随机性密钥生成机需要物理隔离2：密钥分发网络分发时，应该加密传输。3:密钥保存应该以密文方式保存在密钥文件，配置项，数据库等方式保存。4:密钥更换密钥应定期更新，如果存有旧密钥加密的数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-05T13:13:03.000Z">
+<meta property="og:updated_time" content="2018-08-09T01:47:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="代理模式">
-<meta name="twitter:description" content="定义：为其他对象提供一种代理一控制对这个对象的访问。 组成：1:抽象接口类，定义了真实处理类和代理共用接口。2:真实类，实现1中的抽象接口类，实现真实业务逻辑，供代理类调用。3:代理类，实现抽象接口类，通过真实类实现抽象方法，并可以附加自己的操作。 适用场景：1:远程代理，为一个对象在不同的地址空间提供局部代表，这样可以隐藏对象于不同地址空间的事实－－－－－还需要理解2:虚拟代理，根据需要创建开销">
+<meta name="twitter:title" content="信息安全-密钥">
+<meta name="twitter:description" content="密钥使用原则：1:不同系统间，相同算法，使用不同加密密钥。2:相同系统，不同环境，使用不同加密密钥。3:相同系统，不同功能，使用不同加密密钥。 密钥生命周期阶段安全保障1:密钥生成阶段密钥长度满足要求密钥生成功能保证随机性密钥生成机需要物理隔离2：密钥分发网络分发时，应该加密传输。3:密钥保存应该以密文方式保存在密钥文件，配置项，数据库等方式保存。4:密钥更换密钥应定期更新，如果存有旧密钥加密的数">
   
     <link rel="alternative" href="/atom.xml" title="留白" type="application/atom+xml">
   
@@ -158,31 +159,37 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2018020502" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2018080701" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      代理模式
+      信息安全-密钥
     </h1>
   
 
         
-        <a href="/2018/02/05/2018020502/" class="archive-article-date">
-  	<time datetime="2018-02-05T12:42:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
+        <a href="/2018/08/07/2018080701/" class="archive-article-date">
+  	<time datetime="2018-08-07T08:59:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>为其他对象提供一种代理一控制对这个对象的访问。</p>
-<h3 id="组成："><a href="#组成：" class="headerlink" title="组成："></a>组成：</h3><p>1:抽象接口类，定义了真实处理类和代理共用接口。<br>2:真实类，实现1中的抽象接口类，实现真实业务逻辑，供代理类调用。<br>3:代理类，实现抽象接口类，通过真实类实现抽象方法，并可以附加自己的操作。</p>
-<h3 id="适用场景："><a href="#适用场景：" class="headerlink" title="适用场景："></a>适用场景：</h3><p>1:远程代理，为一个对象在不同的地址空间提供局部代表，这样可以隐藏对象于不同地址空间的事实－－－－－还需要理解<br>2:虚拟代理，根据需要创建开销很大的对象，通过它来存放实例化需要很长时间的真实对象。－－－－－还需要理解<br>3:安全代理，用来控制真实对象访问时不同的权限。<br>4:智能指引，是指调用真实的对象时，代理处理另外一些事情。</p>
-<h3 id="比较："><a href="#比较：" class="headerlink" title="比较："></a>比较：</h3><p>与此前学习的装饰类比较：<br>1:装饰模式可以动态增加特色功能，可以有不同组合增加，而代理模式或在真实类之前或者之后增加特色功能是固定的<br>2:装饰模式时在运行时确定具体功能的，代理模式在编译时就确定了<br>3:装饰模式可以直接访问到原始对象，而代理模式隐藏对象的具体信息。</p>
-<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public abstract class Subject &#123;</div><div class="line">	public abstract void request();</div><div class="line">&#125;</div><div class="line">public class RealSubject extends Subject&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void request() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(&quot;the real request&quot;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">public class Proxy extends Subject&#123;</div><div class="line">	private RealSubject realSubject=new RealSubject();</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void request() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		realSubject.request();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">public class TestPorxy &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Proxy proxy=new Proxy();</div><div class="line">		proxy.request();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h3 id="密钥使用原则："><a href="#密钥使用原则：" class="headerlink" title="密钥使用原则："></a>密钥使用原则：</h3><p>1:不同系统间，相同算法，使用不同加密密钥。<br>2:相同系统，不同环境，使用不同加密密钥。<br>3:相同系统，不同功能，使用不同加密密钥。</p>
+<h3 id="密钥生命周期阶段安全保障"><a href="#密钥生命周期阶段安全保障" class="headerlink" title="密钥生命周期阶段安全保障"></a>密钥生命周期阶段安全保障</h3><p>1:密钥生成阶段<br>密钥长度满足要求<br>密钥生成功能保证随机性<br>密钥生成机需要物理隔离<br>2：密钥分发<br>网络分发时，应该加密传输。<br>3:密钥保存<br>应该以密文方式保存在密钥文件，配置项，数据库等方式保存。<br>4:密钥更换<br>密钥应定期更新，如果存有旧密钥加密的数据，应该做移行。</p>
+<h3 id="身份鉴别技术"><a href="#身份鉴别技术" class="headerlink" title="身份鉴别技术"></a>身份鉴别技术</h3><p>1:静态密码鉴别技术，通过输入与用户ID对应的已设定密码进行身份有效性验证的技术<br>存储、传输过程中应该密文形式存在；存储时用散列算法计算并存储散列值，并加盐。<br>2:物理介质鉴别技术：通过自动或人工识别用户持有的物理介质（身份证）的有效性进行身份有效性验证的技术。<br>3:动态密码鉴别技术：通过输入用户持有的设备中的动态变化密码进行身份有效性验证的技术。<br>4:智能IC卡、USB KEY和PKI技术：使用用户持有的智能卡或USB KEY（存放用户私钥证书），结合PKI机制，进行身份有效性验证的技术。<br>5:生物识别技术：使用用户的人体生物特征（如：指纹、视网膜）作为身份有效性验证的技术。</p>
+<h3 id="用户ID和密码"><a href="#用户ID和密码" class="headerlink" title="用户ID和密码"></a>用户ID和密码</h3><p>1:用户id设计时，应该唯一性<br>2:密码需要有一定复杂性，密码长度保证，字母数字、大小写等组合。<br>3:定期修改密码要求<br>4:初始密码检查<br>5:返回错误提示不能太精确<br>6：错误超过一定次数，需要锁定用户。<br>7:超时自动登出。</p>
+<h3 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h3><p>1:系统访问控制<br>2:业务访问控制</p>
+<h3 id="数据安全性"><a href="#数据安全性" class="headerlink" title="数据安全性"></a>数据安全性</h3><p>1:通信数据的机密性保护<br>在应用层采用对称密码算法或非对称密码算法对传输的内容进行机密性保护，<br>2:通信数据完整性保护<br>统计交易记录总数，统计文件总数<br>计算验证码（奇偶检验，计算校验和）<br>3:敏感信息的屏蔽保护<br>客户姓名、地址、证件号码、联系电话、账号等敏感信息需要屏蔽。</p>
+<h3 id="安全性设计"><a href="#安全性设计" class="headerlink" title="安全性设计"></a>安全性设计</h3><h4 id="防重操作"><a href="#防重操作" class="headerlink" title="防重操作"></a>防重操作</h4><p>1:客户端控制<br>按钮灰显，屏蔽刷新键<br>2:通过UUID、时间戳或者计数器防止重复提交</p>
+<h4 id="抗抵赖机制"><a href="#抗抵赖机制" class="headerlink" title="抗抵赖机制"></a>抗抵赖机制</h4><p>1:交易提交方，附上原发者身份。<br>2:数字签名</p>
+<h4 id="防撞库设计"><a href="#防撞库设计" class="headerlink" title="防撞库设计"></a>防撞库设计</h4><p>1:图形验证码技术<br>服务器端随机生成，由数字和字母组成。失败多次以后，可通过汉字验证码增加难度。<br>采取图片底纹干扰，颜色变换等方式，防范被攻击程序自动识别<br>使用时间限制和仅能使用一次。<br>2:限制登陆次数<br>限制一定时间内访问次数。<br>3:可信终端检查<br>通过U盾等机制，应用系统建立用户可信终端列表。<br>4:动态验证码登陆<br>手机短信验证码，电子密码器验证码<br>5:数字签名技术<br>U盾。</p>
+<h4 id="交易合法性检查"><a href="#交易合法性检查" class="headerlink" title="交易合法性检查"></a>交易合法性检查</h4><p>服务端对交易要素及用户权限进行合法性检查<br>前端检查提升易用性，但检查逻辑容易被绕过，无法保证安全性。<br>1:范围<br>所有前端提交的交易要素<br>2:检查逻辑<br>参数合法性（类型，长度，上下限边界，参数之间关联关系）<br>用户权限合法性<br>业务规则<br>3:检查先后关系<br>检查用户权限，再检查账号密码是否正确等；检查未通过的提示信息<br>4:上传文件应该有最大值限制<br>5:BS监测数据合法性<br>a：对于通过互联网对外服务的BS应用系统，应对用户提交参数进行检测，过滤存在危害的字符，防范跨站脚本攻击。<br>b:BS应用系统应设置cookie的http only属性，对于采用https连接的，应设置cookie的secure属性。<br>c:BS应用系统应选用一次性令牌，设置cookie有效时限，图片验证码等措施<br>d:BS应用系统中服务端如涉及调用其他URL资源且该URL地址可被前端查看，应采用服务端拼接跳转地址或别名映射等安全方式防范URL跳转漏洞，不应将跳转对IP、端口和路径直接在URL中显示。</p>
+
       
 
       
@@ -216,6 +223,21 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">信息安全</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -266,7 +288,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/05/2018020502/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/08/07/2018080701/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -280,18 +302,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2018/02/06/2018020601/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          工厂方法模式
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/02/05/2018020501/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">设计模式－－装饰模式</div>
+    <a href="/2018/07/31/2018073101/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">源码学习-HashMap</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -329,7 +342,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2018/02/05/2018020502/",
+  id: "http://yoursite.com/2018/08/07/2018080701/",
   owner: 'feixiang0713',
   repo: 'feixiang0713.github.io',
   oauth: {
